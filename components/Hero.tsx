@@ -115,7 +115,7 @@ export default function Hero() {
           transition={{ delay: 0.4, duration: 0.8 }}
           className="mt-4 text-lg md:text-xl text-zinc-600 dark:text-zinc-400 font-medium"
         >
-          BSIT Student & Full Stack Developer
+           Full Stack Developer
         </motion.p>
 
         <motion.div
@@ -146,10 +146,7 @@ export default function Hero() {
           transition={{ delay: 0.8 }}
           className="mt-8"
         >
-          <p className="max-w-xl mx-auto text-zinc-600 dark:text-zinc-500 leading-relaxed">
-            A passionate BSIT student and dedicated programmer with strong experience in developing multiple systems. I enjoy solving problems through code, continuously improving my skills, and exploring different areas of the IT industry.
-          </p>
-        </motion.div>
+            </motion.div>
       </div>
 
       <motion.div

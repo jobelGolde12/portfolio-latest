@@ -88,7 +88,7 @@ export default function Navbar() {
             className="hidden md:flex items-center gap-3"
           >
             <motion.a
-              href="https://github.com/jobelGolde12"
+              href="https://github.com/jobelGolde12/portfolio-latest"
               target="_blank"
               rel="noopener noreferrer"
               whileHover={{ scale: 1.05, y: -2 }}
@@ -99,7 +99,7 @@ export default function Navbar() {
               GitHub
             </motion.a>
             <motion.a
-              href="#contact"
+              href="mailto:jobelgolde45@gmail.com"
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
               className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-full font-medium hover:shadow-lg hover:shadow-emerald-500/25 transition-shadow"
