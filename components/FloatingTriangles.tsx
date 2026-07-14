@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 
 const colors = [
@@ -39,10 +39,19 @@ function generateTriangles(count: number): Triangle[] {
 }
 
 export default function FloatingTriangles() {
-  const triangles = useMemo(() => {
-    if (typeof window === 'undefined') return generateTriangles(15);
-    return generateTriangles(window.innerWidth < 768 ? 8 : 15);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
   }, []);
+
+  const triangles = useMemo(() => {
+    return generateTriangles(typeof window !== 'undefined' && window.innerWidth < 768 ? 8 : 15);
+  }, []);
+
+  if (!isMounted) {
+    return <div className="fixed inset-0 -z-5 overflow-hidden pointer-events-none" />;
+  }
 
   return (
     <div className="fixed inset-0 -z-5 overflow-hidden pointer-events-none">

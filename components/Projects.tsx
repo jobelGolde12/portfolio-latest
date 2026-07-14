@@ -23,12 +23,12 @@ const projects = [
     gradient: 'from-violet-500 to-purple-600',
   },
   {
-    title: 'School Portal',
-    description: 'A centralized platform for students to securely view academic information such as grades, announcements, and schedules. Implemented user authentication and role-based access.',
-    tech: ['PHP/Laravel', 'Vue.js', 'Inertia.js'],
-    github: 'https://github.com/jobelGolde12/school_portal.git',
-    category: 'Educational System',
-    gradient: 'from-cyan-500 to-blue-600',
+    title: 'Protec Damayan',
+    description: 'A community web application for Barangay Bonga that manages mutual aid (damayan) funds, records, and disbursements. Features automated death announcements via SMS through the Semaphore API for timely community notifications.',
+    tech: ['Laravel', 'Bootstrap', 'Vue.js'],
+    github: 'https://github.com/jobelGolde12/damayan.git',
+    category: 'Barangay System',
+    gradient: 'from-rose-500 to-red-600',
   },
 ];
 
