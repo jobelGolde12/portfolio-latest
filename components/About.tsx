@@ -90,7 +90,7 @@ export default function About() {
                 animate={isInView ? { scale: 1, opacity: 1 } : {}}
                 transition={{ delay: 0.8, type: 'spring' }}
               >
-                <p className="text-3xl font-bold text-emerald-500">3+</p>
+                <p className="text-3xl font-bold text-emerald-500">4+</p>
                 <p className="text-sm text-zinc-600 dark:text-zinc-400">Years Learning</p>
               </motion.div>
             </div>

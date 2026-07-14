@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion, useInView, useMotionValue, useSpring, useTransform } from 'framer-motion';
 
 const skillCategories = [
@@ -12,6 +12,7 @@ const skillCategories = [
       { name: 'PHP', level: 80 },
       { name: 'Java', level: 75 },
       { name: 'C++', level: 70 },
+      { name: 'Python', level: 65 },
     ],
   },
   {
@@ -23,6 +24,7 @@ const skillCategories = [
       { name: 'Vue.js', level: 75 },
       { name: 'HTML/CSS', level: 90 },
       { name: 'Tailwind CSS', level: 88 },
+      { name: 'Next.js', level: 78 },
       { name: 'Inertia.js', level: 78 },
     ],
   },
@@ -35,6 +37,8 @@ const skillCategories = [
       { name: 'Figma', level: 75 },
       { name: 'XAMPP', level: 80 },
       { name: 'Postman', level: 78 },
+      { name: 'Laragon', level: 80 },
+      { name: 'VS Code', level: 88 },
     ],
   },
   {
@@ -54,6 +58,12 @@ function SkillBar({ name, level, isInView, index }: { name: string; level: numbe
   const scale = useSpring(progress, { damping: 20, stiffness: 50 });
 
   const width = useTransform(scale, [0, 1], ['0%', `${level}%`]);
+
+  useEffect(() => {
+    if (isInView) {
+      progress.set(1);
+    }
+  }, [isInView, progress]);
 
   return (
     <motion.div
@@ -81,14 +91,8 @@ function SkillBar({ name, level, isInView, index }: { name: string; level: numbe
       </div>
       <div
         className="h-3 bg-zinc-200 dark:bg-zinc-800 rounded-full overflow-hidden cursor-pointer"
-        onMouseEnter={() => {
-          setIsHovered(true);
-          scale.set(1);
-        }}
-        onMouseLeave={() => {
-          setIsHovered(false);
-          scale.set(0);
-        }}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
       >
         <motion.div
           className="h-full bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full relative"
