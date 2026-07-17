@@ -80,6 +80,7 @@ export default function About() {
                   src="/profile.jpg"
                   alt="Jobel V. Golde"
                   fill
+                  sizes="(max-width: 768px) 100vw, 448px"
                   className="object-cover"
                 />
               </div>

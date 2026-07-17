@@ -1,166 +1,178 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import { GithubIcon } from './Icons';
 
 const projects = [
   {
     title: 'Lost and Found System',
-    description: 'A community-based platform to report and track lost items. Features real-time item status updates and searchable categorized listings to improve user experience and item recovery efficiency.',
+    description:
+      'A community platform for reporting and recovering lost items—real-time status updates, searchable categories, and a flow built for local use.',
     tech: ['Laravel', 'Vue.js', 'Bootstrap', 'Inertia'],
     github: 'https://github.com/jobelGolde12/bulan_lost_and_found3.git',
-    category: 'Capstone Project',
-    gradient: 'from-emerald-500 to-teal-600',
+    category: 'Capstone',
+    year: '2024',
   },
   {
     title: 'Profanity Detection API',
-    description: 'A custom profanity detection API specialized in Tagalog and regional Filipino profanity terms. Designed to integrate with posts, comments, and messaging systems.',
-    tech: ['PHP/Laravel', 'REST API', 'React.js'],
+    description:
+      'REST API focused on Tagalog and regional Filipino terms, built to plug into posts, comments, and messaging without a heavy client.',
+    tech: ['Laravel', 'REST API', 'React'],
     github: 'https://github.com/jobelGolde12/profanity_api.git',
-    category: 'API Development',
-    gradient: 'from-violet-500 to-purple-600',
+    category: 'API',
+    year: '2024',
   },
   {
     title: 'Protec Damayan',
-    description: 'A community web application for Barangay Bonga that manages mutual aid (damayan) funds, records, and disbursements. Features automated death announcements via SMS through the Semaphore API for timely community notifications.',
-    tech: ['Laravel', 'Bootstrap', 'Vue.js'],
+    description:
+      'Barangay Bonga mutual-aid system for fund records and disbursements, with automated death announcements over SMS via Semaphore.',
+    tech: ['Laravel', 'Vue.js', 'Bootstrap'],
     github: 'https://github.com/jobelGolde12/damayan.git',
-    category: 'Barangay System',
-    gradient: 'from-rose-500 to-red-600',
+    category: 'Community',
+    year: '2023',
   },
 ];
 
-function ProjectCard({ project, index, isInView }: { project: typeof projects[0]; index: number; isInView: boolean }) {
-  const [isHovered, setIsHovered] = useState(false);
+function ProjectCard({
+  project,
+  index,
+  isInView,
+}: {
+  project: (typeof projects)[0];
+  index: number;
+  isInView: boolean;
+}) {
+  const number = String(index + 1).padStart(2, '0');
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 50 }}
+    <motion.article
+      initial={{ opacity: 0, y: 28 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ delay: index * 0.15, duration: 0.6 }}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      className="group relative bg-white dark:bg-zinc-900 rounded-2xl overflow-hidden shadow-lg shadow-zinc-200/50 dark:shadow-zinc-950/50 border border-zinc-100 dark:border-zinc-800"
+      transition={{
+        delay: 0.08 + index * 0.1,
+        duration: 0.55,
+        ease: [0.25, 0.1, 0.25, 1],
+      }}
+      className="group relative"
     >
-      <div className={`h-2 bg-gradient-to-r ${project.gradient}`} />
-      
-      <div className="p-6">
-        <div className="flex items-center justify-between mb-4">
-          <span className={`px-3 py-1 text-xs font-medium rounded-full bg-gradient-to-r ${project.gradient} text-white`}>
-            {project.category}
-          </span>
-          <motion.a
-            href={project.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            className="p-2 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors"
+      <a
+        href={project.github}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="block rounded-2xl px-5 py-6 sm:px-7 sm:py-8
+          bg-zinc-50/80 dark:bg-zinc-900/40
+          transition-[background-color,transform,box-shadow] duration-300 ease-out
+          hover:bg-zinc-100/90 dark:hover:bg-zinc-900/70
+          hover:-translate-y-0.5
+          focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/60 focus-visible:ring-offset-2
+          focus-visible:ring-offset-white dark:focus-visible:ring-offset-zinc-950"
+      >
+        <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:gap-8 lg:gap-10">
+          {/* Index */}
+          <span
+            className="shrink-0 font-mono text-sm tracking-widest text-zinc-300 dark:text-zinc-600
+              sm:pt-1 sm:w-10 transition-colors duration-300
+              group-hover:text-emerald-500/80"
+            aria-hidden
           >
-            <GithubIcon className="w-5 h-5" />
-          </motion.a>
+            {number}
+          </span>
+
+          {/* Body */}
+          <div className="min-w-0 flex-1">
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-3">
+              <span className="text-[11px] font-medium uppercase tracking-[0.16em] text-emerald-600 dark:text-emerald-400">
+                {project.category}
+              </span>
+              <span className="hidden sm:inline text-zinc-300 dark:text-zinc-700" aria-hidden>
+                ·
+              </span>
+              <time className="text-xs text-zinc-400 dark:text-zinc-500 tabular-nums">
+                {project.year}
+              </time>
+            </div>
+
+            <div className="flex items-start justify-between gap-4">
+              <h3
+                className="text-xl sm:text-2xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50
+                  transition-colors duration-300 group-hover:text-emerald-700 dark:group-hover:text-emerald-300"
+              >
+                {project.title}
+              </h3>
+              <span
+                className="mt-1 shrink-0 flex h-9 w-9 items-center justify-center rounded-full
+                  bg-zinc-200/60 dark:bg-zinc-800/80 text-zinc-500 dark:text-zinc-400
+                  transition-all duration-300
+                  group-hover:bg-emerald-500 group-hover:text-white
+                  group-hover:rotate-12"
+                aria-hidden
+              >
+                <ArrowUpRight className="h-4 w-4" strokeWidth={2} />
+              </span>
+            </div>
+
+            <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-zinc-600 dark:text-zinc-400">
+              {project.description}
+            </p>
+
+            <ul className="mt-5 flex flex-wrap gap-x-1 gap-y-2" aria-label="Technologies used">
+              {project.tech.map((tech, i) => (
+                <li key={tech} className="flex items-center text-sm text-zinc-500 dark:text-zinc-500">
+                  {i > 0 && (
+                    <span className="mx-2 text-zinc-300 dark:text-zinc-700 select-none" aria-hidden>
+                      /
+                    </span>
+                  )}
+                  <span className="transition-colors duration-200 group-hover:text-zinc-700 dark:group-hover:text-zinc-300">
+                    {tech}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
-
-        <motion.h3
-          className="text-xl font-bold text-zinc-900 dark:text-white mb-3"
-          animate={isHovered ? { x: 5 } : { x: 0 }}
-          transition={{ type: 'spring', stiffness: 400 }}
-        >
-          {project.title}
-        </motion.h3>
-
-        <p className="text-zinc-600 dark:text-zinc-400 text-sm leading-relaxed mb-5">
-          {project.description}
-        </p>
-
-        <div className="flex flex-wrap gap-2 mb-5">
-          {project.tech.map((tech) => (
-            <span
-              key={tech}
-              className="px-3 py-1 text-xs font-medium bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 rounded-full"
-            >
-              {tech}
-            </span>
-          ))}
-        </div>
-
-        <motion.a
-          href={project.github}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center gap-2 text-sm font-medium text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300"
-          whileHover={{ x: 5 }}
-        >
-          View Project
-          <motion.div animate={isHovered ? { x: 5 } : { x: 0 }}>
-            <ArrowRight className="w-4 h-4" />
-          </motion.div>
-        </motion.a>
-      </div>
-
-      <motion.div
-        className={`absolute inset-0 bg-gradient-to-r ${project.gradient} opacity-0`}
-        animate={{ opacity: isHovered ? 0.05 : 0 }}
-        transition={{ duration: 0.3 }}
-      />
-    </motion.div>
+      </a>
+    </motion.article>
   );
 }
 
 export default function Projects() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
-  const [activeFilter, setActiveFilter] = useState('All');
-
-  const categories = ['All', ...new Set(projects.map(p => p.category))];
-
-  const filteredProjects = activeFilter === 'All'
-    ? projects
-    : projects.filter(p => p.category === activeFilter);
+  const isInView = useInView(ref, { once: true, margin: '-80px' });
 
   return (
     <section id="projects" className="py-24 md:py-32 px-4" ref={ref}>
       <div className="max-w-6xl mx-auto">
+        {/* Header — matches About / Skills rhythm */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 24 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          transition={{ duration: 0.55, ease: [0.25, 0.1, 0.25, 1] }}
+          className="mb-12 md:mb-16"
         >
-          <span className="text-emerald-500 font-medium tracking-wider uppercase text-sm">My Work</span>
-          <h2 className="text-4xl md:text-5xl font-bold mt-2 bg-gradient-to-r from-zinc-900 to-zinc-700 dark:from-white dark:to-zinc-400 bg-clip-text">
-            Featured Projects
-          </h2>
-          <div className="w-20 h-1 bg-gradient-to-r from-emerald-500 to-teal-500 mx-auto mt-4 rounded-full" />
+          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6">
+            <div>
+              <span className="text-emerald-500 font-medium tracking-wider uppercase text-sm">
+                Selected work
+              </span>
+              <h2 className="text-4xl md:text-5xl font-bold mt-2 tracking-tight text-zinc-900 dark:text-white">
+                Projects
+              </h2>
+              <div className="w-20 h-1 bg-gradient-to-r from-emerald-500 to-teal-500 mt-4 rounded-full" />
+            </div>
+
+            <p className="max-w-sm text-sm leading-relaxed text-zinc-500 dark:text-zinc-400 sm:text-right">
+              Academic and personal systems I&apos;ve built end to end—from
+              idea to working code.
+            </p>
+          </div>
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.2 }}
-          className="flex flex-wrap justify-center gap-3 mb-12"
-        >
-          {categories.map((category) => (
-            <motion.button
-              key={category}
-              onClick={() => setActiveFilter(category)}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${
-                activeFilter === category
-                  ? 'bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-lg shadow-emerald-500/25'
-                  : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200 dark:hover:bg-zinc-700'
-              }`}
-            >
-              {category}
-            </motion.button>
-          ))}
-        </motion.div>
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredProjects.map((project, index) => (
+        {/* Project list */}
+        <div className="flex flex-col gap-3 sm:gap-4">
+          {projects.map((project, index) => (
             <ProjectCard
               key={project.title}
               project={project}
@@ -170,23 +182,25 @@ export default function Projects() {
           ))}
         </div>
 
+        {/* Quiet footer link */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.5 }}
-          className="mt-12 text-center"
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : {}}
+          transition={{ delay: 0.45, duration: 0.5 }}
+          className="mt-12 md:mt-14 flex justify-center sm:justify-start"
         >
-          <motion.a
+          <a
             href="https://github.com/jobelGolde12"
             target="_blank"
             rel="noopener noreferrer"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="inline-flex items-center gap-2 px-6 py-3 bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 rounded-full font-medium"
+            className="inline-flex items-center gap-2.5 text-sm font-medium text-zinc-500 dark:text-zinc-400
+              hover:text-zinc-900 dark:hover:text-white transition-colors duration-200
+              focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/50 rounded-sm"
           >
-            View All Projects
-            <GithubIcon className="w-4 h-4" />
-          </motion.a>
+            <GithubIcon className="h-4 w-4" />
+            <span>More on GitHub</span>
+            <ArrowUpRight className="h-3.5 w-3.5 opacity-60" />
+          </a>
         </motion.div>
       </div>
     </section>

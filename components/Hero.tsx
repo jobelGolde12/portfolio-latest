@@ -65,8 +65,10 @@ export default function Hero() {
                 src="/profile.jpg"
                 alt="Jobel V. Golde"
                 fill
+                sizes="(max-width: 768px) 208px, 288px"
                 className="object-cover"
                 priority
+                loading="eager"
               />
             </motion.div>
             <motion.div
