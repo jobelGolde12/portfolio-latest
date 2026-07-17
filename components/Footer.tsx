@@ -10,7 +10,7 @@ export default function Footer() {
   const isInView = useInView(ref, { once: true });
 
   return (
-    <footer ref={ref} className="py-12 px-4 border-t border-zinc-200 dark:border-zinc-800">
+    <footer ref={ref} className="py-12 px-4">
       <div className="max-w-6xl mx-auto">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           <motion.div
@@ -27,7 +27,7 @@ export default function Footer() {
               className="h-10 w-auto object-contain"
             />
             <p className="text-sm text-zinc-500 mt-2">
-              BSIT Student & Full Stack Developer
+             Full Stack Developer
             </p>
           </motion.div>
 

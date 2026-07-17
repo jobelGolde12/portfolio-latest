@@ -34,7 +34,7 @@ export default function AnimatedBackground() {
       />
 
       <svg
-        className="absolute top-20 left-10 w-40 h-40 text-emerald-400/15"
+        className="hidden md:block absolute top-20 left-10 w-40 h-40 text-emerald-400/15"
         viewBox="0 0 100 100"
       >
         <motion.path
@@ -49,7 +49,7 @@ export default function AnimatedBackground() {
       </svg>
 
       <svg
-        className="absolute bottom-32 right-20 w-32 h-32 text-violet-400/15"
+        className="hidden md:block absolute bottom-32 right-20 w-32 h-32 text-violet-400/15"
         viewBox="0 0 100 100"
       >
         <motion.circle
@@ -66,7 +66,7 @@ export default function AnimatedBackground() {
       </svg>
 
       <svg
-        className="absolute top-1/3 right-1/4 w-24 h-24 text-cyan-400/10"
+        className="hidden md:block absolute top-1/3 right-1/4 w-24 h-24 text-cyan-400/10"
         viewBox="0 0 100 100"
       >
         <motion.rect

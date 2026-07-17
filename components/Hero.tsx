@@ -83,7 +83,7 @@ export default function Hero() {
         </motion.div>
 
         <svg
-          className="absolute -top-12 -right-12 w-32 h-32 text-emerald-400/50"
+          className="hidden md:block absolute -top-16 -right-16 w-40 h-40 text-emerald-400/40"
           viewBox="0 0 100 100"
         >
           <motion.path

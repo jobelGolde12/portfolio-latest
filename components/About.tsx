@@ -63,13 +63,13 @@ export default function About() {
           >
             <div className="relative w-full max-w-md mx-auto aspect-square">
               <motion.div
-                className="absolute inset-0 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-3xl rotate-6"
+                className="absolute inset-0 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-3xl rotate-3 sm:rotate-6"
                 initial={{ rotate: 0 }}
                 animate={{ rotate: isInView ? 6 : 0 }}
                 transition={{ duration: 0.8, delay: 0.4 }}
               />
               <motion.div
-                className="absolute inset-0 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-3xl -rotate-3 opacity-50 blur-sm"
+                className="absolute inset-0 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-3xl -rotate-1 sm:-rotate-3 opacity-50 blur-sm"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: isInView ? 0.5 : 0 }}
                 transition={{ duration: 0.8, delay: 0.6 }}
@@ -85,13 +85,13 @@ export default function About() {
               </div>
               
               <motion.div
-                className="absolute -bottom-4 -right-4 bg-white dark:bg-zinc-800 rounded-2xl p-4 shadow-xl"
+                className="absolute -bottom-3 -right-3 sm:-bottom-4 sm:-right-4 bg-white dark:bg-zinc-800 rounded-2xl p-3 sm:p-4 shadow-xl"
                 initial={{ scale: 0, opacity: 0 }}
                 animate={isInView ? { scale: 1, opacity: 1 } : {}}
                 transition={{ delay: 0.8, type: 'spring' }}
               >
-                <p className="text-3xl font-bold text-emerald-500">4+</p>
-                <p className="text-sm text-zinc-600 dark:text-zinc-400">Years Learning</p>
+                <p className="text-2xl sm:text-3xl font-bold text-emerald-500">4+</p>
+                <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400">Years Learning</p>
               </motion.div>
             </div>
           </motion.div>
@@ -106,7 +106,7 @@ export default function About() {
               {aboutContent.summary}
             </motion.p>
 
-            <motion.div variants={itemVariants} className="grid grid-cols-2 gap-4">
+            <motion.div variants={itemVariants} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="bg-zinc-50 dark:bg-zinc-900 rounded-xl p-4">
                 <p className="text-sm text-zinc-500 mb-1">Education</p>
                 <p className="font-semibold text-zinc-900 dark:text-white">{aboutContent.education.degree}</p>
