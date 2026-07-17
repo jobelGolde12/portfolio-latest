@@ -14,6 +14,11 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: 'Jobel V. Golde | BSIT Student & Full Stack Developer',
   description: 'Professional portfolio of Jobel V. Golde - BSIT Student and Full Stack Developer from Sorsogon State University',
+  icons: {
+    icon: [{ url: '/jobel_logo.png', type: 'image/png' }],
+    apple: [{ url: '/jobel_logo.png', type: 'image/png' }],
+    shortcut: '/jobel_logo.png',
+  },
 };
 
 export default function RootLayout({

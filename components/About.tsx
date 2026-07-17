@@ -52,7 +52,6 @@ export default function About() {
           <h2 className="text-4xl md:text-5xl font-bold mt-2 bg-gradient-to-r from-zinc-900 to-zinc-700 dark:from-white dark:to-zinc-400 bg-clip-text">
             About Me
           </h2>
-          <div className="w-20 h-1 bg-gradient-to-r from-emerald-500 to-teal-500 mx-auto mt-4 rounded-full" />
         </motion.div>
 
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">

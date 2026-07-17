@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Mail } from 'lucide-react';
 
@@ -58,11 +59,19 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16 md:h-20">
           <motion.a
             href="#"
-            className="text-xl md:text-2xl font-bold bg-gradient-to-r from-emerald-600 to-teal-500 bg-clip-text text-transparent"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            className="relative flex items-center shrink-0"
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
+            aria-label="Jobel — Home"
           >
-            JOBEL
+            <Image
+              src="/jobel_logo.png"
+              alt="Jobel"
+              width={140}
+              height={48}
+              className="h-9 md:h-11 w-auto object-contain"
+              priority
+            />
           </motion.a>
 
           <div className="hidden md:flex items-center gap-8">

@@ -160,7 +160,6 @@ export default function Projects() {
               <h2 className="text-4xl md:text-5xl font-bold mt-2 tracking-tight text-zinc-900 dark:text-white">
                 Projects
               </h2>
-              <div className="w-20 h-1 bg-gradient-to-r from-emerald-500 to-teal-500 mt-4 rounded-full" />
             </div>
 
             <p className="max-w-sm text-sm leading-relaxed text-zinc-500 dark:text-zinc-400 sm:text-right">

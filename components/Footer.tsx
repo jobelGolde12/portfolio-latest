@@ -1,7 +1,8 @@
 'use client';
 
-import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
+import Image from 'next/image';
+import { motion, useInView } from 'framer-motion';
 import { GithubIcon } from './Icons';
 
 export default function Footer() {
@@ -16,12 +17,16 @@ export default function Footer() {
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5 }}
-            className="text-center md:text-left"
+            className="text-center md:text-left flex flex-col items-center md:items-start"
           >
-            <span className="text-2xl font-bold bg-gradient-to-r from-emerald-600 to-teal-500 bg-clip-text text-transparent">
-              JOBEL
-            </span>
-            <p className="text-sm text-zinc-500 mt-1">
+            <Image
+              src="/jobel_logo.png"
+              alt="Jobel"
+              width={120}
+              height={40}
+              className="h-10 w-auto object-contain"
+            />
+            <p className="text-sm text-zinc-500 mt-2">
               BSIT Student & Full Stack Developer
             </p>
           </motion.div>

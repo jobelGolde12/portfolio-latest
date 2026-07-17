@@ -135,7 +135,6 @@ export default function Contact() {
           <h2 className="text-4xl md:text-5xl font-bold mt-2 bg-gradient-to-r from-zinc-900 to-zinc-700 dark:from-white dark:to-zinc-400 bg-clip-text">
             Contact Me
           </h2>
-          <div className="w-20 h-1 bg-gradient-to-r from-emerald-500 to-teal-500 mx-auto mt-4 rounded-full" />
           <p className="mt-6 text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto">
             Have a project in mind or want to collaborate? Feel free to reach out. I am always open to discussing new opportunities.
           </p>
