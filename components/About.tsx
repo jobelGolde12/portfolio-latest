@@ -62,18 +62,6 @@ export default function About() {
             className="relative"
           >
             <div className="relative w-full max-w-md mx-auto aspect-square">
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-3xl rotate-3 sm:rotate-6"
-                initial={{ rotate: 0 }}
-                animate={{ rotate: isInView ? 6 : 0 }}
-                transition={{ duration: 0.8, delay: 0.4 }}
-              />
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-3xl -rotate-1 sm:-rotate-3 opacity-50 blur-sm"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: isInView ? 0.5 : 0 }}
-                transition={{ duration: 0.8, delay: 0.6 }}
-              />
               <div className="relative w-full h-full bg-zinc-100 dark:bg-zinc-900 rounded-3xl overflow-hidden shadow-2xl">
                 <Image
                   src="/profile.jpg"

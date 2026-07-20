@@ -45,21 +45,8 @@ export default function Hero() {
             className="relative w-52 h-52 md:w-72 md:h-72 mx-auto"
           >
             <motion.div
-              className="absolute inset-0 bg-gradient-to-br from-emerald-400 via-teal-500 to-cyan-500 rounded-full blur-xl opacity-40"
-              animate={{
-                scale: [1, 1.1, 1],
-                opacity: [0.3, 0.5, 0.3],
-              }}
-              transition={{ duration: 4, repeat: Infinity }}
-            />
-            <motion.div
-              className="absolute inset-0 bg-gradient-to-br from-emerald-400 via-teal-500 to-cyan-500 rounded-full blur-lg opacity-60"
-              animate={{ rotate: 360 }}
-              transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-            />
-            <motion.div
               whileHover={{ scale: 1.05, rotate: 3 }}
-              className="relative w-full h-full rounded-full overflow-hidden shadow-2xl shadow-emerald-500/30 border-4 border-white dark:border-zinc-800"
+              className="relative w-full h-full rounded-full overflow-hidden shadow-2xl border-4 border-white dark:border-zinc-800"
             >
               <Image
                 src="/profile.jpg"
@@ -71,32 +58,9 @@ export default function Hero() {
                 loading="eager"
               />
             </motion.div>
-            <motion.div
-              className="absolute -bottom-2 -right-2 bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-3 py-1 rounded-full text-sm font-medium shadow-lg"
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ delay: 1, type: 'spring' }}
-            >
-              Available for hire
-            </motion.div>
           </motion.div>
         </motion.div>
 
-        <svg
-          className="hidden md:block absolute -top-16 -right-16 w-40 h-40 text-emerald-400/40"
-          viewBox="0 0 100 100"
-        >
-          <motion.path
-            d="M10 50 Q 30 10, 50 50 T 90 50"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="3"
-            strokeLinecap="round"
-            initial={{ pathLength: 0, opacity: 0 }}
-            animate={{ pathLength: 1, opacity: 1 }}
-            transition={{ duration: 2.5, delay: 0.5 }}
-          />
-        </svg>
       </div>
 
       <div className="text-center mt-10">
