@@ -4,6 +4,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import ReactLenis from "lenis/react";
 import React, { useRef } from "react";
 import { cn } from "@/lib/utils";
+import { FacebookIcon, LinkedinIcon, InstagramIcon } from '../Icons';
 
 type CharacterProps = {
   char: string;
@@ -88,19 +89,16 @@ const Skiper31 = () => {
   const { scrollYProgress: scrollYProgress2 } = useScroll({ target: targetRef2 });
   const { scrollYProgress: scrollYProgress3 } = useScroll({ target: targetRef3 });
 
-  const text = "see more from ";
+  const text = "Social media ";
   const characters = text.split("");
   const centerIndex = Math.floor(characters.length / 2);
 
-  const macIcon = [
-    "https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/discord.svg",
-    "https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/figma.svg",
-    "https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/framer.svg",
-    "https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/github.svg",
-    "https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/mongodb.svg",
-    "https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/notion.svg",
+  const socialIcons = [
+    { icon: FacebookIcon, href: 'https://www.facebook.com/jobelGolde', label: 'Facebook' },
+    { icon: InstagramIcon, href: 'https://www.instagram.com/jobelgolde/', label: 'Instagram' },
+    { icon: LinkedinIcon, href: 'https://www.linkedin.com/in/jobel-golde-6a8822411/', label: 'LinkedIn' },
   ];
-  const iconCenterIndex = Math.floor(macIcon.length / 2);
+  const iconCenterIndex = Math.floor(socialIcons.length / 2);
 
   return (
     <ReactLenis root>
@@ -133,51 +131,60 @@ const Skiper31 = () => {
           </div>
         </div>
 
-        {/* Block 2 - Icons with translate/scale */}
+        {/* Block 2 - Social icons with translate/scale */}
         <div
           ref={targetRef2}
           className="relative -mt-[100vh] box-border flex h-[210vh] flex-col items-center justify-center gap-[2vw] overflow-hidden bg-zinc-50 dark:bg-zinc-900/50 p-[2vw]"
         >
-          <p className="flex items-center justify-center gap-3 text-2xl font-medium tracking-tight text-zinc-800 dark:text-zinc-200">
-            <Bracket className="h-12 text-zinc-800 dark:text-zinc-200" />
-            <span className="font-medium">integrate with your fav tech stack</span>
-            <Bracket className="h-12 scale-x-[-1] text-zinc-800 dark:text-zinc-200" />
-          </p>
-
-          <div className="flex flex-wrap items-center justify-center gap-8">
-            {macIcon.map((char, index) => (
-              <CharacterV2
-                key={index}
-                char={char}
-                index={index}
-                centerIndex={iconCenterIndex}
-                scrollYProgress={scrollYProgress2}
-              />
-            ))}
+          <div className="flex flex-wrap items-center justify-center gap-12">
+            {socialIcons.map((item, index) => {
+              const distanceFromCenter = index - iconCenterIndex;
+              const x = useTransform(scrollYProgress2, [0, 0.5], [distanceFromCenter * 50, 0]);
+              const scale = useTransform(scrollYProgress2, [0, 0.5], [0.75, 1]);
+              const y = useTransform(scrollYProgress2, [0, 0.5], [Math.abs(distanceFromCenter) * 50, 0]);
+              const Icon = item.icon;
+              return (
+                <motion.a
+                  key={item.label}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block"
+                  style={{ x, scale, y, transformOrigin: "center" }}
+                >
+                  <Icon className="h-16 w-16 text-zinc-700 dark:text-zinc-300 hover:text-emerald-500 dark:hover:text-emerald-400 transition-colors" />
+                </motion.a>
+              );
+            })}
           </div>
         </div>
 
-        {/* Block 3 - Icons with rotation */}
+        {/* Block 3 - Social icons with rotation */}
         <div
           ref={targetRef3}
           className="relative -mt-[95vh] box-border flex h-[210vh] flex-col items-center justify-center gap-[2vw] overflow-hidden bg-zinc-50 dark:bg-zinc-900/50 p-[2vw]"
         >
-          <p className="flex items-center justify-center gap-3 text-2xl font-medium tracking-tight text-zinc-800 dark:text-zinc-200">
-            <Bracket className="h-12 text-zinc-800 dark:text-zinc-200" />
-            <span className="font-medium">integrate with your fav tech stack</span>
-            <Bracket className="h-12 scale-x-[-1] text-zinc-800 dark:text-zinc-200" />
-          </p>
-
-          <div className="flex flex-wrap items-center justify-center gap-8" style={{ perspective: "500px" }}>
-            {macIcon.map((char, index) => (
-              <CharacterV3
-                key={index}
-                char={char}
-                index={index}
-                centerIndex={iconCenterIndex}
-                scrollYProgress={scrollYProgress3}
-              />
-            ))}
+          <div className="flex flex-wrap items-center justify-center gap-12" style={{ perspective: "500px" }}>
+            {socialIcons.map((item, index) => {
+              const distanceFromCenter = index - iconCenterIndex;
+              const x = useTransform(scrollYProgress3, [0, 0.5], [distanceFromCenter * 90, 0]);
+              const rotate = useTransform(scrollYProgress3, [0, 0.5], [distanceFromCenter * 50, 0]);
+              const y = useTransform(scrollYProgress3, [0, 0.5], [-Math.abs(distanceFromCenter) * 20, 0]);
+              const scale = useTransform(scrollYProgress3, [0, 0.5], [0.75, 1]);
+              const Icon = item.icon;
+              return (
+                <motion.a
+                  key={item.label}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block"
+                  style={{ x, rotate, y, scale, transformOrigin: "center" }}
+                >
+                  <Icon className="h-16 w-16 text-zinc-700 dark:text-zinc-300 hover:text-emerald-500 dark:hover:text-emerald-400 transition-colors" />
+                </motion.a>
+              );
+            })}
           </div>
         </div>
       </div>
