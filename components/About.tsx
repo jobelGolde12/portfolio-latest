@@ -62,7 +62,7 @@ export default function About() {
             className="relative"
           >
             <div className="relative w-full max-w-md mx-auto aspect-square">
-              <div className="relative w-full h-full bg-zinc-100 dark:bg-zinc-900 rounded-3xl overflow-hidden shadow-2xl">
+              <div className="relative w-full h-full bg-zinc-100 dark:bg-zinc-900 rounded-3xl overflow-hidden">
                 <Image
                   src="/profile.jpg"
                   alt="Jobel V. Golde"

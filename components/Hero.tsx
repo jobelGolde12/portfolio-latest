@@ -7,16 +7,30 @@ import { ArrowDown, MapPin, Mail, Phone } from 'lucide-react';
 
 export default function Hero() {
   const ref = useRef<HTMLDivElement>(null);
+
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
-  const springConfig = { damping: 20, stiffness: 300 };
-  const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [8, -8]), springConfig);
-  const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-8, 8]), springConfig);
+  const springConfig = {
+    damping: 20,
+    stiffness: 300,
+  };
+
+  const rotateX = useSpring(
+    useTransform(mouseY, [-0.5, 0.5], [8, -8]),
+    springConfig
+  );
+
+  const rotateY = useSpring(
+    useTransform(mouseX, [-0.5, 0.5], [-8, 8]),
+    springConfig
+  );
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!ref.current) return;
+
     const rect = ref.current.getBoundingClientRect();
+
     mouseX.set((e.clientX - rect.left - rect.width / 2) / rect.width);
     mouseY.set((e.clientY - rect.top - rect.height / 2) / rect.height);
   };
@@ -35,32 +49,30 @@ export default function Hero() {
         className="relative"
       >
         <motion.div
-          style={{ rotateX, rotateY, transformPerspective: 1200 }}
-          className="relative"
+          style={{
+            rotateX,
+            rotateY,
+            transformPerspective: 1200,
+          }}
         >
           <motion.div
-            initial={{ scale: 0, opacity: 0, rotate: -10 }}
-            animate={{ scale: 1, opacity: 1, rotate: 0 }}
-            transition={{ duration: 1, ease: 'easeOut', type: 'spring' }}
-            className="relative w-52 h-52 md:w-72 md:h-72 mx-auto"
+            whileHover={{
+              scale: 1.05,
+              rotate: 3,
+            }}
+            className="relative w-52 h-52 md:w-72 md:h-72 rounded-full overflow-hidden border-4 border-white dark:border-zinc-800"
           >
-            <motion.div
-              whileHover={{ scale: 1.05, rotate: 3 }}
-              className="relative w-full h-full rounded-full overflow-hidden shadow-2xl border-4 border-white dark:border-zinc-800"
-            >
-              <Image
-                src="/profile.jpg"
-                alt="Jobel V. Golde"
-                fill
-                sizes="(max-width: 768px) 208px, 288px"
-                className="object-cover"
-                priority
-                loading="eager"
-              />
-            </motion.div>
+            <Image
+              src="/profile.jpg"
+              alt="Jobel V. Golde"
+              fill
+              priority
+              sizes="(max-width: 768px) 208px, 288px"
+              className="object-cover opacity-100"
+              loading="eager"
+            />
           </motion.div>
         </motion.div>
-
       </div>
 
       <div className="text-center mt-10">
@@ -70,7 +82,7 @@ export default function Hero() {
           transition={{ delay: 0.2, duration: 0.8 }}
           className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight"
         >
-          <span className="bg-gradient-to-r from-zinc-900 via-zinc-700 to-zinc-900 dark:from-white dark:via-zinc-200 dark:to-white bg-clip-text">
+          <span className="bg-gradient-to-r from-zinc-900 via-zinc-700 to-zinc-900 dark:from-white dark:via-zinc-200 dark:to-white bg-clip-text text-transparent">
             JOBEL V. GOLDE
           </span>
         </motion.h1>
@@ -81,7 +93,7 @@ export default function Hero() {
           transition={{ delay: 0.4, duration: 0.8 }}
           className="mt-4 text-lg md:text-xl text-zinc-600 dark:text-zinc-400 font-medium"
         >
-           Full Stack Developer
+          Full Stack Developer
         </motion.p>
 
         <motion.div
@@ -94,25 +106,21 @@ export default function Hero() {
             <MapPin className="w-4 h-4 text-emerald-500" />
             Bonga, Bulan, Sorsogon
           </span>
+
           <span className="w-1.5 h-1.5 rounded-full bg-zinc-300 dark:bg-zinc-700" />
+
           <span className="flex items-center gap-1">
             <Mail className="w-4 h-4 text-emerald-500" />
             jobelgolde45@gmail.com
           </span>
+
           <span className="w-1.5 h-1.5 rounded-full bg-zinc-300 dark:bg-zinc-700" />
+
           <span className="flex items-center gap-1">
             <Phone className="w-4 h-4 text-emerald-500" />
             +63 993 054 3293
           </span>
         </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8 }}
-          className="mt-8"
-        >
-            </motion.div>
       </div>
 
       <motion.div
@@ -126,10 +134,16 @@ export default function Hero() {
           whileHover={{ y: 5 }}
           className="flex flex-col items-center gap-2 text-emerald-600 dark:text-emerald-400 cursor-pointer"
         >
-          <span className="text-sm font-medium">Scroll to explore</span>
+          <span className="text-sm font-medium">
+            Scroll to explore
+          </span>
+
           <motion.div
             animate={{ y: [0, 8, 0] }}
-            transition={{ duration: 1.5, repeat: Infinity }}
+            transition={{
+              duration: 1.5,
+              repeat: Infinity,
+            }}
           >
             <ArrowDown className="w-5 h-5" />
           </motion.div>
