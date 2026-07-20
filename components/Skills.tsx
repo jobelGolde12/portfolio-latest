@@ -2,6 +2,7 @@
 
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
+import { Skiper31 } from '@/components/ui/text-scroll-animation';
 
 const skillGroups = [
   {
@@ -44,7 +45,8 @@ export default function Skills() {
   const isInView = useInView(ref, { once: true, margin: '-60px' });
 
   return (
-    <section id="skills" className="py-24 md:py-32 px-4" ref={ref}>
+    <>
+      <section id="skills" className="py-24 md:py-32 px-4" ref={ref}>
       <div className="max-w-6xl mx-auto">
         {/* Header — same rhythm as Projects */}
         <motion.div
@@ -126,5 +128,8 @@ export default function Skills() {
         </div>
       </div>
     </section>
+
+    <Skiper31 />
+    </>
   );
 }
