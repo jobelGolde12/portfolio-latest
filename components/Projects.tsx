@@ -7,21 +7,22 @@ import { GithubIcon } from './Icons';
 
 const projects = [
   {
+    title: 'Profanity Detection API',
+    description:
+      'REST API focused on Tagalog and regional Filipino terms, built to plug into posts, comments, and messaging without a heavy client.',
+    tech: ['Laravel', 'REST API', 'React'],
+    github: 'https://github.com/jobelGolde12/profanity_api.git',
+    live: 'https://filipino-profanity-api-latest.vercel.app/',
+    category: 'API',
+    year: '2024',
+  },
+  {
     title: 'Lost and Found System',
     description:
       'A community platform for reporting and recovering lost items—real-time status updates, searchable categories, and a flow built for local use.',
     tech: ['Laravel', 'Vue.js', 'Bootstrap', 'Inertia'],
     github: 'https://github.com/jobelGolde12/bulan_lost_and_found3.git',
     category: 'Capstone',
-    year: '2024',
-  },
-  {
-    title: 'Profanity Detection API',
-    description:
-      'REST API focused on Tagalog and regional Filipino terms, built to plug into posts, comments, and messaging without a heavy client.',
-    tech: ['Laravel', 'REST API', 'React'],
-    github: 'https://github.com/jobelGolde12/profanity_api.git',
-    category: 'API',
     year: '2024',
   },
   {
@@ -58,7 +59,7 @@ function ProjectCard({
       className="group relative"
     >
       <a
-        href={project.github}
+        href={project.live || project.github}
         target="_blank"
         rel="noopener noreferrer"
         className="block rounded-2xl px-5 py-6 sm:px-7 sm:py-8
@@ -85,6 +86,44 @@ function ProjectCard({
             <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-3">
               <span className="text-[11px] font-medium uppercase tracking-[0.16em] text-emerald-600 dark:text-emerald-400">
                 {project.category}
+              </span>
+              {project.live && (
+                <span
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    window.open(project.live, '_blank', 'noopener,noreferrer');
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      window.open(project.live, '_blank', 'noopener,noreferrer');
+                    }
+                  }}
+                  role="link"
+                  tabIndex={0}
+                  className="cursor-pointer text-[11px] font-medium uppercase tracking-[0.16em] text-blue-600 dark:text-blue-400
+                    hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/60 rounded-sm"
+                >
+                  Live
+                </span>
+              )}
+              <span
+                onClick={(e) => {
+                  e.stopPropagation();
+                  window.open(project.github, '_blank', 'noopener,noreferrer');
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    window.open(project.github, '_blank', 'noopener,noreferrer');
+                  }
+                }}
+                role="link"
+                tabIndex={0}
+                className="cursor-pointer text-[11px] font-medium uppercase tracking-[0.16em] text-zinc-400 dark:text-zinc-500
+                  hover:text-zinc-700 dark:hover:text-zinc-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/60 rounded-sm"
+              >
+                Source
               </span>
               <span className="hidden sm:inline text-zinc-300 dark:text-zinc-700" aria-hidden>
                 ·
@@ -132,6 +171,7 @@ function ProjectCard({
               ))}
             </ul>
           </div>
+
         </div>
       </a>
     </motion.article>
