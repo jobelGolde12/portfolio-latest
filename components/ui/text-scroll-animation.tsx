@@ -27,7 +27,7 @@ const CharacterV1 = ({
 
   return (
     <motion.span
-      className={cn("inline-block text-emerald-500", isSpace && "w-4")}
+      className={cn("inline-block text-black dark:text-white", isSpace && "w-4")}
       style={{ x, rotateX }}
     >
       {char}
@@ -82,11 +82,9 @@ const CharacterV3 = ({
 
 const Skiper31 = () => {
   const targetRef = useRef<HTMLDivElement | null>(null);
-  const targetRef2 = useRef<HTMLDivElement | null>(null);
   const targetRef3 = useRef<HTMLDivElement | null>(null);
 
   const { scrollYProgress } = useScroll({ target: targetRef });
-  const { scrollYProgress: scrollYProgress2 } = useScroll({ target: targetRef2 });
   const { scrollYProgress: scrollYProgress3 } = useScroll({ target: targetRef3 });
 
   const text = "Social media ";
@@ -128,34 +126,6 @@ const Skiper31 = () => {
                 scrollYProgress={scrollYProgress}
               />
             ))}
-          </div>
-        </div>
-
-        {/* Block 2 - Social icons with translate/scale */}
-        <div
-          ref={targetRef2}
-          className="relative -mt-[100vh] box-border flex h-[210vh] flex-col items-center justify-center gap-[2vw] overflow-hidden bg-zinc-50 dark:bg-zinc-900/50 p-[2vw]"
-        >
-          <div className="flex flex-wrap items-center justify-center gap-12">
-            {socialIcons.map((item, index) => {
-              const distanceFromCenter = index - iconCenterIndex;
-              const x = useTransform(scrollYProgress2, [0, 0.5], [distanceFromCenter * 50, 0]);
-              const scale = useTransform(scrollYProgress2, [0, 0.5], [0.75, 1]);
-              const y = useTransform(scrollYProgress2, [0, 0.5], [Math.abs(distanceFromCenter) * 50, 0]);
-              const Icon = item.icon;
-              return (
-                <motion.a
-                  key={item.label}
-                  href={item.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block"
-                  style={{ x, scale, y, transformOrigin: "center" }}
-                >
-                  <Icon className="h-16 w-16 text-zinc-700 dark:text-zinc-300 hover:text-emerald-500 dark:hover:text-emerald-400 transition-colors" />
-                </motion.a>
-              );
-            })}
           </div>
         </div>
 
