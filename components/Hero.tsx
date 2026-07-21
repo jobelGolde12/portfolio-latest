@@ -89,7 +89,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4, duration: 0.8 }}
-          className="mt-4 text-[18px] md:text-[20px] text-[#9C9C9C] font-medium"
+          className="mt-4 text-[18px] md:text-[20px] text-white font-medium"
         >
           Full Stack Developer
         </motion.p>
@@ -98,24 +98,24 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6 }}
-          className="mt-8 flex flex-wrap items-center justify-center gap-4 text-[13px] text-[#6B6B6B]"
+          className="mt-8 flex flex-wrap items-center justify-center gap-4 text-[13px] text-white"
         >
           <span className="flex items-center gap-1.5">
-            <MapPin className="w-4 h-4 text-[#9C9C9C]" />
+            <MapPin className="w-4 h-4 text-white" />
             Bonga, Bulan, Sorsogon
           </span>
 
-          <span className="w-1 h-1 rounded-full bg-[#6B6B6B]" />
+          <span className="w-1 h-1 rounded-full bg-white" />
 
           <span className="flex items-center gap-1.5">
-            <Mail className="w-4 h-4 text-[#9C9C9C]" />
+            <Mail className="w-4 h-4 text-white" />
             jobelgolde45@gmail.com
           </span>
 
-          <span className="w-1 h-1 rounded-full bg-[#6B6B6B]" />
+          <span className="w-1 h-1 rounded-full bg-white" />
 
           <span className="flex items-center gap-1.5">
-            <Phone className="w-4 h-4 text-[#9C9C9C]" />
+            <Phone className="w-4 h-4 text-white" />
             +63 993 054 3293
           </span>
         </motion.div>
@@ -130,7 +130,7 @@ export default function Hero() {
         <motion.a
           href="#about"
           whileHover={{ y: 5 }}
-          className="flex flex-col items-center gap-2 text-[#6B6B6B] cursor-pointer"
+          className="flex flex-col items-center gap-2 text-white cursor-pointer"
         >
           <span className="text-[13px] font-medium">
             Scroll to explore

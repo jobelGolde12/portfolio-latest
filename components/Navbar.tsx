@@ -83,7 +83,7 @@ export default function Navbar() {
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.06 }}
-              className="relative px-4 py-2 text-[13px] font-medium text-[#6B6B6B] hover:text-[#1F1F1F] hover:bg-[#F2F2F2] rounded-full transition-all duration-200"
+              className="relative px-4 py-2 text-[13px] font-medium text-white hover:text-white hover:bg-white/10 rounded-full transition-all duration-200"
             >
               {link.name}
             </motion.a>
@@ -102,7 +102,7 @@ export default function Navbar() {
             rel="noopener noreferrer"
             whileHover={{ y: -1 }}
             whileTap={{ scale: 0.97 }}
-            className="flex items-center gap-2 px-4 py-2 text-[13px] font-medium text-[#1F1F1F] hover:bg-[#F2F2F2] rounded-full transition-colors duration-200"
+            className="flex items-center gap-2 px-4 py-2 text-[13px] font-medium text-white hover:bg-white/10 rounded-full transition-colors duration-200"
           >
             <GithubIcon className="w-4 h-4" />
             GitHub
@@ -111,7 +111,7 @@ export default function Navbar() {
             href="#contact"
             whileHover={{ y: -1 }}
             whileTap={{ scale: 0.97 }}
-            className="flex items-center gap-2 px-5 py-2 bg-[#1F1F1F] text-white text-[13px] font-medium rounded-full hover:bg-[#333] transition-colors duration-200"
+            className="flex items-center gap-2 px-5 py-2 bg-white text-[#1F1F1F] text-[13px] font-medium rounded-full hover:bg-white/90 transition-colors duration-200"
           >
             <Mail className="w-4 h-4" />
             Hire Me
@@ -120,7 +120,7 @@ export default function Navbar() {
 
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="md:hidden p-2 text-[#1F1F1F] hover:bg-[#F2F2F2] rounded-full transition-colors"
+          className="md:hidden p-2 text-white hover:bg-white/10 rounded-full transition-colors"
         >
           {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
         </button>
@@ -141,7 +141,7 @@ export default function Navbar() {
                   key={link.name}
                   href={link.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="block px-4 py-3 text-[14px] font-medium text-[#6B6B6B] hover:text-[#1F1F1F] hover:bg-[#F2F2F2] rounded-xl transition-colors"
+                  className="block px-4 py-3 text-[14px] font-medium text-white hover:text-white hover:bg-white/10 rounded-xl transition-colors"
                 >
                   {link.name}
                 </a>
@@ -151,14 +151,14 @@ export default function Navbar() {
                   href="https://github.com/jobelGolde12"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 px-5 py-2.5 bg-[#F2F2F2] text-[#1F1F1F] rounded-full text-[13px] font-medium hover:bg-[#E9E9E9] transition-colors"
+                  className="flex items-center justify-center gap-2 px-5 py-2.5 bg-white/10 text-white rounded-full text-[13px] font-medium hover:bg-white/20 transition-colors"
                 >
                   <GithubIcon className="w-4 h-4" />
                   GitHub
                 </a>
                 <a
                   href="#contact"
-                  className="flex items-center justify-center gap-2 px-5 py-2.5 bg-[#1F1F1F] text-white rounded-full text-[13px] font-medium hover:bg-[#333] transition-colors"
+                  className="flex items-center justify-center gap-2 px-5 py-2.5 bg-white text-[#1F1F1F] rounded-full text-[13px] font-medium hover:bg-white/90 transition-colors"
                 >
                   <Mail className="w-4 h-4" />
                   Hire Me

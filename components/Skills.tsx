@@ -56,14 +56,14 @@ export default function Skills() {
         >
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6">
             <div>
-              <span className="text-[#9C9C9C] font-medium tracking-wider uppercase text-[13px]">
+              <span className="text-white font-medium tracking-wider uppercase text-[13px]">
                 Capabilities
               </span>
               <h2 className="text-[28px] md:text-[32px] font-bold mt-2 tracking-[-0.02em] text-white">
                 Skills
               </h2>
             </div>
-            <p className="max-w-sm text-[14px] leading-[1.7] text-[#6B6B6B] sm:text-right">
+            <p className="max-w-sm text-[14px] leading-[1.7] text-white sm:text-right">
               Stack I use day to day — focused on full-stack web, with a foundation
               in systems and networking.
             </p>
@@ -90,8 +90,8 @@ export default function Skills() {
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:gap-10 lg:gap-14">
                   <div className="flex items-baseline gap-3 sm:w-40 lg:w-48 shrink-0">
                     <span
-                      className="font-mono text-[12px] tracking-widest text-[#6B6B6B]/40
-                        transition-colors duration-200 group-hover:text-[#6B6B6B]/70"
+                      className="font-mono text-[12px] tracking-widest text-white/40
+                        transition-colors duration-200 group-hover:text-white/70"
                       aria-hidden
                     >
                       {number}
@@ -108,7 +108,7 @@ export default function Skills() {
                     {group.skills.map((skill) => (
                       <li key={skill}>
                         <span
-                          className="inline-block px-3 py-1.5 text-[13px] text-[#9C9C9C]
+                          className="inline-block px-3 py-1.5 text-[13px] text-white
                             bg-white/5 rounded-lg
                             transition-colors duration-200
                             hover:text-white

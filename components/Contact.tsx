@@ -85,13 +85,13 @@ function Field({
         className={`absolute left-0 origin-left cursor-text select-none transition-all duration-200 ease-out
           ${
             showFloating
-              ? 'top-0 text-[11px] font-medium text-[#9C9C9C]'
-              : 'top-[18px] text-[14px] text-[#6B6B6B]'
+              ? 'top-0 text-[11px] font-medium text-white'
+              : 'top-[18px] text-[14px] text-white'
           }`}
       >
         {label}
         {required && (
-          <span className="text-[#6B6B6B] ml-0.5" aria-hidden>
+          <span className="text-white ml-0.5" aria-hidden>
             *
           </span>
         )}
@@ -190,7 +190,7 @@ export default function Contact() {
           transition={{ duration: 0.6 }}
           className="mb-16 md:mb-20"
         >
-          <span className="text-[#9C9C9C] font-medium tracking-wider uppercase text-[13px]">
+          <span className="text-white font-medium tracking-wider uppercase text-[13px]">
             Get in Touch
           </span>
           <h2 className="text-[28px] md:text-[32px] font-bold mt-3 tracking-[-0.02em] text-white">
@@ -207,7 +207,7 @@ export default function Contact() {
             transition={{ delay: 0.15, duration: 0.6 }}
             className="lg:col-span-5 space-y-10"
           >
-            <p className="text-[14px] leading-[1.7] text-[#6B6B6B] max-w-sm">
+            <p className="text-[14px] leading-[1.7] text-white max-w-sm">
               I&rsquo;m always open to discussing new projects, creative ideas, or
               opportunities to be part of your vision. Drop a message and I&rsquo;ll
               get back to you as soon as I can.
@@ -228,7 +228,7 @@ export default function Contact() {
                   <span
                     className="shrink-0 flex items-center justify-center w-10 h-10 rounded-full
                       bg-white/5
-                      text-[#9C9C9C]
+                      text-white
                       group-hover:bg-white/10
                       transition-colors duration-200"
                   >
@@ -236,12 +236,12 @@ export default function Contact() {
                   </span>
 
                   <div className="min-w-0">
-                    <p className="text-[11px] text-[#6B6B6B] uppercase tracking-widest font-medium">
+                    <p className="text-[11px] text-white uppercase tracking-widest font-medium">
                       {info.label}
                     </p>
                     <p
                       className="text-[13px] font-medium text-white truncate
-                        group-hover:text-[#9C9C9C]
+                        group-hover:text-white
                         transition-colors duration-200"
                     >
                       {info.value}
@@ -256,7 +256,7 @@ export default function Contact() {
               animate={isInView ? { opacity: 1 } : {}}
               transition={{ delay: 0.5, duration: 0.4 }}
             >
-              <p className="text-[11px] text-[#6B6B6B] uppercase tracking-widest font-medium mb-3">
+              <p className="text-[11px] text-white uppercase tracking-widest font-medium mb-3">
                 Social
               </p>
               <div className="flex gap-2">
@@ -273,7 +273,7 @@ export default function Contact() {
                     whileTap={{ scale: 0.9 }}
                     className="flex items-center justify-center w-9 h-9 rounded-full
                       bg-white/5
-                      text-[#6B6B6B]
+                      text-white
                       hover:bg-white/10 hover:text-white
                       transition-all duration-200"
                     aria-label={social.label}

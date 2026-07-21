@@ -26,7 +26,7 @@ export default function Footer() {
               height={40}
               className="h-8 w-auto object-contain"
             />
-            <p className="text-[13px] text-[#6B6B6B] mt-2">
+            <p className="text-[13px] text-white mt-2">
               Full Stack Developer
             </p>
           </motion.div>
@@ -41,7 +41,7 @@ export default function Footer() {
               href="https://github.com/jobelGolde12"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[#6B6B6B] hover:text-white transition-colors"
+              className="text-white hover:text-white transition-colors"
             >
               <GithubIcon className="w-5 h-5" />
             </a>
@@ -51,7 +51,7 @@ export default function Footer() {
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.2, duration: 0.5 }}
-            className="text-[13px] text-[#6B6B6B]"
+            className="text-[13px] text-white"
           >
             &copy; {new Date().getFullYear()} Jobel V. Golde. All rights reserved.
           </motion.p>

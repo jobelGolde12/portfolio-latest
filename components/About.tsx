@@ -48,7 +48,7 @@ export default function About() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <span className="text-[#9C9C9C] font-medium tracking-wider uppercase text-[13px]">Get to know me</span>
+          <span className="text-white font-medium tracking-wider uppercase text-[13px]">Get to know me</span>
           <h2 className="text-[28px] md:text-[32px] font-bold mt-2 text-white tracking-[-0.02em]">
             About Me
           </h2>
@@ -79,7 +79,7 @@ export default function About() {
                 transition={{ delay: 0.8, type: 'spring' }}
               >
                 <p className="text-2xl sm:text-3xl font-bold text-[#1F1F1F]">4+</p>
-                <p className="text-[13px] text-[#6B6B6B]">Years Learning</p>
+                <p className="text-[13px] text-[#1F1F1F]">Years Learning</p>
               </motion.div>
             </div>
           </motion.div>
@@ -90,23 +90,23 @@ export default function About() {
             animate={isInView ? 'visible' : 'hidden'}
             className="space-y-6"
           >
-            <motion.p variants={itemVariants} className="text-[16px] text-[#9C9C9C] leading-[1.7]">
+            <motion.p variants={itemVariants} className="text-[16px] text-white leading-[1.7]">
               {aboutContent.summary}
             </motion.p>
 
             <motion.div variants={itemVariants} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="bg-dark rounded-[16px] p-5 shadow-[0_1px_3px_rgba(0,0,0,0.04)]">
-                <p className="text-[13px] text-[#9C9C9C] mb-1">Education</p>
+                <p className="text-[13px] text-white mb-1">Education</p>
                 <p className="font-semibold text-white text-[14px]">{aboutContent.education.degree}</p>
               </div>
               <div className="bg-dark rounded-[16px] p-5 shadow-[0_1px_3px_rgba(0,0,0,0.04)]">
-                <p className="text-[13px] text-[#9C9C9C] mb-1">University</p>
+                <p className="text-[13px] text-white mb-1">University</p>
                 <p className="font-semibold text-white text-[14px]">Sorsogon State University</p>
               </div>
             </motion.div>
 
             <motion.div variants={itemVariants}>
-              <p className="text-[13px] text-[#9C9C9C] mb-3">Languages</p>
+              <p className="text-[13px] text-white mb-3">Languages</p>
               <div className="flex flex-wrap gap-2">
                 {aboutContent.languages.map((lang, i) => (
                   <motion.span
@@ -114,7 +114,7 @@ export default function About() {
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={isInView ? { opacity: 1, scale: 1 } : {}}
                     transition={{ delay: 0.5 + i * 0.1 }}
-                    className="px-4 py-2 bg-white/10 border border-white/10 rounded-full text-[13px] font-medium text-[#9C9C9C]"
+                    className="px-4 py-2 bg-white/10 border border-white/10 rounded-full text-[13px] font-medium text-white"
                   >
                     {lang}
                   </motion.span>
@@ -123,7 +123,7 @@ export default function About() {
             </motion.div>
 
             <motion.div variants={itemVariants}>
-              <p className="text-[13px] text-[#9C9C9C] mb-3">Interests</p>
+              <p className="text-[13px] text-white mb-3">Interests</p>
               <div className="flex flex-wrap gap-2">
                 {aboutContent.interests.map((interest, i) => (
                   <motion.span
@@ -132,7 +132,7 @@ export default function About() {
                     animate={isInView ? { opacity: 1, y: 0 } : {}}
                     transition={{ delay: 0.6 + i * 0.1 }}
                     whileHover={{ scale: 1.05, y: -2 }}
-                    className="px-4 py-2 bg-white/5 rounded-full text-[13px] font-medium text-[#6B6B6B] cursor-default"
+                    className="px-4 py-2 bg-white/5 rounded-full text-[13px] font-medium text-white cursor-default"
                   >
                     {interest}
                   </motion.span>

@@ -2,15 +2,15 @@
 
 :root {
   --background: #1E1B20;
-  --foreground: #1F1F1F;
+  --foreground: #ffffff;
   --surface-primary: #F8F8F7;
   --surface-secondary: #FFFFFF;
-  --text-primary: #1F1F1F;
-  --text-secondary: #6B6B6B;
-  --text-muted: #9C9C9C;
+  --text-primary: #ffffff;
+  --text-secondary: #ffffff;
+  --text-muted: #ffffff;
   --border: #E9E9E9;
   --hover-surface: #F2F2F2;
-  --accent: #1F1F1F;
+  --accent: #ffffff;
   --font-sans: var(--font-manrope);
 }
 
@@ -40,8 +40,8 @@ body {
 }
 
 ::selection {
-  background-color: rgba(31, 31, 31, 0.15);
-  color: var(--text-primary);
+  background-color: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
 }
 
 @keyframes fadeInUp {

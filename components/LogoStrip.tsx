@@ -25,7 +25,7 @@ export default function LogoStrip() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.2 }}
-          className="text-center text-[13px] text-[#6B6B6B] mb-8 font-medium uppercase tracking-wider"
+          className="text-center text-[13px] text-white mb-8 font-medium uppercase tracking-wider"
         >
           Technologies I Work With
         </motion.p>
@@ -42,7 +42,7 @@ export default function LogoStrip() {
                 y: -5,
                 transition: { type: 'spring', stiffness: 400, damping: 10 }
               }}
-              className="flex flex-col items-center gap-2 text-[#6B6B6B] cursor-pointer group"
+              className="flex flex-col items-center gap-2 text-white cursor-pointer group"
             >
               <span className="text-3xl md:text-4xl grayscale group-hover:grayscale-0 transition-all duration-500 transform group-hover:rotate-6">
                 {logo.icon}

@@ -148,7 +148,7 @@ const Skiper31 = () => {
                   className="block"
                   style={{ x, rotate, y, scale, transformOrigin: "center" }}
                 >
-                  <Icon className="h-16 w-16 text-white/30 hover:text-white transition-colors" />
+                  <Icon className="h-16 w-16 text-white hover:text-white transition-colors" />
                 </motion.a>
               );
             })}
