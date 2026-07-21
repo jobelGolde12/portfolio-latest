@@ -70,7 +70,7 @@ function Field({
     'text-white ' +
     'focus:outline-none transition-colors duration-200 ' +
     'focus:border-white/40 ' +
-    'placeholder-transparent ' +
+    'placeholder:text-white ' +
     (isTextarea ? 'resize-none min-h-[100px] pt-6' : 'pt-6 pb-2');
 
   return (

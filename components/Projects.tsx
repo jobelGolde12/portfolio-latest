@@ -63,7 +63,7 @@ function ProjectCard({
         target="_blank"
         rel="noopener noreferrer"
         className="block rounded-[16px] px-5 py-6 sm:px-7 sm:py-8
-          bg-white
+          bg-dark
           transition-[transform,box-shadow] duration-300 ease-out
           hover:-translate-y-0.5
           hover:shadow-[0_8px_32px_rgba(0,0,0,0.06)]
@@ -140,11 +140,11 @@ function ProjectCard({
               >
                 {project.title}
               </h3>
-              <span
+             <span
                 className="mt-1 shrink-0 flex h-8 w-8 items-center justify-center rounded-full
-                  bg-[#F2F2F2] text-[#9C9C9C]
+                  bg-[#1F1F1F] text-white
                   transition-all duration-300
-                  group-hover:bg-[#1F1F1F] group-hover:text-white
+                  group-hover:bg-white group-hover:text-[#1F1F1F]
                   group-hover:rotate-12"
                 aria-hidden
               >
