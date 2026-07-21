@@ -19,7 +19,7 @@ const projects = [
   {
     title: 'Lost and Found System',
     description:
-      'A community platform for reporting and recovering lost items—real-time status updates, searchable categories, and a flow built for local use.',
+      'A community platform for reporting and recovering lost items — real-time status updates, searchable categories, and a flow built for local use.',
     tech: ['Laravel', 'Vue.js', 'Bootstrap', 'Inertia'],
     github: 'https://github.com/jobelGolde12/bulan_lost_and_found3.git',
     category: 'Capstone',
@@ -62,20 +62,20 @@ function ProjectCard({
         href={project.live || project.github}
         target="_blank"
         rel="noopener noreferrer"
-        className="block rounded-2xl px-5 py-6 sm:px-7 sm:py-8
-          bg-zinc-50/80 dark:bg-zinc-900/40
-          transition-[background-color,transform,box-shadow] duration-300 ease-out
-          hover:bg-zinc-100/90 dark:hover:bg-zinc-900/70
+        className="block rounded-[16px] px-5 py-6 sm:px-7 sm:py-8
+          bg-white
+          transition-[transform,box-shadow] duration-300 ease-out
           hover:-translate-y-0.5
-          focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/60 focus-visible:ring-offset-2
-          focus-visible:ring-offset-white dark:focus-visible:ring-offset-zinc-950"
+          hover:shadow-[0_8px_32px_rgba(0,0,0,0.06)]
+          focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1F1F1F]/20 focus-visible:ring-offset-2
+          focus-visible:ring-offset-[#1E1B20]"
       >
         <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:gap-8 lg:gap-10">
           {/* Index */}
           <span
-            className="shrink-0 font-mono text-sm tracking-widest text-zinc-300 dark:text-zinc-600
+            className="shrink-0 font-mono text-[12px] tracking-widest text-[#E9E9E9]
               sm:pt-1 sm:w-10 transition-colors duration-300
-              group-hover:text-emerald-500/80"
+              group-hover:text-[#9C9C9C]"
             aria-hidden
           >
             {number}
@@ -84,7 +84,7 @@ function ProjectCard({
           {/* Body */}
           <div className="min-w-0 flex-1">
             <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-3">
-              <span className="text-[11px] font-medium uppercase tracking-[0.16em] text-emerald-600 dark:text-emerald-400">
+              <span className="text-[11px] font-medium uppercase tracking-[0.16em] text-[#6B6B6B]">
                 {project.category}
               </span>
               {project.live && (
@@ -101,8 +101,8 @@ function ProjectCard({
                   }}
                   role="link"
                   tabIndex={0}
-                  className="cursor-pointer text-[11px] font-medium uppercase tracking-[0.16em] text-blue-600 dark:text-blue-400
-                    hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/60 rounded-sm"
+                  className="cursor-pointer text-[11px] font-medium uppercase tracking-[0.16em] text-[#6B6B6B]
+                    hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1F1F1F]/20 rounded-sm"
                 >
                   Live
                 </span>
@@ -120,51 +120,51 @@ function ProjectCard({
                 }}
                 role="link"
                 tabIndex={0}
-                className="cursor-pointer text-[11px] font-medium uppercase tracking-[0.16em] text-zinc-400 dark:text-zinc-500
-                  hover:text-zinc-700 dark:hover:text-zinc-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/60 rounded-sm"
+                className="cursor-pointer text-[11px] font-medium uppercase tracking-[0.16em] text-[#9C9C9C]
+                  hover:text-[#6B6B6B] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1F1F1F]/20 rounded-sm"
               >
                 Source
               </span>
-              <span className="hidden sm:inline text-zinc-300 dark:text-zinc-700" aria-hidden>
+              <span className="hidden sm:inline text-[#E9E9E9]" aria-hidden>
                 ·
               </span>
-              <time className="text-xs text-zinc-400 dark:text-zinc-500 tabular-nums">
+              <time className="text-[12px] text-[#9C9C9C] tabular-nums">
                 {project.year}
               </time>
             </div>
 
             <div className="flex items-start justify-between gap-4">
               <h3
-                className="text-xl sm:text-2xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50
-                  transition-colors duration-300 group-hover:text-emerald-700 dark:group-hover:text-emerald-300"
+                className="text-[18px] sm:text-[20px] font-semibold tracking-[-0.02em] text-white
+                  transition-colors duration-300"
               >
                 {project.title}
               </h3>
               <span
-                className="mt-1 shrink-0 flex h-9 w-9 items-center justify-center rounded-full
-                  bg-zinc-200/60 dark:bg-zinc-800/80 text-zinc-500 dark:text-zinc-400
+                className="mt-1 shrink-0 flex h-8 w-8 items-center justify-center rounded-full
+                  bg-[#F2F2F2] text-[#9C9C9C]
                   transition-all duration-300
-                  group-hover:bg-emerald-500 group-hover:text-white
+                  group-hover:bg-[#1F1F1F] group-hover:text-white
                   group-hover:rotate-12"
                 aria-hidden
               >
-                <ArrowUpRight className="h-4 w-4" strokeWidth={2} />
+                <ArrowUpRight className="h-3.5 w-3.5" strokeWidth={2} />
               </span>
             </div>
 
-            <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-zinc-600 dark:text-zinc-400">
+            <p className="mt-3 max-w-2xl text-[14px] leading-[1.7] text-[#6B6B6B]">
               {project.description}
             </p>
 
             <ul className="mt-5 flex flex-wrap gap-x-1 gap-y-2" aria-label="Technologies used">
               {project.tech.map((tech, i) => (
-                <li key={tech} className="flex items-center text-sm text-zinc-500 dark:text-zinc-500">
+                <li key={tech} className="flex items-center text-[13px] text-[#9C9C9C]">
                   {i > 0 && (
-                    <span className="mx-2 text-zinc-300 dark:text-zinc-700 select-none" aria-hidden>
+                    <span className="mx-2 text-[#E9E9E9] select-none" aria-hidden>
                       /
                     </span>
                   )}
-                  <span className="transition-colors duration-200 group-hover:text-zinc-700 dark:group-hover:text-zinc-300">
+                  <span className="transition-colors duration-200 group-hover:text-[#6B6B6B]">
                     {tech}
                   </span>
                 </li>
@@ -184,8 +184,7 @@ export default function Projects() {
 
   return (
     <section id="projects" className="py-24 md:py-32 px-4" ref={ref}>
-      <div className="max-w-6xl mx-auto">
-        {/* Header — matches About / Skills rhythm */}
+      <div className="max-w-[1200px] mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -194,22 +193,21 @@ export default function Projects() {
         >
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6">
             <div>
-              <span className="text-emerald-500 font-medium tracking-wider uppercase text-sm">
+              <span className="text-[#9C9C9C] font-medium tracking-wider uppercase text-[13px]">
                 Selected work
               </span>
-              <h2 className="text-4xl md:text-5xl font-bold mt-2 tracking-tight text-zinc-900 dark:text-white">
+              <h2 className="text-[28px] md:text-[32px] font-bold mt-2 tracking-[-0.02em] text-white">
                 Projects
               </h2>
             </div>
 
-            <p className="max-w-sm text-sm leading-relaxed text-zinc-500 dark:text-zinc-400 sm:text-right">
-              Academic and personal systems I&apos;ve built end to end—from
+            <p className="max-w-sm text-[14px] leading-[1.7] text-[#6B6B6B] sm:text-right">
+              Academic and personal systems I&apos;ve built end to end — from
               idea to working code.
             </p>
           </div>
         </motion.div>
 
-        {/* Project list */}
         <div className="flex flex-col gap-3 sm:gap-4">
           {projects.map((project, index) => (
             <ProjectCard
@@ -221,7 +219,6 @@ export default function Projects() {
           ))}
         </div>
 
-        {/* Quiet footer link */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
@@ -232,9 +229,9 @@ export default function Projects() {
             href="https://github.com/jobelGolde12"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2.5 text-sm font-medium text-zinc-500 dark:text-zinc-400
-              hover:text-zinc-900 dark:hover:text-white transition-colors duration-200
-              focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/50 rounded-sm"
+            className="inline-flex items-center gap-2.5 text-[13px] font-medium text-[#6B6B6B]
+              hover:text-white transition-colors duration-200
+              focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1F1F1F]/50 rounded-sm"
           >
             <GithubIcon className="h-4 w-4" />
             <span>More on GitHub</span>

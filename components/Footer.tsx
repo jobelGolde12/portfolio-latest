@@ -10,8 +10,8 @@ export default function Footer() {
   const isInView = useInView(ref, { once: true });
 
   return (
-    <footer ref={ref} className="py-12 px-4">
-      <div className="max-w-6xl mx-auto">
+    <footer ref={ref} className="py-12 px-4 border-t border-white/5">
+      <div className="max-w-[1200px] mx-auto">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -24,10 +24,10 @@ export default function Footer() {
               alt="Jobel"
               width={120}
               height={40}
-              className="h-10 w-auto object-contain"
+              className="h-8 w-auto object-contain"
             />
-            <p className="text-sm text-zinc-500 mt-2">
-             Full Stack Developer
+            <p className="text-[13px] text-[#6B6B6B] mt-2">
+              Full Stack Developer
             </p>
           </motion.div>
 
@@ -41,7 +41,7 @@ export default function Footer() {
               href="https://github.com/jobelGolde12"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-zinc-500 hover:text-zinc-900 dark:hover:text-white transition-colors"
+              className="text-[#6B6B6B] hover:text-white transition-colors"
             >
               <GithubIcon className="w-5 h-5" />
             </a>
@@ -51,9 +51,9 @@ export default function Footer() {
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.2, duration: 0.5 }}
-            className="text-sm text-zinc-500"
+            className="text-[13px] text-[#6B6B6B]"
           >
-            © {new Date().getFullYear()} Jobel V. Golde. All rights reserved.
+            &copy; {new Date().getFullYear()} Jobel V. Golde. All rights reserved.
           </motion.p>
         </div>
       </div>

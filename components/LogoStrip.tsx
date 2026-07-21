@@ -18,14 +18,14 @@ export default function LogoStrip() {
         whileInView={{ opacity: 1 }}
         viewport={{ once: true, margin: '-100px' }}
         transition={{ duration: 0.8 }}
-        className="max-w-6xl mx-auto px-4"
+        className="max-w-[1200px] mx-auto px-4"
       >
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.2 }}
-          className="text-center text-sm text-zinc-500 dark:text-zinc-600 mb-8 font-medium uppercase tracking-wider"
+          className="text-center text-[13px] text-[#6B6B6B] mb-8 font-medium uppercase tracking-wider"
         >
           Technologies I Work With
         </motion.p>
@@ -37,17 +37,17 @@ export default function LogoStrip() {
               whileInView={{ opacity: 1, y: 0, scale: 1 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1, type: 'spring', stiffness: 100 }}
-              whileHover={{ 
-                scale: 1.15, 
+              whileHover={{
+                scale: 1.15,
                 y: -5,
                 transition: { type: 'spring', stiffness: 400, damping: 10 }
               }}
-              className="flex flex-col items-center gap-2 text-zinc-400 dark:text-zinc-600 cursor-pointer group"
+              className="flex flex-col items-center gap-2 text-[#6B6B6B] cursor-pointer group"
             >
               <span className="text-3xl md:text-4xl grayscale group-hover:grayscale-0 transition-all duration-500 transform group-hover:rotate-6">
                 {logo.icon}
               </span>
-              <span className="text-xs md:text-sm font-medium group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+              <span className="text-[12px] md:text-[13px] font-medium group-hover:text-white transition-colors">
                 {logo.name}
               </span>
             </motion.div>

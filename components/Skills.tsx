@@ -47,8 +47,7 @@ export default function Skills() {
   return (
     <>
       <section id="skills" className="py-24 md:py-32 px-4" ref={ref}>
-      <div className="max-w-6xl mx-auto">
-        {/* Header — same rhythm as Projects */}
+      <div className="max-w-[1200px] mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -57,21 +56,20 @@ export default function Skills() {
         >
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6">
             <div>
-              <span className="text-emerald-500 font-medium tracking-wider uppercase text-sm">
+              <span className="text-[#9C9C9C] font-medium tracking-wider uppercase text-[13px]">
                 Capabilities
               </span>
-              <h2 className="text-4xl md:text-5xl font-bold mt-2 tracking-tight text-zinc-900 dark:text-white">
+              <h2 className="text-[28px] md:text-[32px] font-bold mt-2 tracking-[-0.02em] text-white">
                 Skills
               </h2>
             </div>
-            <p className="max-w-sm text-sm leading-relaxed text-zinc-500 dark:text-zinc-400 sm:text-right">
-              Stack I use day to day—focused on full-stack web, with a foundation
+            <p className="max-w-sm text-[14px] leading-[1.7] text-[#6B6B6B] sm:text-right">
+              Stack I use day to day — focused on full-stack web, with a foundation
               in systems and networking.
             </p>
           </div>
         </motion.div>
 
-        {/* Groups */}
         <div className="flex flex-col">
           {skillGroups.map((group, index) => {
             const number = String(index + 1).padStart(2, '0');
@@ -87,18 +85,18 @@ export default function Skills() {
                   ease: [0.25, 0.1, 0.25, 1],
                 }}
                 className="group py-7 sm:py-8 first:pt-0 last:pb-0
-                  border-b border-zinc-100 dark:border-zinc-800/80 last:border-b-0"
+                  border-b border-white/5 last:border-b-0"
               >
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:gap-10 lg:gap-14">
                   <div className="flex items-baseline gap-3 sm:w-40 lg:w-48 shrink-0">
                     <span
-                      className="font-mono text-xs tracking-widest text-zinc-300 dark:text-zinc-600
-                        transition-colors duration-200 group-hover:text-emerald-500/70"
+                      className="font-mono text-[12px] tracking-widest text-[#6B6B6B]/40
+                        transition-colors duration-200 group-hover:text-[#6B6B6B]/70"
                       aria-hidden
                     >
                       {number}
                     </span>
-                    <h3 className="text-sm font-medium text-zinc-900 dark:text-zinc-100 tracking-tight">
+                    <h3 className="text-[14px] font-medium text-white tracking-tight">
                       {group.title}
                     </h3>
                   </div>
@@ -110,11 +108,11 @@ export default function Skills() {
                     {group.skills.map((skill) => (
                       <li key={skill}>
                         <span
-                          className="inline-block px-3 py-1.5 text-sm text-zinc-600 dark:text-zinc-400
-                            bg-zinc-100/80 dark:bg-zinc-900/60 rounded-md
-                            transition-colors duration-150
-                            hover:text-zinc-900 dark:hover:text-zinc-100
-                            hover:bg-zinc-200/70 dark:hover:bg-zinc-800/80"
+                          className="inline-block px-3 py-1.5 text-[13px] text-[#9C9C9C]
+                            bg-white/5 rounded-lg
+                            transition-colors duration-200
+                            hover:text-white
+                            hover:bg-white/10"
                         >
                           {skill}
                         </span>

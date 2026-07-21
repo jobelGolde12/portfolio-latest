@@ -72,12 +72,12 @@ export default function CustomCursor() {
         }}
         transition={{ duration: 0.15 }}
       >
-        <div className="w-10 h-10 border-2 border-emerald-500 rounded-full -translate-x-1/2 -translate-y-1/2" />
-        <div className="absolute top-1/2 left-1/2 w-2 h-2 bg-emerald-500 rounded-full -translate-x-1/2 -translate-y-1/2" />
+        <div className="w-10 h-10 border-[1.5px] border-white/40 rounded-full -translate-x-1/2 -translate-y-1/2" />
+        <div className="absolute top-1/2 left-1/2 w-1.5 h-1.5 bg-white rounded-full -translate-x-1/2 -translate-y-1/2" />
       </motion.div>
-      
+
       <motion.div
-        className="absolute top-0 left-0 w-32 h-32 rounded-full bg-emerald-500/10 -translate-x-1/2 -translate-y-1/2"
+        className="absolute top-0 left-0 w-32 h-32 rounded-full bg-white/5 -translate-x-1/2 -translate-y-1/2"
         animate={{
           scale: isHovering ? 1 : 0,
           opacity: isHovering ? 1 : 0,

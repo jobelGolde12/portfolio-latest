@@ -27,7 +27,7 @@ const CharacterV1 = ({
 
   return (
     <motion.span
-      className={cn("inline-block text-black dark:text-white", isSpace && "w-4")}
+      className={cn("inline-block text-white", isSpace && "w-4")}
       style={{ x, rotateX }}
     >
       {char}
@@ -100,21 +100,19 @@ const Skiper31 = () => {
 
   return (
     <ReactLenis root>
-      <div className="w-full bg-zinc-50 dark:bg-zinc-900/50">
-        {/* Scroll hint */}
-        <div className="top-22 absolute left-1/2 z-10 grid -translate-x-1/2 content-start justify-items-center gap-6 text-center text-zinc-800 dark:text-zinc-200">
-          <span className="relative max-w-[12ch] text-xs uppercase leading-tight opacity-40 after:absolute after:left-1/2 after:top-full after:h-16 after:w-px after:bg-gradient-to-b after:from-zinc-300 after:to-zinc-800 dark:after:from-zinc-600 dark:after:to-zinc-200 after:content-['']">
+      <div className="w-full">
+        <div className="top-22 absolute left-1/2 z-10 grid -translate-x-1/2 content-start justify-items-center gap-6 text-center text-white">
+          <span className="relative max-w-[12ch] text-[11px] uppercase leading-tight opacity-30 after:absolute after:left-1/2 after:top-full after:h-16 after:w-px after:bg-gradient-to-b after:from-white/20 after:to-transparent after:content-['']">
             Scroll to see more
           </span>
         </div>
 
-        {/* Block 1 - Text animation */}
         <div
           ref={targetRef}
-          className="relative box-border flex h-[210vh] items-center justify-center gap-[2vw] overflow-hidden bg-zinc-50 dark:bg-zinc-900/50 p-[2vw]"
+          className="relative box-border flex h-[210vh] items-center justify-center gap-[2vw] overflow-hidden p-[2vw]"
         >
           <div
-            className="w-full max-w-4xl text-center text-6xl font-bold uppercase tracking-tighter text-zinc-900 dark:text-zinc-100"
+            className="w-full max-w-4xl text-center text-6xl font-bold uppercase tracking-tighter text-white"
             style={{ perspective: "500px" }}
           >
             {characters.map((char, index) => (
@@ -129,10 +127,9 @@ const Skiper31 = () => {
           </div>
         </div>
 
-        {/* Block 3 - Social icons with rotation */}
         <div
           ref={targetRef3}
-          className="relative -mt-[95vh] box-border flex h-[210vh] flex-col items-center justify-center gap-[2vw] overflow-hidden bg-zinc-50 dark:bg-zinc-900/50 p-[2vw]"
+          className="relative -mt-[95vh] box-border flex h-[210vh] flex-col items-center justify-center gap-[2vw] overflow-hidden p-[2vw]"
         >
           <div className="flex flex-wrap items-center justify-center gap-12" style={{ perspective: "500px" }}>
             {socialIcons.map((item, index) => {
@@ -151,7 +148,7 @@ const Skiper31 = () => {
                   className="block"
                   style={{ x, rotate, y, scale, transformOrigin: "center" }}
                 >
-                  <Icon className="h-16 w-16 text-zinc-700 dark:text-zinc-300 hover:text-emerald-500 dark:hover:text-emerald-400 transition-colors" />
+                  <Icon className="h-16 w-16 text-white/30 hover:text-white transition-colors" />
                 </motion.a>
               );
             })}

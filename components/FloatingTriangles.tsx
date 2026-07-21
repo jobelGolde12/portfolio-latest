@@ -3,15 +3,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 
-const colors = [
-  'from-emerald-400 to-teal-500',
-  'from-teal-400 to-emerald-500',
-  'from-violet-400 to-purple-500',
-  'from-rose-400 to-pink-500',
-  'from-amber-400 to-orange-500',
-  'from-lime-400 to-green-500',
-];
-
 interface Triangle {
   id: number;
   x: number;
@@ -58,7 +49,7 @@ export default function FloatingTriangles() {
       {triangles.map((triangle) => (
         <motion.div
           key={triangle.id}
-          className="absolute opacity-[0.06] dark:opacity-[0.08]"
+          className="absolute opacity-[0.03]"
           style={{
             left: `${triangle.x}%`,
             top: `${triangle.y}%`,
@@ -70,8 +61,8 @@ export default function FloatingTriangles() {
             borderBottomColor: 'currentColor',
             filter: 'blur(1px)',
           }}
-          initial={{ 
-            y: 0, 
+          initial={{
+            y: 0,
             rotate: triangle.rotate,
             scale: 0.5,
             opacity: 0,
@@ -81,7 +72,7 @@ export default function FloatingTriangles() {
             x: [0, 15, 0, -15, 0],
             rotate: [triangle.rotate, triangle.rotate + 180],
             scale: [0.5, 1, 0.8, 1, 0.5],
-            opacity: [0, 0.15, 0.1, 0.15, 0],
+            opacity: [0, 0.06, 0.04, 0.06, 0],
           }}
           transition={{
             duration: triangle.duration,
@@ -90,7 +81,7 @@ export default function FloatingTriangles() {
             ease: 'easeInOut',
           }}
         >
-          <div className={`absolute inset-0 bg-gradient-to-b ${colors[triangle.id % colors.length]} blur-sm`} />
+          <div className="absolute inset-0 bg-white blur-sm" />
         </motion.div>
       ))}
     </div>
