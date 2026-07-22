@@ -62,12 +62,12 @@ function ProjectCard({
         href={project.live || project.github}
         target="_blank"
         rel="noopener noreferrer"
-        className="block rounded-[16px] px-5 py-6 sm:px-7 sm:py-8
-          bg-dark
+        className="block rounded-[16px] px-6 py-6 sm:px-8 sm:py-8
+          bg-white/5
           transition-[transform,box-shadow] duration-300 ease-out
           hover:-translate-y-0.5
           hover:shadow-[0_8px_32px_rgba(0,0,0,0.06)]
-          focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1F1F1F]/20 focus-visible:ring-offset-2
+          focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/20 focus-visible:ring-offset-2
           focus-visible:ring-offset-[#1E1B20]"
       >
         <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:gap-8 lg:gap-10">
@@ -156,15 +156,15 @@ function ProjectCard({
               {project.description}
             </p>
 
-            <ul className="mt-5 flex flex-wrap gap-x-1 gap-y-2" aria-label="Technologies used">
+            <ul className="mt-5 flex flex-wrap gap-x-1 gap-y-2 items-center" aria-label="Technologies used">
               {project.tech.map((tech, i) => (
-                <li key={tech} className="flex items-center text-[13px] text-white">
+                <li key={tech} className="flex items-center text-[13px] text-white/70">
                   {i > 0 && (
-                    <span className="mx-2 text-white select-none" aria-hidden>
-                      /
+                    <span className="mx-2 text-white/30 select-none" aria-hidden>
+                      &middot;
                     </span>
                   )}
-                  <span className="transition-colors duration-200 group-hover:text-white/70">
+                  <span className="transition-colors duration-200 group-hover:text-white">
                     {tech}
                   </span>
                 </li>

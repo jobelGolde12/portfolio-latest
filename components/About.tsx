@@ -95,12 +95,12 @@ export default function About() {
             </motion.p>
 
             <motion.div variants={itemVariants} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="bg-dark rounded-[16px] p-5 shadow-[0_1px_3px_rgba(0,0,0,0.04)]">
-                <p className="text-[13px] text-white mb-1">Education</p>
-                <p className="font-semibold text-white text-[14px]">{aboutContent.education.degree}</p>
+              <div className="rounded-[16px] p-6 bg-white/5">
+                <p className="text-[13px] text-white/60 mb-1.5">Education</p>
+                <p className="font-semibold text-white text-[14px] leading-snug">{aboutContent.education.degree}</p>
               </div>
-              <div className="bg-dark rounded-[16px] p-5 shadow-[0_1px_3px_rgba(0,0,0,0.04)]">
-                <p className="text-[13px] text-white mb-1">University</p>
+              <div className="rounded-[16px] p-6 bg-white/5">
+                <p className="text-[13px] text-white/60 mb-1.5">University</p>
                 <p className="font-semibold text-white text-[14px]">Sorsogon State University</p>
               </div>
             </motion.div>
