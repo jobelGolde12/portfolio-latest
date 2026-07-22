@@ -55,7 +55,7 @@ export default function Navbar() {
         className={`flex items-center justify-between w-full max-w-[1280px] transition-all duration-500 rounded-[28px] px-3 py-2 ${
           scrolled
             ? 'bg-white/95 backdrop-blur-xl shadow-[0_2px_24px_rgba(0,0,0,0.08)]'
-            : 'bg-white/80 backdrop-blur-md'
+            : 'bg-transparent'
         }`}
       >
         <motion.a
@@ -83,7 +83,11 @@ export default function Navbar() {
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.06 }}
-              className="relative px-4 py-2 text-[13px] font-medium text-white hover:text-white hover:bg-white/10 rounded-full transition-all duration-200"
+              className={`relative px-4 py-2 text-[13px] font-medium rounded-full transition-all duration-200 ${
+                scrolled
+                  ? 'text-gray-900 hover:text-gray-900 hover:bg-gray-100'
+                  : 'text-white hover:text-white hover:bg-white/10'
+              }`}
             >
               {link.name}
             </motion.a>
@@ -102,7 +106,11 @@ export default function Navbar() {
             rel="noopener noreferrer"
             whileHover={{ y: -1 }}
             whileTap={{ scale: 0.97 }}
-            className="flex items-center gap-2 px-4 py-2 text-[13px] font-medium text-white hover:bg-white/10 rounded-full transition-colors duration-200"
+            className={`flex items-center gap-2 px-4 py-2 text-[13px] font-medium rounded-full transition-colors duration-200 ${
+              scrolled
+                ? 'text-gray-900 hover:bg-gray-100'
+                : 'text-white hover:bg-white/10'
+            }`}
           >
             <GithubIcon className="w-4 h-4" />
             GitHub
@@ -111,7 +119,11 @@ export default function Navbar() {
             href="#contact"
             whileHover={{ y: -1 }}
             whileTap={{ scale: 0.97 }}
-            className="flex items-center gap-2 px-5 py-2 bg-white text-[#1F1F1F] text-[13px] font-medium rounded-full hover:bg-white/90 transition-colors duration-200"
+            className={`flex items-center gap-2 px-5 py-2 text-[13px] font-medium rounded-full transition-colors duration-200 ${
+              scrolled
+                ? 'bg-gray-900 text-white hover:bg-gray-800'
+                : 'bg-white/10 text-white hover:bg-white/20'
+            }`}
           >
             <Mail className="w-4 h-4" />
             Hire Me
@@ -120,7 +132,11 @@ export default function Navbar() {
 
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="md:hidden p-2 text-white hover:bg-white/10 rounded-full transition-colors"
+          className={`md:hidden p-2 rounded-full transition-colors ${
+            scrolled
+              ? 'text-gray-900 hover:bg-gray-100'
+              : 'text-white hover:bg-white/10'
+          }`}
         >
           {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
         </button>
@@ -133,7 +149,11 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -8, scale: 0.98 }}
             transition={{ duration: 0.2, ease: 'easeOut' }}
-            className="absolute top-[72px] left-4 right-4 bg-white rounded-[20px] shadow-[0_8px_32px_rgba(0,0,0,0.12)] overflow-hidden md:hidden"
+            className={`absolute top-[72px] left-4 right-4 rounded-[20px] shadow-[0_8px_32px_rgba(0,0,0,0.12)] overflow-hidden md:hidden transition-colors duration-500 ${
+              scrolled
+                ? 'bg-white/95 backdrop-blur-xl'
+                : 'bg-[#1E1B20]/95 backdrop-blur-xl'
+            }`}
           >
             <div className="px-4 py-4 space-y-1">
               {navLinks.map((link) => (
@@ -141,7 +161,11 @@ export default function Navbar() {
                   key={link.name}
                   href={link.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="block px-4 py-3 text-[14px] font-medium text-white hover:text-white hover:bg-white/10 rounded-xl transition-colors"
+                  className={`block px-4 py-3 text-[14px] font-medium rounded-xl transition-colors ${
+                    scrolled
+                      ? 'text-gray-900 hover:text-gray-900 hover:bg-gray-100'
+                      : 'text-white hover:text-white hover:bg-white/10'
+                  }`}
                 >
                   {link.name}
                 </a>
@@ -151,14 +175,22 @@ export default function Navbar() {
                   href="https://github.com/jobelGolde12"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 px-5 py-2.5 bg-white/10 text-white rounded-full text-[13px] font-medium hover:bg-white/20 transition-colors"
+                  className={`flex items-center justify-center gap-2 px-5 py-2.5 rounded-full text-[13px] font-medium transition-colors ${
+                    scrolled
+                      ? 'bg-gray-100 text-gray-900 hover:bg-gray-200'
+                      : 'bg-white/10 text-white hover:bg-white/20'
+                  }`}
                 >
                   <GithubIcon className="w-4 h-4" />
                   GitHub
                 </a>
                 <a
                   href="#contact"
-                  className="flex items-center justify-center gap-2 px-5 py-2.5 bg-white text-[#1F1F1F] rounded-full text-[13px] font-medium hover:bg-white/90 transition-colors"
+                  className={`flex items-center justify-center gap-2 px-5 py-2.5 rounded-full text-[13px] font-medium transition-colors ${
+                    scrolled
+                      ? 'bg-gray-900 text-white hover:bg-gray-800'
+                      : 'bg-white/10 text-white hover:bg-white/20'
+                  }`}
                 >
                   <Mail className="w-4 h-4" />
                   Hire Me
