@@ -89,8 +89,8 @@ export default function Navbar() {
           'flex items-center justify-between w-full max-w-[1280px] transition-all duration-500 rounded-[28px] px-4 py-2',
           scrolled
             ? 'bg-white/95 backdrop-blur-xl shadow-[0_2px_24px_rgba(0,0,0,0.08)]'
-            : 'bg-transparent'
-        }`}
+            : 'bg-transparent',
+        )}
       >
         <motion.a
           href="#"
