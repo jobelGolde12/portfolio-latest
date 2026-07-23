@@ -2,15 +2,25 @@
 
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { Skiper31 } from '@/components/ui/text-scroll-animation';
+import { Pill } from '@/components/ui/pill';
 
 const skillGroups = [
   {
-    title: 'Languages',
+    id: 'core',
+    title: 'Core engineering',
+    description: 'Languages & paradigms I\'m genuinely fluent in',
     skills: ['JavaScript', 'PHP', 'Java', 'C++', 'Python'],
   },
   {
-    title: 'Web',
+    id: 'systems',
+    title: 'Systems & infrastructure',
+    description: 'Where I operate — databases, networking, data',
+    skills: ['MySQL', 'phpMyAdmin', 'LAN/WAN', 'IP Addressing', 'Wireshark'],
+  },
+  {
+    id: 'craft',
+    title: 'Craft & tooling',
+    description: 'The day-to-day tools that shape how I work',
     skills: [
       'Laravel',
       'React',
@@ -20,12 +30,6 @@ const skillGroups = [
       'HTML/CSS',
       'Tailwind',
       'Bootstrap',
-    ],
-  },
-  {
-    title: 'Data & tools',
-    skills: [
-      'MySQL',
       'Git',
       'Postman',
       'Figma',
@@ -35,99 +39,89 @@ const skillGroups = [
     ],
   },
   {
-    title: 'Networking',
-    skills: ['LAN/WAN', 'IP Addressing', 'Wireshark'],
+    id: 'exploring',
+    title: 'Currently exploring',
+    description: 'Actively learning right now',
+    skills: ['TypeScript', 'Docker', 'Cloud Platforms'],
   },
 ];
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.08 },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 16 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] as const },
+  },
+};
 
 export default function Skills() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-60px' });
 
   return (
-    <>
-      <section id="skills" className="py-24 md:py-32 px-4" ref={ref}>
-      <div className="max-w-[1200px] mx-auto">
+    <section id="skills" className="py-24 md:py-32 px-4" ref={ref}>
+      <div className="max-w-[1120px] mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.35, ease: [0.25, 0.1, 0.25, 1] }}
+          transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
           className="mb-12 md:mb-16"
         >
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6">
             <div>
-              <span className="text-white font-medium tracking-wider uppercase text-[13px]">
+              <span className="text-accent-signal font-mono text-xs tracking-wider uppercase">
                 Capabilities
               </span>
-              <h2 className="text-[28px] md:text-[32px] font-bold mt-2 tracking-[-0.02em] text-white">
+              <h2 className="text-text-primary mt-2 font-display tracking-[var(--tracking-tight)]" style={{ fontSize: 'var(--text-3xl)' }}>
                 Skills
               </h2>
             </div>
-            <p className="max-w-sm text-[14px] leading-[1.7] text-white sm:text-right">
+            <p className="max-w-sm text-sm leading-[1.7] text-text-secondary sm:text-right">
               Stack I use day to day — focused on full-stack web, with a foundation
               in systems and networking.
             </p>
           </div>
         </motion.div>
 
-        <div className="flex flex-col">
-          {skillGroups.map((group, index) => {
-            const number = String(index + 1).padStart(2, '0');
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate={isInView ? 'visible' : 'hidden'}
+          className="grid grid-cols-1 md:grid-cols-2 gap-6"
+        >
+          {skillGroups.map((group) => (
+            <motion.div
+              key={group.id}
+              variants={itemVariants}
+              className="rounded-xl border border-border-subtle bg-bg-surface p-6"
+            >
+              <div className="mb-4">
+                <h3 className="text-text-primary font-medium text-sm">
+                  {group.title}
+                </h3>
+                <p className="text-text-tertiary text-xs mt-0.5">
+                  {group.description}
+                </p>
+              </div>
 
-            return (
-              <motion.div
-                key={group.title}
-                initial={{ opacity: 0, y: 12 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{
-                  duration: 0.3,
-                  delay: 0.05 + index * 0.04,
-                  ease: [0.25, 0.1, 0.25, 1],
-                }}
-                className="group py-7 sm:py-8 first:pt-0 last:pb-0
-                  border-b border-white/5 last:border-b-0"
-              >
-                <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:gap-10 lg:gap-14">
-                  <div className="flex items-baseline gap-3 sm:w-40 lg:w-48 shrink-0">
-                    <span
-                      className="font-mono text-[12px] tracking-widest text-white/40
-                        transition-colors duration-200 group-hover:text-white/70"
-                      aria-hidden
-                    >
-                      {number}
-                    </span>
-                    <h3 className="text-[14px] font-medium text-white tracking-tight">
-                      {group.title}
-                    </h3>
-                  </div>
-
-                  <ul
-                    className="flex flex-wrap gap-2 sm:gap-2.5 flex-1 min-w-0"
-                    aria-label={`${group.title} skills`}
-                  >
-                    {group.skills.map((skill) => (
-                      <li key={skill}>
-                        <span
-                          className="inline-block px-3 py-1.5 text-[13px] text-white
-                            bg-white/5 rounded-lg
-                            transition-colors duration-200
-                            hover:text-white
-                            hover:bg-white/10"
-                        >
-                          {skill}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </motion.div>
-            );
-          })}
-        </div>
+              <div className="flex flex-wrap gap-2" aria-label={`${group.title} skills`}>
+                {group.skills.map((skill) => (
+                  <Pill key={skill}>{skill}</Pill>
+                ))}
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
       </div>
     </section>
-
-    <Skiper31 />
-    </>
   );
 }

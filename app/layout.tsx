@@ -1,37 +1,33 @@
 import type { Metadata } from 'next';
 import { GeistSans } from 'geist/font/sans';
 import { GeistMono } from 'geist/font/mono';
-import { Instrument_Serif } from 'next/font/google';
+import { Fraunces } from 'next/font/google';
 import './globals.css';
-import Navbar from '@/components/Navbar';
-import AnimatedBackground from '@/components/AnimatedBackground';
-import FloatingTriangles from '@/components/FloatingTriangles';
-import CustomCursor from '@/components/CustomCursor';
+import Shell from '@/components/Shell';
 
 const geistSans = GeistSans;
-
 const geistMono = GeistMono;
 
-const instrumentSerif = Instrument_Serif({
-  weight: '400',
+const fraunces = Fraunces({
   subsets: ['latin'],
-  variable: '--font-instrument-serif',
+  variable: '--font-fraunces',
   display: 'swap',
+  weight: ['400', '500', '700', '800', '900'],
 });
 
 export const metadata: Metadata = {
-  title: 'Jobel V. Golde | BSIT Student & Full Stack Developer',
+  title: 'Jobel V. Golde — Full Stack Developer',
   description:
-    'Professional portfolio of Jobel V. Golde — BSIT student and full-stack developer from Sorsogon State University, building modern web experiences.',
+    'Professional portfolio of Jobel V. Golde — full-stack developer building systems that stay boring under load. BSIT student at Sorsogon State University.',
   icons: {
     icon: [{ url: '/jobel_logo.png', type: 'image/png' }],
     apple: [{ url: '/jobel_logo.png', type: 'image/png' }],
     shortcut: '/jobel_logo.png',
   },
   openGraph: {
-    title: 'Jobel V. Golde | Full Stack Developer',
+    title: 'Jobel V. Golde — Full Stack Developer',
     description:
-      'Full-stack developer crafting modern digital experiences. BSIT student at Sorsogon State University.',
+      'Full-stack developer building systems that stay boring under load. BSIT student at Sorsogon State University.',
     type: 'website',
     locale: 'en_US',
   },
@@ -43,23 +39,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable} font-sans antialiased min-h-screen overflow-x-hidden`}
+        className={`${geistSans.variable} ${geistMono.variable} ${fraunces.variable} font-ui antialiased min-h-screen overflow-x-hidden`}
       >
-        {/* Skip link for keyboard users */}
-        <a
-          href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[9999] focus:px-4 focus:py-2 focus:bg-white focus:text-[#1F1F1F] focus:rounded-lg focus:outline-none focus:shadow-lg"
-        >
-          Skip to main content
-        </a>
-
-        <CustomCursor />
-        <FloatingTriangles />
-        <AnimatedBackground />
-        <Navbar />
-        <main id="main-content">{children}</main>
+        <Shell>{children}</Shell>
       </body>
     </html>
   );

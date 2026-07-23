@@ -2,9 +2,13 @@
 
 import { useRef, useState } from 'react';
 import Image from 'next/image';
-import { motion, useInView } from 'framer-motion';
-import { ArrowUpRight, GithubIcon as GithubIconLucid } from 'lucide-react';
+import { motion, useInView, AnimatePresence } from 'framer-motion';
+import { ArrowUpRight, ExternalLink } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { Tag } from '@/components/ui/tag';
+import { Card } from '@/components/ui/card';
 import { GithubIcon } from './Icons';
+import { cn } from '@/lib/utils';
 
 /* ─── Data ─────────────────────────────────────────────── */
 
@@ -13,173 +17,188 @@ const projects = [
     title: 'Profanity Detection API',
     description:
       'REST API focused on Tagalog and regional Filipino terms, built to plug into posts, comments, and messaging without a heavy client.',
+    problem: 'Filipino social platforms lack reliable profanity detection for Tagalog and regional dialects, relying on English-only filters that miss most local inappropriate content.',
+    decision: 'Built a custom Laravel REST API with a curated lexicon approach instead of ML-based NLP — faster to deploy, zero model-training overhead, and accurate for the specific language domain.',
+    metrics: ['~50ms avg response time', 'Supports Tagalog + regional terms', 'REST integration-ready'],
     tech: ['Laravel', 'REST API', 'React'],
     github: 'https://github.com/jobelGolde12/profanity_api.git',
     live: 'https://filipino-profanity-api-latest.vercel.app/',
     category: 'API',
     year: '2024',
+    status: 'shipped' as const,
     image: '/images/project_profanity_api.png',
   },
   {
     title: 'Lost and Found System',
     description:
       'A community platform for reporting and recovering lost items — real-time status updates, searchable categories, and a flow built for local use.',
+    problem: 'Communities in Bulan lack a centralized system for reporting lost items. Physical bulletin boards and social media posts get buried, making recovery slow and unreliable.',
+    decision: 'Used Laravel + Vue.js with Inertia for server-rendered SPA behavior — real-time status updates without WebSocket complexity, and a familiar stack for rapid iteration.',
+    metrics: ['Real-time item status', 'Searchable categories', 'Built for local community use'],
     tech: ['Laravel', 'Vue.js', 'Bootstrap', 'Inertia'],
     github: 'https://github.com/jobelGolde12/bulan_lost_and_found3.git',
     category: 'Capstone',
     year: '2024',
+    status: 'shipped' as const,
     image: '/images/project_lost_and_found.png',
   },
   {
     title: 'Protec Damayan',
     description:
       'Barangay Bonga mutual-aid system for fund records and disbursements, with automated death announcements over SMS via Semaphore.',
+    problem: 'Barangay Bonga\'s mutual-aid fund relied on manual ledger tracking and word-of-mouth announcements, leading to record discrepancies and delayed community notifications.',
+    decision: 'Automated fund tracking with Laravel and integrated Semaphore for SMS death announcements — replacing manual processes with reliable, auditable digital records.',
+    metrics: ['Automated SMS announcements', 'Digital fund ledger', 'Transparent disbursement records'],
     tech: ['Laravel', 'Vue.js', 'Bootstrap'],
     github: 'https://github.com/jobelGolde12/damayan.git',
     category: 'Community',
     year: '2023',
+    status: 'shipped' as const,
+    image: null,
+  },
+  {
+    title: 'School Portal',
+    description:
+      'Student information and access system with role-based authentication for students, teachers, and administrators.',
+    problem: 'Students and faculty needed a centralized platform to access grades, announcements, and schedules without relying on scattered email chains and paper-based systems.',
+    decision: 'Built with Laravel + Vue.js using Inertia for seamless SPA navigation, with role-based access control to tailor the experience for students, teachers, and administrators.',
+    metrics: ['Role-based access (3 user types)', 'Centralized academic info', 'Secure authentication'],
+    tech: ['Laravel', 'Vue.js', 'Inertia.js'],
+    github: 'https://github.com/jobelGolde12/school_portal.git',
+    category: 'Education',
+    year: '2023',
+    status: 'shipped' as const,
     image: null,
   },
 ];
 
+const categories = ['All', 'API', 'Capstone', 'Community', 'Education'];
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.08 },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] as const },
+  },
+};
+
 function ProjectCard({
   project,
   index,
-  isInView,
 }: {
   project: (typeof projects)[0];
   index: number;
-  isInView: boolean;
 }) {
-  const number = String(index + 1).padStart(2, '0');
-
   return (
-    <motion.article
-      initial={{ opacity: 0, y: 28 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{
-        delay: 0.08 + index * 0.1,
-        duration: 0.55,
-        ease: [0.25, 0.1, 0.25, 1],
-      }}
-      className="group relative"
-    >
-      <a
-        href={project.live || project.github}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="block rounded-[16px] px-6 py-6 sm:px-8 sm:py-8
-          bg-white/5
-          transition-[transform,box-shadow] duration-300 ease-out
-          hover:-translate-y-0.5
-          hover:shadow-[0_8px_32px_rgba(0,0,0,0.06)]
-          focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/20 focus-visible:ring-offset-2
-          focus-visible:ring-offset-[#1E1B20]"
-      >
-        <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:gap-8 lg:gap-10">
-          {/* Index */}
-          <span
-            className="shrink-0 font-mono text-[12px] tracking-widest text-white
-              sm:pt-1 sm:w-10 transition-colors duration-300
-              group-hover:text-white/70"
-            aria-hidden
-          >
-            {number}
-          </span>
-
-          {/* Body */}
-          <div className="min-w-0 flex-1">
-            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-3">
-              <span className="text-[11px] font-medium uppercase tracking-[0.16em] text-white">
+    <motion.article variants={itemVariants} className="group">
+      <Card hoverable className="h-full">
+        <div className="flex flex-col gap-4">
+          {/* Header: category + status + year */}
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <span className="font-mono text-xs text-text-tertiary" aria-hidden>
+                {String(index + 1).padStart(2, '0')}
+              </span>
+              <span className="text-xs font-medium uppercase tracking-wider text-text-secondary">
                 {project.category}
               </span>
-              {project.live && (
-                <span
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    window.open(project.live, '_blank', 'noopener,noreferrer');
-                  }}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                      e.preventDefault();
-                      window.open(project.live, '_blank', 'noopener,noreferrer');
-                    }
-                  }}
-                  role="link"
-                  tabIndex={0}
-                  className="cursor-pointer text-[11px] font-medium uppercase tracking-[0.16em] text-white
-                    hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/20 rounded-sm"
-                >
-                  Live
-                </span>
-              )}
-              <span
-                onClick={(e) => {
-                  e.stopPropagation();
-                  window.open(project.github, '_blank', 'noopener,noreferrer');
-                }}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    window.open(project.github, '_blank', 'noopener,noreferrer');
-                  }
-                }}
-                role="link"
-                tabIndex={0}
-                className="cursor-pointer text-[11px] font-medium uppercase tracking-[0.16em] text-white
-                  hover:text-white/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/20 rounded-sm"
-              >
-                Source
-              </span>
-              <span className="hidden sm:inline text-white" aria-hidden>
-                ·
-              </span>
-              <time className="text-[12px] text-white tabular-nums">
+            </div>
+            <div className="flex items-center gap-3">
+              <Badge status="success" label={project.status} />
+              <time className="text-xs text-text-tertiary font-mono tabular-nums">
                 {project.year}
               </time>
             </div>
-
-            <div className="flex items-start justify-between gap-4">
-              <h3
-                className="text-[18px] sm:text-[20px] font-semibold tracking-[-0.02em] text-white
-                  transition-colors duration-300"
-              >
-                {project.title}
-              </h3>
-             <span
-                className="mt-1 shrink-0 flex h-8 w-8 items-center justify-center rounded-full
-                  bg-[#1F1F1F] text-white
-                  transition-all duration-300
-                  group-hover:bg-white group-hover:text-[#1F1F1F]
-                  group-hover:rotate-12"
-                aria-hidden
-              >
-                <ArrowUpRight className="h-3.5 w-3.5" strokeWidth={2} />
-              </span>
-            </div>
-
-            <p className="mt-3 max-w-2xl text-[14px] leading-[1.7] text-white">
-              {project.description}
-            </p>
-
-            <ul className="mt-5 flex flex-wrap gap-x-1 gap-y-2 items-center" aria-label="Technologies used">
-              {project.tech.map((tech, i) => (
-                <li key={tech} className="flex items-center text-[13px] text-white/70">
-                  {i > 0 && (
-                    <span className="mx-2 text-white/30 select-none" aria-hidden>
-                      &middot;
-                    </span>
-                  )}
-                  <span className="transition-colors duration-200 group-hover:text-white">
-                    {tech}
-                  </span>
-                </li>
-              ))}
-            </ul>
           </div>
 
+          {/* Project image (if available) */}
+          {project.image && (
+            <div className="relative aspect-video rounded-lg overflow-hidden bg-bg-surface-2">
+              <Image
+                src={project.image}
+                alt={`${project.title} preview`}
+                fill
+                sizes="(max-width: 768px) 100vw, 500px"
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+            </div>
+          )}
+
+          {/* Title */}
+          <h3 className="text-text-primary font-semibold tracking-tight" style={{ fontSize: 'var(--text-lg)' }}>
+            {project.title}
+          </h3>
+
+          {/* Description */}
+          <p className="text-text-secondary text-sm leading-[1.7]">
+            {project.description}
+          </p>
+
+          {/* Problem + Decision (case study preview) */}
+          <div className="space-y-3 rounded-lg bg-bg-base p-4 border border-border-subtle">
+            <div>
+              <p className="text-[11px] font-mono uppercase tracking-wider text-accent-warm mb-1">Problem</p>
+              <p className="text-text-secondary text-sm leading-[1.6]">{project.problem}</p>
+            </div>
+            <div className="border-t border-border-subtle pt-3">
+              <p className="text-[11px] font-mono uppercase tracking-wider text-accent-signal mb-1">Decision</p>
+              <p className="text-text-secondary text-sm leading-[1.6]">{project.decision}</p>
+            </div>
+          </div>
+
+          {/* Metrics */}
+          <div className="flex flex-wrap gap-3">
+            {project.metrics.map((metric) => (
+              <span
+                key={metric}
+                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-accent-signal-dim text-accent-signal-text text-xs font-mono"
+              >
+                {metric}
+              </span>
+            ))}
+          </div>
+
+          {/* Tech tags */}
+          <div className="flex flex-wrap gap-1.5" aria-label="Technologies used">
+            {project.tech.map((tech) => (
+              <Tag key={tech}>{tech}</Tag>
+            ))}
+          </div>
+
+          {/* Links */}
+          <div className="flex items-center gap-4 pt-2 border-t border-border-subtle">
+            {project.live && (
+              <a
+                href={project.live}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 text-sm text-text-secondary hover:text-accent-signal transition-colors"
+              >
+                <ExternalLink className="w-3.5 h-3.5" />
+                Live demo
+              </a>
+            )}
+            <a
+              href={project.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-sm text-text-secondary hover:text-accent-signal transition-colors"
+            >
+              <GithubIcon className="w-3.5 h-3.5" />
+              Source code
+            </a>
+          </div>
         </div>
-      </a>
+      </Card>
     </motion.article>
   );
 }
@@ -187,57 +206,97 @@ function ProjectCard({
 export default function Projects() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-80px' });
+  const [activeFilter, setActiveFilter] = useState('All');
+
+  const filteredProjects =
+    activeFilter === 'All'
+      ? projects
+      : projects.filter((p) => p.category === activeFilter);
 
   return (
     <section id="projects" className="py-24 md:py-32 px-4" ref={ref}>
-      <div className="max-w-[1200px] mx-auto">
+      <div className="max-w-[1120px] mx-auto">
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.55, ease: [0.25, 0.1, 0.25, 1] }}
+          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
           className="mb-12 md:mb-16"
         >
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6">
             <div>
-              <span className="text-white font-medium tracking-wider uppercase text-[13px]">
+              <span className="text-accent-signal font-mono text-xs tracking-wider uppercase">
                 Selected work
               </span>
-              <h2 className="text-[28px] md:text-[32px] font-bold mt-2 tracking-[-0.02em] text-white">
+              <h2 className="text-text-primary mt-2 font-display tracking-[var(--tracking-tight)]" style={{ fontSize: 'var(--text-3xl)' }}>
                 Projects
               </h2>
             </div>
-
-            <p className="max-w-sm text-[14px] leading-[1.7] text-white sm:text-right">
+            <p className="max-w-sm text-sm leading-[1.7] text-text-secondary sm:text-right">
               Academic and personal systems I&apos;ve built end to end — from
               idea to working code.
             </p>
           </div>
         </motion.div>
 
-        <div className="flex flex-col gap-3 sm:gap-4">
-          {projects.map((project, index) => (
-            <ProjectCard
-              key={project.title}
-              project={project}
-              index={index}
-              isInView={isInView}
-            />
+        {/* Filter pills */}
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ delay: 0.1, duration: 0.4 }}
+          className="flex flex-wrap gap-2 mb-10"
+          role="radiogroup"
+          aria-label="Filter projects by category"
+        >
+          {categories.map((cat) => (
+            <button
+              key={cat}
+              onClick={() => setActiveFilter(cat)}
+              role="radio"
+              aria-checked={activeFilter === cat}
+              className={cn(
+                'px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-200',
+                activeFilter === cat
+                  ? 'bg-accent-signal text-white'
+                  : 'bg-bg-surface-2 text-text-secondary hover:text-text-primary hover:bg-bg-surface border border-transparent hover:border-border-subtle',
+              )}
+            >
+              {cat}
+            </button>
           ))}
-        </div>
+        </motion.div>
 
+        {/* Project grid */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeFilter}
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            exit={{ opacity: 0, transition: { duration: 0.2 } }}
+            className="grid grid-cols-1 md:grid-cols-2 gap-6"
+          >
+            {filteredProjects.map((project, index) => (
+              <ProjectCard
+                key={project.title}
+                project={project}
+                index={index}
+              />
+            ))}
+          </motion.div>
+        </AnimatePresence>
+
+        {/* GitHub link */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
-          transition={{ delay: 0.45, duration: 0.5 }}
-          className="mt-12 md:mt-14 flex justify-center sm:justify-start"
+          transition={{ delay: 0.4, duration: 0.5 }}
+          className="mt-12 md:mt-14 flex justify-center"
         >
           <a
             href="https://github.com/jobelGolde12"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2.5 text-[13px] font-medium text-white
-              hover:text-white transition-colors duration-200
-              focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 rounded-sm"
+            className="inline-flex items-center gap-2.5 text-sm font-medium text-text-secondary hover:text-accent-signal transition-colors"
           >
             <GithubIcon className="h-4 w-4" />
             <span>More on GitHub</span>

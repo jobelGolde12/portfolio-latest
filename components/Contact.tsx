@@ -2,7 +2,11 @@
 
 import { useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { Mail, Phone, MapPin, Send, CheckCircle, ArrowUpRight } from 'lucide-react';
+import { Mail, MapPin, Send, CheckCircle, ArrowUpRight, Copy, Check } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Button } from '@/components/ui/button';
 import { GithubIcon, LinkedinIcon, FacebookIcon } from './Icons';
 
 /* ─── Data ─────────────────────────────────────────── */
@@ -13,12 +17,6 @@ const contactInfo = [
     label: 'Email',
     value: 'jobelgolde45@gmail.com',
     href: 'mailto:jobelgolde45@gmail.com',
-  },
-  {
-    icon: Phone,
-    label: 'Phone',
-    value: '+63 993 054 3293',
-    href: 'tel:+639930543293',
   },
   {
     icon: MapPin,
@@ -38,111 +36,31 @@ const socialLinks = [
   { icon: FacebookIcon, href: 'https://www.facebook.com/jobelGolde', label: 'Facebook' },
 ];
 
-/* ─── Floating label input ─────────────────────────── */
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.08 },
+  },
+};
 
-function Field({
-  label,
-  type = 'text',
-  name,
-  value,
-  onChange,
-  required = false,
-  isInView,
-  delay,
-  isTextarea = false,
-}: {
-  label: string;
-  type?: string;
-  name: string;
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
-  required?: boolean;
-  isInView: boolean;
-  delay: number;
-  isTextarea?: boolean;
-}) {
-  const [isFocused, setIsFocused] = useState(false);
-  const hasValue = value.length > 0;
-  const showFloating = isFocused || hasValue;
-
-  const sharedClasses =
-    'w-full bg-transparent border-0 border-b-2 border-white/10 ' +
-    'text-white ' +
-    'focus:outline-none transition-colors duration-200 ' +
-    'focus:border-white/40 ' +
-    'placeholder:text-white ' +
-    (isTextarea ? 'resize-none min-h-[100px] pt-6' : 'pt-6 pb-2');
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 16 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ delay, duration: 0.45, ease: [0.25, 0.1, 0.25, 1] }}
-      className="relative"
-    >
-      <label
-        htmlFor={`field-${name}`}
-        className={`absolute left-0 origin-left cursor-text select-none transition-all duration-200 ease-out
-          ${
-            showFloating
-              ? 'top-0 text-[11px] font-medium text-white'
-              : 'top-[18px] text-[14px] text-white'
-          }`}
-      >
-        {label}
-        {required && (
-          <span className="text-white ml-0.5" aria-hidden>
-            *
-          </span>
-        )}
-      </label>
-
-      {isTextarea ? (
-        <textarea
-          id={`field-${name}`}
-          name={name}
-          value={value}
-          onChange={onChange}
-          required={required}
-          rows={4}
-          onFocus={() => setIsFocused(true)}
-          onBlur={() => setIsFocused(false)}
-          className={sharedClasses}
-        />
-      ) : (
-        <input
-          id={`field-${name}`}
-          type={type}
-          name={name}
-          value={value}
-          onChange={onChange}
-          required={required}
-          onFocus={() => setIsFocused(true)}
-          onBlur={() => setIsFocused(false)}
-          className={sharedClasses}
-        />
-      )}
-
-      <motion.span
-        className="absolute bottom-0 left-0 h-[2px] rounded-full bg-white/40"
-        initial={{ width: 0 }}
-        animate={{ width: showFloating ? '100%' : 0 }}
-        transition={{ duration: 0.25, ease: 'easeOut' }}
-      />
-    </motion.div>
-  );
-}
-
-/* ─── Main section ─────────────────────────────────── */
+const itemVariants = {
+  hidden: { opacity: 0, y: 16 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] as const },
+  },
+};
 
 export default function Contact() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const [copied, setCopied] = useState(false);
 
   const [formState, setFormState] = useState({
     name: '',
     email: '',
-    subject: '',
     message: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -165,8 +83,8 @@ export default function Contact() {
 
       if (response.ok) {
         setIsSubmitted(true);
-        setFormState({ name: '', email: '', subject: '', message: '' });
-        setTimeout(() => setIsSubmitted(false), 3000);
+        setFormState({ name: '', email: '', message: '' });
+        setTimeout(() => setIsSubmitted(false), 4000);
       } else {
         alert('Something went wrong. Please try again.');
       }
@@ -177,73 +95,76 @@ export default function Contact() {
     }
   };
 
+  const copyEmail = async () => {
+    await navigator.clipboard.writeText('jobelgolde45@gmail.com');
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   return (
     <section
       id="contact"
       className="py-24 md:py-32 px-4"
       ref={ref}
     >
-      <div className="max-w-[1200px] mx-auto">
+      <div className="max-w-[1120px] mx-auto">
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.6 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
           className="mb-16 md:mb-20"
         >
-          <span className="text-white font-medium tracking-wider uppercase text-[13px]">
-            Get in Touch
+          <span className="text-accent-signal font-mono text-xs tracking-wider uppercase">
+            Get in touch
           </span>
-          <h2 className="text-[28px] md:text-[32px] font-bold mt-3 tracking-[-0.02em] text-white">
-            Let&rsquo;s work{' '}
+          <h2 className="text-text-primary mt-2 font-display tracking-[var(--tracking-tight)]" style={{ fontSize: 'var(--text-3xl)' }}>
+            Let&apos;s start a{' '}
             <br className="hidden sm:block" />
-            together
+            conversation
           </h2>
         </motion.div>
 
-        <div className="grid lg:grid-cols-12 gap-12 lg:gap-20">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.15, duration: 0.6 }}
-            className="lg:col-span-5 space-y-10"
-          >
-            <p className="text-[14px] leading-[1.7] text-white max-w-sm">
-              I&rsquo;m always open to discussing new projects, creative ideas, or
-              opportunities to be part of your vision. Drop a message and I&rsquo;ll
-              get back to you as soon as I can.
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate={isInView ? 'visible' : 'hidden'}
+          className="grid lg:grid-cols-12 gap-12 lg:gap-20"
+        >
+          {/* Left column: info */}
+          <motion.div variants={itemVariants} className="lg:col-span-5 space-y-8">
+            {/* Status reprise */}
+            <Badge status="success" label="Available for new roles" />
+
+            {/* Response time */}
+            <p className="text-text-secondary text-sm leading-[1.7]">
+              I&apos;m always open to discussing new projects, creative ideas, or
+              opportunities to be part of your vision.
             </p>
 
-            <div className="space-y-5">
+            <div className="flex items-center gap-2 text-sm text-text-tertiary">
+              <span className="animate-signal-pulse inline-block w-1.5 h-1.5 rounded-full bg-success" />
+              Usually replies within a day
+            </div>
+
+            {/* Contact methods */}
+            <div className="space-y-4">
               {contactInfo.map((info, i) => (
                 <motion.a
                   key={info.label}
                   href={info.href}
                   target={info.label === 'Location' ? '_blank' : undefined}
                   rel={info.label === 'Location' ? 'noopener noreferrer' : undefined}
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ delay: 0.25 + i * 0.08, duration: 0.4 }}
-                  className="flex items-center gap-4 group cursor-pointer"
+                  variants={itemVariants}
+                  className="flex items-center gap-4 group"
                 >
-                  <span
-                    className="shrink-0 flex items-center justify-center w-10 h-10 rounded-full
-                      bg-white/5
-                      text-white
-                      group-hover:bg-white/10
-                      transition-colors duration-200"
-                  >
+                  <span className="shrink-0 flex items-center justify-center w-10 h-10 rounded-full bg-bg-surface border border-border-subtle text-text-secondary group-hover:border-accent-signal group-hover:text-accent-signal transition-colors duration-200">
                     <info.icon className="w-4 h-4" />
                   </span>
-
                   <div className="min-w-0">
-                    <p className="text-[11px] text-white uppercase tracking-widest font-medium">
+                    <p className="text-[11px] text-text-tertiary uppercase tracking-widest font-mono">
                       {info.label}
                     </p>
-                    <p
-                      className="text-[13px] font-medium text-white truncate
-                        group-hover:text-white
-                        transition-colors duration-200"
-                    >
+                    <p className="text-sm font-medium text-text-primary truncate group-hover:text-accent-signal transition-colors duration-200">
                       {info.value}
                     </p>
                   </div>
@@ -251,31 +172,32 @@ export default function Contact() {
               ))}
             </div>
 
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={isInView ? { opacity: 1 } : {}}
-              transition={{ delay: 0.5, duration: 0.4 }}
-            >
-              <p className="text-[11px] text-white uppercase tracking-widest font-medium mb-3">
+            {/* Copy email */}
+            <motion.div variants={itemVariants}>
+              <button
+                onClick={copyEmail}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-border-subtle text-sm text-text-secondary hover:border-accent-signal hover:text-accent-signal transition-colors"
+              >
+                {copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+                {copied ? 'Copied!' : 'Copy email'}
+              </button>
+            </motion.div>
+
+            {/* Social */}
+            <motion.div variants={itemVariants}>
+              <p className="text-[11px] text-text-tertiary uppercase tracking-widest font-mono mb-3">
                 Social
               </p>
               <div className="flex gap-2">
-                {socialLinks.map((social, i) => (
+                {socialLinks.map((social) => (
                   <motion.a
                     key={social.label}
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                    transition={{ delay: 0.55 + i * 0.06 }}
                     whileHover={{ y: -2 }}
-                    whileTap={{ scale: 0.9 }}
-                    className="flex items-center justify-center w-9 h-9 rounded-full
-                      bg-white/5
-                      text-white
-                      hover:bg-white/10 hover:text-white
-                      transition-all duration-200"
+                    whileTap={{ scale: 0.95 }}
+                    className="flex items-center justify-center w-9 h-9 rounded-full bg-bg-surface border border-border-subtle text-text-secondary hover:border-accent-signal hover:text-accent-signal transition-all duration-200"
                     aria-label={social.label}
                   >
                     <social.icon className="w-4 h-4" />
@@ -285,105 +207,89 @@ export default function Contact() {
             </motion.div>
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{
-              delay: 0.3,
-              duration: 0.6,
-              ease: [0.25, 0.1, 0.25, 1],
-            }}
-            className="lg:col-span-7"
-          >
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid sm:grid-cols-2 gap-6">
-                <Field
-                  label="Your name"
-                  name="name"
-                  value={formState.name}
-                  onChange={handleChange}
-                  required
-                  isInView={isInView}
-                  delay={0.35}
-                />
-                <Field
-                  label="Your email"
-                  type="email"
-                  name="email"
-                  value={formState.email}
-                  onChange={handleChange}
-                  required
-                  isInView={isInView}
-                  delay={0.4}
-                />
-              </div>
-
-              <Field
-                label="Subject"
-                name="subject"
-                value={formState.subject}
-                onChange={handleChange}
-                required
-                isInView={isInView}
-                delay={0.45}
-              />
-
-              <Field
-                label="Your message"
-                name="message"
-                value={formState.message}
-                onChange={handleChange}
-                required
-                isInView={isInView}
-                delay={0.5}
-                isTextarea
-              />
-
+          {/* Right column: form */}
+          <motion.div variants={itemVariants} className="lg:col-span-7">
+            {isSubmitted ? (
               <motion.div
-                initial={{ opacity: 0 }}
-                animate={isInView ? { opacity: 1 } : {}}
-                transition={{ delay: 0.55 }}
-                className="pt-2"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="flex flex-col items-center justify-center text-center py-16 rounded-xl border border-success/20 bg-success/5"
               >
-                <motion.button
+                <CheckCircle className="w-10 h-10 text-success mb-4" />
+                <h3 className="text-text-primary font-medium text-lg mb-2">Message sent</h3>
+                <p className="text-text-secondary text-sm">Talk soon — I&apos;ll get back to you within a day.</p>
+              </motion.div>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-5">
+                <div className="grid sm:grid-cols-2 gap-5">
+                  <Input
+                    label="Your name"
+                    name="name"
+                    value={formState.name}
+                    onChange={handleChange}
+                    required
+                    placeholder="Jane Doe"
+                  />
+                  <Input
+                    label="Your email"
+                    type="email"
+                    name="email"
+                    value={formState.email}
+                    onChange={handleChange}
+                    required
+                    placeholder="jane@example.com"
+                  />
+                </div>
+
+                <Textarea
+                  label="Your message"
+                  name="message"
+                  value={formState.message}
+                  onChange={handleChange}
+                  required
+                  placeholder="Tell me about your project or idea..."
+                  rows={5}
+                />
+
+                <Button
                   type="submit"
-                  disabled={isSubmitting || isSubmitted}
-                  whileHover={{ y: -1 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="inline-flex items-center gap-2.5 px-6 py-3
-                    bg-white text-[#1F1F1F]
-                    rounded-full text-[13px] font-medium
-                    hover:shadow-[0_4px_16px_rgba(255,255,255,0.1)]
-                    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/20 focus-visible:ring-offset-2
-                    focus-visible:ring-offset-[#1E1B20]
-                    transition-all duration-200
-                    disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:shadow-none"
+                  variant="primary"
+                  size="lg"
+                  disabled={isSubmitting}
+                  className="w-full sm:w-auto"
                 >
                   {isSubmitting ? (
                     <>
                       <motion.div
                         animate={{ rotate: 360 }}
                         transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-                        className="w-4 h-4 rounded-full border-2 border-[#1F1F1F]/30 border-t-[#1F1F1F]"
+                        className="w-4 h-4 rounded-full border-2 border-white/30 border-t-white"
                       />
-                      <span>Sending...</span>
-                    </>
-                  ) : isSubmitted ? (
-                    <>
-                      <CheckCircle className="w-4 h-4" />
-                      <span>Sent!</span>
+                      Sending...
                     </>
                   ) : (
                     <>
-                      <span>Send message</span>
-                      <ArrowUpRight className="w-3.5 h-3.5" strokeWidth={2} />
+                      Start a conversation
+                      <ArrowUpRight className="w-4 h-4" />
                     </>
                   )}
-                </motion.button>
-              </motion.div>
-            </form>
+                </Button>
+              </form>
+            )}
           </motion.div>
-        </div>
+        </motion.div>
+
+        {/* Warm closing line */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : {}}
+          transition={{ delay: 0.6, duration: 0.5 }}
+          className="mt-16 text-center"
+        >
+          <p className="text-text-tertiary text-sm italic">
+            Always happy to talk about code, community, or collaboration.
+          </p>
+        </motion.div>
       </div>
     </section>
   );
