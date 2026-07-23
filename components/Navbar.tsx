@@ -147,7 +147,7 @@ export default function Navbar({
             />
           </motion.a>
 
-          {/* Desktop nav links */}
+          {/* Desktop nav links - Made darker for visibility */}
           <div className="hidden md:flex items-center gap-1">
             {navLinks.map((link, index) => (
               <motion.a
@@ -160,7 +160,7 @@ export default function Navbar({
                   'relative px-4 py-2 text-sm font-medium rounded-full transition-colors duration-200',
                   activeSection === link.href
                     ? 'text-accent-signal'
-                    : 'text-text-secondary hover:text-text-primary hover:bg-bg-surface-2',
+                    : 'text-text-primary hover:text-text-primary hover:bg-bg-surface-2',
                 )}
               >
                 {link.name}
@@ -168,7 +168,7 @@ export default function Navbar({
             ))}
           </div>
 
-          {/* Desktop actions */}
+          {/* Desktop actions - Made icons and text darker */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -178,7 +178,7 @@ export default function Navbar({
             {/* Command palette hint */}
             <button
               onClick={onCommandPaletteOpen}
-              className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono text-text-tertiary rounded-full border border-border-subtle hover:border-border-strong hover:text-text-secondary transition-colors"
+              className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono text-text-primary rounded-full border border-border-subtle hover:border-border-strong hover:text-text-primary transition-colors"
               aria-label="Open command palette"
             >
               <Search className="w-3 h-3" />
@@ -188,7 +188,7 @@ export default function Navbar({
             {/* Theme toggle */}
             <button
               onClick={toggleTheme}
-              className="flex items-center justify-center w-8 h-8 rounded-full text-text-tertiary hover:text-text-primary hover:bg-bg-surface-2 transition-colors"
+              className="flex items-center justify-center w-8 h-8 rounded-full text-text-primary hover:text-text-primary hover:bg-bg-surface-2 transition-colors"
               aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
             >
               {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
@@ -198,7 +198,7 @@ export default function Navbar({
               href="https://github.com/jobelGolde12/"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-text-secondary rounded-full hover:text-text-primary hover:bg-bg-surface-2 transition-colors"
+              className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-text-primary rounded-full hover:text-text-primary hover:bg-bg-surface-2 transition-colors"
             >
               <GithubIcon className="w-4 h-4" />
               GitHub
@@ -212,18 +212,18 @@ export default function Navbar({
             </a>
           </motion.div>
 
-          {/* Mobile: search + theme + menu */}
+          {/* Mobile: search + theme + menu - Made icons darker */}
           <div className="flex md:hidden items-center gap-1">
             <button
               onClick={onCommandPaletteOpen}
-              className="p-2 rounded-full text-text-tertiary hover:text-text-primary hover:bg-bg-surface-2 transition-colors"
+              className="p-2 rounded-full text-text-primary hover:text-text-primary hover:bg-bg-surface-2 transition-colors"
               aria-label="Open command palette"
             >
               <Search className="w-4 h-4" />
             </button>
             <button
               onClick={toggleTheme}
-              className="p-2 rounded-full text-text-tertiary hover:text-text-primary hover:bg-bg-surface-2 transition-colors"
+              className="p-2 rounded-full text-text-primary hover:text-text-primary hover:bg-bg-surface-2 transition-colors"
               aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
             >
               {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
@@ -231,7 +231,7 @@ export default function Navbar({
             <button
               ref={toggleRef}
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-full text-text-secondary hover:text-text-primary hover:bg-bg-surface-2 transition-colors"
+              className="p-2 rounded-full text-text-primary hover:text-text-primary hover:bg-bg-surface-2 transition-colors"
               aria-expanded={mobileMenuOpen}
               aria-controls="mobile-menu"
             >
@@ -265,7 +265,7 @@ export default function Navbar({
                       'block px-4 py-3 text-sm font-medium rounded-xl transition-colors',
                       activeSection === link.href
                         ? 'text-accent-signal bg-accent-signal-dim'
-                        : 'text-text-secondary hover:text-text-primary hover:bg-bg-surface-2',
+                        : 'text-text-primary hover:text-text-primary hover:bg-bg-surface-2',
                     )}
                   >
                     {link.name}
@@ -276,7 +276,7 @@ export default function Navbar({
                     href="https://github.com/jobelGolde12"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium bg-bg-surface-2 text-text-secondary hover:text-text-primary transition-colors"
+                    className="flex items-center justify-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium bg-bg-surface-2 text-text-primary hover:text-text-primary transition-colors"
                   >
                     <GithubIcon className="w-4 h-4" />
                     GitHub

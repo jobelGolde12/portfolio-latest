@@ -102,7 +102,7 @@ export default function Skills() {
             <motion.div
               key={group.id}
               variants={itemVariants}
-              className="rounded-xl border border-border-subtle bg-bg-surface p-6"
+              className="rounded-xl p-6"
             >
               <div className="mb-4">
                 <h3 className="font-medium text-sm">
@@ -113,7 +113,7 @@ export default function Skills() {
                 </p>
               </div>
 
-              <div className="flex flex-wrap gap-2" aria-label={`${group.title} skills`}>
+              <div className="flex flex-wrap gap-2 " aria-label={`${group.title} skills`}>
                 {group.skills.map((skill) => (
                   <Pill key={skill}>{skill}</Pill>
                 ))}

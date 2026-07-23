@@ -86,11 +86,11 @@ export default function About() {
             </motion.p>
 
             <motion.div variants={itemVariants} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <Card>
+              <Card className=' bg-dark'>
                 <p className="text-white/50 text-xs mb-1.5 font-mono uppercase tracking-wider">Education</p>
                 <p className="font-medium text-sm leading-snug">{aboutContent.education.degree}</p>
               </Card>
-              <Card>
+              <Card className=' bg-dark'>
                 <p className="text-white/50 text-xs mb-1.5 font-mono uppercase tracking-wider">University</p>
                 <p className="font-medium text-sm">{aboutContent.education.school}</p>
               </Card>
