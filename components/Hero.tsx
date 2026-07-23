@@ -271,10 +271,7 @@ export default function Hero() {
                 fill
                 priority
                 sizes="(max-width: 1024px) 100vw, 520px"
-                className="object-cover object-center scale-105"
-                style={{
-                  filter: 'contrast(1.05) saturate(0.95) brightness(0.85)',
-                }}
+                className="object-cover object-center scale-105 mix-blend-multiply"
               />
 
               {/* Feathered edge overlay */}

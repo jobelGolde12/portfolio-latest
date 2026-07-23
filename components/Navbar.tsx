@@ -185,14 +185,7 @@ export default function Navbar({
               <span>⌘K</span>
             </button>
 
-            {/* Theme toggle */}
-            <button
-              onClick={toggleTheme}
-              className="flex items-center justify-center w-8 h-8 rounded-full text-text-primary hover:text-text-primary hover:bg-bg-surface-2 transition-colors"
-              aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
-            >
-              {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-            </button>
+            
 
             <a
               href="https://github.com/jobelGolde12/"
@@ -220,13 +213,6 @@ export default function Navbar({
               aria-label="Open command palette"
             >
               <Search className="w-4 h-4" />
-            </button>
-            <button
-              onClick={toggleTheme}
-              className="p-2 rounded-full text-text-primary hover:text-text-primary hover:bg-bg-surface-2 transition-colors"
-              aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
-            >
-              {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
             </button>
             <button
               ref={toggleRef}
