@@ -144,7 +144,7 @@ function ProjectCard({
           </p>
 
           {/* Problem + Decision (case study preview) */}
-          <div className="space-y-3 rounded-lg bg-bg-base p-4 border border-border-subtle">
+          <div className="space-y-3 rounded-lg bg-dark p-4 border border-border-subtle">
             <div>
               <p className="text-[11px] font-mono uppercase tracking-wider text-accent-warm mb-1">Problem</p>
               <p className="text-sm leading-[1.6]">{project.problem}</p>

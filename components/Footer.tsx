@@ -93,7 +93,7 @@ export default function Footer() {
                     href={href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-center w-9 h-9 rounded-full bg-bg-surface border border-border-subtle text-white/60 hover:border-accent-signal hover:text-accent-signal transition-all duration-200"
+                    className="flex items-center justify-center w-9 h-9 rounded-full bg-dark border border-border-subtle text-white/60 hover:border-accent-signal hover:text-accent-signal transition-all duration-200"
                     aria-label={`${label} (opens in new tab)`}
                   >
                     <Icon className="w-4 h-4" />

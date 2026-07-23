@@ -157,7 +157,7 @@ export default function Contact() {
                   variants={itemVariants}
                   className="flex items-center gap-4 group"
                 >
-                  <span className="shrink-0 flex items-center justify-center w-10 h-10 rounded-full bg-bg-surface border border-border-subtle text-white/60 group-hover:border-accent-signal group-hover:text-accent-signal transition-colors duration-200">
+                  <span className="shrink-0 flex items-center justify-center w-10 h-10 rounded-full bg-dark border border-border-subtle text-white/60 group-hover:border-accent-signal group-hover:text-accent-signal transition-colors duration-200">
                     <info.icon className="w-4 h-4" />
                   </span>
                   <div className="min-w-0">
@@ -197,7 +197,7 @@ export default function Contact() {
                     rel="noopener noreferrer"
                     whileHover={{ y: -2 }}
                     whileTap={{ scale: 0.95 }}
-                    className="flex items-center justify-center w-9 h-9 rounded-full bg-bg-surface border border-border-subtle text-white/60 hover:border-accent-signal hover:text-accent-signal transition-all duration-200"
+                    className="flex items-center justify-center w-9 h-9 rounded-full bg-dark border border-border-subtle text-white/60 hover:border-accent-signal hover:text-accent-signal transition-all duration-200"
                     aria-label={social.label}
                   >
                     <social.icon className="w-4 h-4" />
