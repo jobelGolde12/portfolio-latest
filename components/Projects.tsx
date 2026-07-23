@@ -105,16 +105,16 @@ function ProjectCard({
           {/* Header: category + status + year */}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <span className="font-mono text-xs text-text-tertiary" aria-hidden>
+              <span className="font-mono text-xs text-white/50" aria-hidden>
                 {String(index + 1).padStart(2, '0')}
               </span>
-              <span className="text-xs font-medium uppercase tracking-wider text-text-secondary">
+              <span className="text-xs font-medium uppercase tracking-wider text-white/60">
                 {project.category}
               </span>
             </div>
             <div className="flex items-center gap-3">
               <Badge status="success" label={project.status} />
-              <time className="text-xs text-text-tertiary font-mono tabular-nums">
+              <time className="text-xs text-white/50 font-mono tabular-nums">
                 {project.year}
               </time>
             </div>
@@ -134,12 +134,12 @@ function ProjectCard({
           )}
 
           {/* Title */}
-          <h3 className="text-text-primary font-semibold tracking-tight" style={{ fontSize: 'var(--text-lg)' }}>
+          <h3 className="font-semibold tracking-tight" style={{ fontSize: 'var(--text-lg)' }}>
             {project.title}
           </h3>
 
           {/* Description */}
-          <p className="text-text-secondary text-sm leading-[1.7]">
+          <p className="text-sm leading-[1.7]">
             {project.description}
           </p>
 
@@ -147,11 +147,11 @@ function ProjectCard({
           <div className="space-y-3 rounded-lg bg-bg-base p-4 border border-border-subtle">
             <div>
               <p className="text-[11px] font-mono uppercase tracking-wider text-accent-warm mb-1">Problem</p>
-              <p className="text-text-secondary text-sm leading-[1.6]">{project.problem}</p>
+              <p className="text-sm leading-[1.6]">{project.problem}</p>
             </div>
             <div className="border-t border-border-subtle pt-3">
               <p className="text-[11px] font-mono uppercase tracking-wider text-accent-signal mb-1">Decision</p>
-              <p className="text-text-secondary text-sm leading-[1.6]">{project.decision}</p>
+              <p className="text-sm leading-[1.6]">{project.decision}</p>
             </div>
           </div>
 
@@ -181,7 +181,7 @@ function ProjectCard({
                 href={project.live}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 text-sm text-text-secondary hover:text-accent-signal transition-colors"
+                className="inline-flex items-center gap-1.5 text-sm text-white/60 hover:text-accent-signal transition-colors"
               >
                 <ExternalLink className="w-3.5 h-3.5" />
                 Live demo
@@ -191,7 +191,7 @@ function ProjectCard({
               href={project.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-sm text-text-secondary hover:text-accent-signal transition-colors"
+              className="inline-flex items-center gap-1.5 text-sm text-white/60 hover:text-accent-signal transition-colors"
             >
               <GithubIcon className="w-3.5 h-3.5" />
               Source code
@@ -214,7 +214,7 @@ export default function Projects() {
       : projects.filter((p) => p.category === activeFilter);
 
   return (
-    <section id="projects" className="py-24 md:py-32 px-4" ref={ref}>
+    <section id="projects" className="py-24 md:py-32 px-4 text-white" ref={ref}>
       <div className="max-w-[1120px] mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -227,11 +227,11 @@ export default function Projects() {
               <span className="text-accent-signal font-mono text-xs tracking-wider uppercase">
                 Selected work
               </span>
-              <h2 className="text-text-primary mt-2 font-display tracking-[var(--tracking-tight)]" style={{ fontSize: 'var(--text-3xl)' }}>
+              <h2 className="mt-2 font-display tracking-[var(--tracking-tight)]" style={{ fontSize: 'var(--text-3xl)' }}>
                 Projects
               </h2>
             </div>
-            <p className="max-w-sm text-sm leading-[1.7] text-text-secondary sm:text-right">
+            <p className="max-w-sm text-sm leading-[1.7] sm:text-right">
               Academic and personal systems I&apos;ve built end to end — from
               idea to working code.
             </p>
@@ -296,7 +296,7 @@ export default function Projects() {
             href="https://github.com/jobelGolde12"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2.5 text-sm font-medium text-text-secondary hover:text-accent-signal transition-colors"
+            className="inline-flex items-center gap-2.5 text-sm font-medium text-white/60 hover:text-accent-signal transition-colors"
           >
             <GithubIcon className="h-4 w-4" />
             <span>More on GitHub</span>

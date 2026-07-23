@@ -68,7 +68,7 @@ export default function Skills() {
   const isInView = useInView(ref, { once: true, margin: '-60px' });
 
   return (
-    <section id="skills" className="py-24 md:py-32 px-4" ref={ref}>
+    <section id="skills" className="py-24 md:py-32 px-4 text-white" ref={ref}>
       <div className="max-w-[1120px] mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
@@ -81,11 +81,11 @@ export default function Skills() {
               <span className="text-accent-signal font-mono text-xs tracking-wider uppercase">
                 Capabilities
               </span>
-              <h2 className="text-text-primary mt-2 font-display tracking-[var(--tracking-tight)]" style={{ fontSize: 'var(--text-3xl)' }}>
+              <h2 className="mt-2 font-display tracking-[var(--tracking-tight)]" style={{ fontSize: 'var(--text-3xl)' }}>
                 Skills
               </h2>
             </div>
-            <p className="max-w-sm text-sm leading-[1.7] text-text-secondary sm:text-right">
+            <p className="max-w-sm text-sm leading-[1.7] sm:text-right">
               Stack I use day to day — focused on full-stack web, with a foundation
               in systems and networking.
             </p>
@@ -105,10 +105,10 @@ export default function Skills() {
               className="rounded-xl border border-border-subtle bg-bg-surface p-6"
             >
               <div className="mb-4">
-                <h3 className="text-text-primary font-medium text-sm">
+                <h3 className="font-medium text-sm">
                   {group.title}
                 </h3>
-                <p className="text-text-tertiary text-xs mt-0.5">
+                <p className="text-white/50 text-xs mt-0.5">
                   {group.description}
                 </p>
               </div>

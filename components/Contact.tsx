@@ -104,7 +104,7 @@ export default function Contact() {
   return (
     <section
       id="contact"
-      className="py-24 md:py-32 px-4"
+      className="py-24 md:py-32 px-4 text-white"
       ref={ref}
     >
       <div className="max-w-[1120px] mx-auto">
@@ -117,7 +117,7 @@ export default function Contact() {
           <span className="text-accent-signal font-mono text-xs tracking-wider uppercase">
             Get in touch
           </span>
-          <h2 className="text-text-primary mt-2 font-display tracking-[var(--tracking-tight)]" style={{ fontSize: 'var(--text-3xl)' }}>
+          <h2 className="mt-2 font-display tracking-[var(--tracking-tight)]" style={{ fontSize: 'var(--text-3xl)' }}>
             Let&apos;s start a{' '}
             <br className="hidden sm:block" />
             conversation
@@ -136,12 +136,12 @@ export default function Contact() {
             <Badge status="success" label="Available for new roles" />
 
             {/* Response time */}
-            <p className="text-text-secondary text-sm leading-[1.7]">
+            <p className="text-sm leading-[1.7]">
               I&apos;m always open to discussing new projects, creative ideas, or
               opportunities to be part of your vision.
             </p>
 
-            <div className="flex items-center gap-2 text-sm text-text-tertiary">
+            <div className="flex items-center gap-2 text-sm text-white/50">
               <span className="animate-signal-pulse inline-block w-1.5 h-1.5 rounded-full bg-success" />
               Usually replies within a day
             </div>
@@ -157,14 +157,14 @@ export default function Contact() {
                   variants={itemVariants}
                   className="flex items-center gap-4 group"
                 >
-                  <span className="shrink-0 flex items-center justify-center w-10 h-10 rounded-full bg-bg-surface border border-border-subtle text-text-secondary group-hover:border-accent-signal group-hover:text-accent-signal transition-colors duration-200">
+                  <span className="shrink-0 flex items-center justify-center w-10 h-10 rounded-full bg-bg-surface border border-border-subtle text-white/60 group-hover:border-accent-signal group-hover:text-accent-signal transition-colors duration-200">
                     <info.icon className="w-4 h-4" />
                   </span>
                   <div className="min-w-0">
-                    <p className="text-[11px] text-text-tertiary uppercase tracking-widest font-mono">
+                    <p className="text-[11px] text-white/50 uppercase tracking-widest font-mono">
                       {info.label}
                     </p>
-                    <p className="text-sm font-medium text-text-primary truncate group-hover:text-accent-signal transition-colors duration-200">
+                    <p className="text-sm font-medium truncate group-hover:text-accent-signal transition-colors duration-200">
                       {info.value}
                     </p>
                   </div>
@@ -176,7 +176,7 @@ export default function Contact() {
             <motion.div variants={itemVariants}>
               <button
                 onClick={copyEmail}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-border-subtle text-sm text-text-secondary hover:border-accent-signal hover:text-accent-signal transition-colors"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-border-subtle text-sm text-white/60 hover:border-accent-signal hover:text-accent-signal transition-colors"
               >
                 {copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
                 {copied ? 'Copied!' : 'Copy email'}
@@ -185,7 +185,7 @@ export default function Contact() {
 
             {/* Social */}
             <motion.div variants={itemVariants}>
-              <p className="text-[11px] text-text-tertiary uppercase tracking-widest font-mono mb-3">
+              <p className="text-[11px] text-white/50 uppercase tracking-widest font-mono mb-3">
                 Social
               </p>
               <div className="flex gap-2">
@@ -197,7 +197,7 @@ export default function Contact() {
                     rel="noopener noreferrer"
                     whileHover={{ y: -2 }}
                     whileTap={{ scale: 0.95 }}
-                    className="flex items-center justify-center w-9 h-9 rounded-full bg-bg-surface border border-border-subtle text-text-secondary hover:border-accent-signal hover:text-accent-signal transition-all duration-200"
+                    className="flex items-center justify-center w-9 h-9 rounded-full bg-bg-surface border border-border-subtle text-white/60 hover:border-accent-signal hover:text-accent-signal transition-all duration-200"
                     aria-label={social.label}
                   >
                     <social.icon className="w-4 h-4" />
@@ -216,8 +216,8 @@ export default function Contact() {
                 className="flex flex-col items-center justify-center text-center py-16 rounded-xl border border-success/20 bg-success/5"
               >
                 <CheckCircle className="w-10 h-10 text-success mb-4" />
-                <h3 className="text-text-primary font-medium text-lg mb-2">Message sent</h3>
-                <p className="text-text-secondary text-sm">Talk soon — I&apos;ll get back to you within a day.</p>
+                <h3 className="font-medium text-lg mb-2">Message sent</h3>
+                <p className="text-white/70 text-sm">Talk soon — I&apos;ll get back to you within a day.</p>
               </motion.div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-5">
@@ -286,7 +286,7 @@ export default function Contact() {
           transition={{ delay: 0.6, duration: 0.5 }}
           className="mt-16 text-center"
         >
-          <p className="text-text-tertiary text-sm italic">
+          <p className="text-white/50 text-sm italic">
             Always happy to talk about code, community, or collaboration.
           </p>
         </motion.div>

@@ -42,7 +42,7 @@ export default function About() {
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
-    <section id="about" className="py-24 md:py-32 px-4" ref={ref}>
+    <section id="about" className="py-24 md:py-32 px-4 text-white" ref={ref}>
       <div className="max-w-[720px] mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -53,7 +53,7 @@ export default function About() {
           <span className="text-accent-signal font-mono text-xs tracking-wider uppercase">
             About
           </span>
-          <h2 className="text-text-primary mt-2 font-display tracking-[var(--tracking-tight)]" style={{ fontSize: 'var(--text-3xl)' }}>
+          <h2 className="mt-2 font-display tracking-[var(--tracking-tight)]" style={{ fontSize: 'var(--text-3xl)' }}>
             A bit about me
           </h2>
         </motion.div>
@@ -81,23 +81,23 @@ export default function About() {
             animate={isInView ? 'visible' : 'hidden'}
             className="space-y-6"
           >
-            <motion.p variants={itemVariants} className="text-text-secondary leading-[1.7]" style={{ fontSize: 'var(--text-base)' }}>
+            <motion.p variants={itemVariants} className="leading-[1.7]" style={{ fontSize: 'var(--text-base)' }}>
               {aboutContent.summary}
             </motion.p>
 
             <motion.div variants={itemVariants} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <Card>
-                <p className="text-text-tertiary text-xs mb-1.5 font-mono uppercase tracking-wider">Education</p>
-                <p className="font-medium text-text-primary text-sm leading-snug">{aboutContent.education.degree}</p>
+                <p className="text-white/50 text-xs mb-1.5 font-mono uppercase tracking-wider">Education</p>
+                <p className="font-medium text-sm leading-snug">{aboutContent.education.degree}</p>
               </Card>
               <Card>
-                <p className="text-text-tertiary text-xs mb-1.5 font-mono uppercase tracking-wider">University</p>
-                <p className="font-medium text-text-primary text-sm">{aboutContent.education.school}</p>
+                <p className="text-white/50 text-xs mb-1.5 font-mono uppercase tracking-wider">University</p>
+                <p className="font-medium text-sm">{aboutContent.education.school}</p>
               </Card>
             </motion.div>
 
             <motion.div variants={itemVariants}>
-              <p className="text-text-tertiary text-xs mb-3 font-mono uppercase tracking-wider">Languages</p>
+              <p className="text-white/50 text-xs mb-3 font-mono uppercase tracking-wider">Languages</p>
               <div className="flex flex-wrap gap-2">
                 {aboutContent.languages.map((lang) => (
                   <Pill key={lang}>{lang}</Pill>
@@ -106,7 +106,7 @@ export default function About() {
             </motion.div>
 
             <motion.div variants={itemVariants}>
-              <p className="text-text-tertiary text-xs mb-3 font-mono uppercase tracking-wider">Interests</p>
+              <p className="text-white/50 text-xs mb-3 font-mono uppercase tracking-wider">Interests</p>
               <div className="flex flex-wrap gap-2">
                 {aboutContent.interests.map((interest) => (
                   <Pill key={interest}>{interest}</Pill>

@@ -29,7 +29,7 @@ export default function Footer() {
   };
 
   return (
-    <footer ref={ref} className="border-t border-border-subtle">
+    <footer ref={ref} className="border-t border-border-subtle text-white">
       {/* Main footer content */}
       <div className="py-12 px-4">
         <div className="max-w-[1120px] mx-auto">
@@ -48,7 +48,7 @@ export default function Footer() {
                 height={40}
                 className="h-8 w-auto object-contain mb-3"
               />
-              <p className="text-sm text-text-tertiary text-center md:text-left">
+              <p className="text-sm text-white/50 text-center md:text-left">
                 Full Stack Developer — Building systems that stay boring under load.
               </p>
             </motion.div>
@@ -60,7 +60,7 @@ export default function Footer() {
               transition={{ delay: 0.1, duration: 0.5 }}
               className="flex flex-col items-center md:items-start"
             >
-              <p className="text-[11px] text-text-tertiary uppercase tracking-widest font-mono mb-3">
+              <p className="text-[11px] text-white/50 uppercase tracking-widest font-mono mb-3">
                 Navigation
               </p>
               <div className="flex flex-col gap-2">
@@ -68,7 +68,7 @@ export default function Footer() {
                   <a
                     key={link.name}
                     href={link.href}
-                    className="text-sm text-text-secondary hover:text-accent-signal transition-colors"
+                    className="text-sm text-white/60 hover:text-accent-signal transition-colors"
                   >
                     {link.name}
                   </a>
@@ -83,7 +83,7 @@ export default function Footer() {
               transition={{ delay: 0.2, duration: 0.5 }}
               className="flex flex-col items-center md:items-start"
             >
-              <p className="text-[11px] text-text-tertiary uppercase tracking-widest font-mono mb-3">
+              <p className="text-[11px] text-white/50 uppercase tracking-widest font-mono mb-3">
                 Connect
               </p>
               <div className="flex gap-2 mb-4">
@@ -93,7 +93,7 @@ export default function Footer() {
                     href={href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-center w-9 h-9 rounded-full bg-bg-surface border border-border-subtle text-text-secondary hover:border-accent-signal hover:text-accent-signal transition-all duration-200"
+                    className="flex items-center justify-center w-9 h-9 rounded-full bg-bg-surface border border-border-subtle text-white/60 hover:border-accent-signal hover:text-accent-signal transition-all duration-200"
                     aria-label={`${label} (opens in new tab)`}
                   >
                     <Icon className="w-4 h-4" />
@@ -109,12 +109,12 @@ export default function Footer() {
       {/* Bottom bar */}
       <div className="border-t border-border-subtle py-4 px-4">
         <div className="max-w-[1120px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-xs text-text-tertiary">
+          <p className="text-xs text-white/50">
             &copy; {new Date().getFullYear()} Jobel V. Golde. All rights reserved.
           </p>
           <button
             onClick={scrollToTop}
-            className="text-text-tertiary hover:text-accent-signal transition-colors p-1"
+            className="text-white/50 hover:text-accent-signal transition-colors p-1"
             aria-label="Back to top"
           >
             <ArrowUp className="w-4 h-4" />

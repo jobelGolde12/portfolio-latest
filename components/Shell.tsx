@@ -3,6 +3,7 @@
 import { useState, useCallback } from 'react';
 import ThemeProvider from '@/components/ThemeProvider';
 import Navbar from '@/components/Navbar';
+import DarkBackground from '@/components/DarkBackground';
 import AnimatedBackground from '@/components/AnimatedBackground';
 import CommandPalette from '@/components/CommandPalette';
 
@@ -22,6 +23,7 @@ export default function Shell({ children }: { children: React.ReactNode }) {
         Skip to main content
       </a>
 
+      <DarkBackground />
       <AnimatedBackground />
       <Navbar onCommandPaletteOpen={openCommand} />
       <CommandPalette open={commandOpen} onClose={closeCommand} />
