@@ -71,7 +71,7 @@ export default function About() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
-          className="font-display font-bold tracking-[var(--tracking-tight)] leading-[0.95] text-[clamp(2.75rem,9vw,7rem)] max-w-4xl"
+          className="font-['Geist',sans-serif] font-light leading-[0.9] tracking-[-0.05em] text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl max-w-[90vw] sm:max-w-[80vw] md:max-w-[70vw] lg:max-w-[60vw] mx-auto"
         >
           A bit about me.
         </motion.h2>

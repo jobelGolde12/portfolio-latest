@@ -176,11 +176,14 @@ function SkillBadge({ skill }: { skill: string }) {
       whileTap={{ scale: 0.97 }}
       className="
         group/badge
-        relative inline-flex items-center gap-[7px]
-        px-3.5 py-[7px] rounded-full
+        relative inline-flex items-center
+        gap-1.5 sm:gap-[7px]
+        px-2.5 py-1.5
+        sm:px-3.5 sm:py-[7px]
+        rounded-full
         border border-white/[0.07]
         bg-white/[0.03]
-        text-[13px] text-white/75 font-normal
+        text-[12px] sm:text-[13px] text-white/75 font-normal
         cursor-default select-none
         transition-colors duration-300
         hover:border-[var(--color-accent,#a78bfa)]/50
@@ -197,7 +200,13 @@ function SkillBadge({ skill }: { skill: string }) {
       aria-label={skill}
     >
       <Icon
-        className="w-3.5 h-3.5 text-white/35 transition-colors duration-300 group-hover/badge:text-[var(--color-accent,#a78bfa)]"
+        className="
+          w-3 h-3
+          sm:w-3.5 sm:h-3.5
+          text-white/35
+          transition-colors duration-300
+          group-hover/badge:text-[var(--color-accent,#a78bfa)]
+        "
         strokeWidth={1.8}
         aria-hidden="true"
       />
@@ -227,12 +236,16 @@ function SkillCard({
       }}
       className="
         relative
-        rounded-[22px]
+        rounded-2xl
+        sm:rounded-[22px]
         border border-white/[0.06]
         bg-white/[0.025]
         backdrop-blur-sm
-        p-7 md:p-8
-        transition-all duration-400
+        p-5
+        sm:p-6
+        md:p-7
+        lg:p-8
+        transition-all duration-300
         hover:border-[var(--color-accent,#a78bfa)]/30
         hover:bg-white/[0.045]
         hover:shadow-[0_8px_40px_-12px_rgba(167,139,250,0.08),0_1px_3px_rgba(0,0,0,0.3)]
@@ -251,12 +264,15 @@ function SkillCard({
       }}
     >
       {/* ── Header row ── */}
-      <div className="flex items-start justify-between mb-4">
-        <div className="flex items-center gap-3">
+      <div className="flex items-start justify-between mb-3 sm:mb-4">
+        <div className="flex items-center gap-2.5 sm:gap-3">
           <div
             className="
               flex items-center justify-center
-              w-9 h-9 rounded-xl
+              w-8 h-8
+              sm:w-9 sm:h-9
+              rounded-lg
+              sm:rounded-xl
               bg-white/[0.05]
               border border-white/[0.06]
               text-white/50
@@ -264,9 +280,19 @@ function SkillCard({
               group-hover/card:text-[var(--color-accent,#a78bfa)]
             "
           >
-            <GroupIcon className="w-[18px] h-[18px]" strokeWidth={1.7} aria-hidden="true" />
+            <GroupIcon
+              className="w-4 h-4 sm:w-[18px] sm:h-[18px]"
+              strokeWidth={1.7}
+              aria-hidden="true"
+            />
           </div>
-          <h3 className="font-medium text-[15px] text-white tracking-[-0.01em]">
+          <h3
+            className="
+              font-medium
+              text-[14px] sm:text-[15px]
+              text-white tracking-[-0.01em]
+            "
+          >
             {group.title}
           </h3>
         </div>
@@ -274,7 +300,7 @@ function SkillCard({
           className="
             font-mono text-[11px] tracking-wider
             text-white/25
-            mt-1.5
+            mt-1 sm:mt-1.5
             tabular-nums
           "
           aria-label={`${count} skills`}
@@ -284,14 +310,20 @@ function SkillCard({
       </div>
 
       {/* ── Description ── */}
-      <p className="text-[13px] leading-[1.65] text-white/40 mb-5">
+      <p
+        className="
+          text-[12.5px] sm:text-[13px]
+          leading-[1.65] text-white/40
+          mb-4 sm:mb-5
+        "
+      >
         {group.description}
       </p>
 
       {/* ── Divider ── */}
       <div
         className="
-          h-px mb-5
+          h-px mb-4 sm:mb-5
           bg-gradient-to-r from-white/[0.06] via-white/[0.03] to-transparent
         "
         aria-hidden="true"
@@ -300,7 +332,7 @@ function SkillCard({
       {/* ── Badges ── */}
       <motion.div
         variants={badgeStagger}
-        className="flex flex-wrap gap-2"
+        className="flex flex-wrap gap-1.5 sm:gap-2"
         role="list"
         aria-label={`${group.title} skills`}
       >
@@ -319,7 +351,7 @@ function SectionHeader() {
       variants={headerVariants}
       initial="hidden"
       animate="visible"
-      className="mb-16 md:mb-20"
+      className="mb-10 sm:mb-14 md:mb-16 lg:mb-20"
     >
       {/* Label */}
       <motion.span
@@ -328,7 +360,7 @@ function SectionHeader() {
           inline-block
           font-mono text-[11px] tracking-[0.14em] uppercase
           text-[var(--color-accent,#a78bfa)]
-          mb-4
+          mb-3 sm:mb-4
         "
       >
         Capabilities
@@ -341,9 +373,9 @@ function SectionHeader() {
           font-display tracking-[var(--tracking-tight)]
           text-white
           leading-[1.1]
-          mb-5
+          mb-4 sm:mb-5
         "
-        style={{ fontSize: 'clamp(2rem, 5vw, 3rem)' }}
+        style={{ fontSize: 'clamp(1.75rem, 5vw, 3rem)' }}
       >
         Skills
       </motion.h2>
@@ -351,14 +383,14 @@ function SectionHeader() {
       {/* Decorative line */}
       <motion.div
         variants={headerChild}
-        className="w-12 h-px bg-white/10 mb-5"
+        className="w-10 sm:w-12 h-px bg-white/10 mb-4 sm:mb-5"
         aria-hidden="true"
       />
 
       {/* Supporting text */}
       <motion.p
         variants={headerChild}
-        className="max-w-md text-[14px] leading-[1.75] text-white/45"
+        className="max-w-sm sm:max-w-md text-[13px] sm:text-[14px] leading-[1.75] text-white/45"
       >
         Stack I use day to day — focused on full-stack web, with a foundation
         in systems and networking.
@@ -376,26 +408,45 @@ export default function Skills() {
     <section
       id="skills"
       ref={ref}
-      className="relative py-28 md:py-36 px-4 overflow-hidden text-white"
+      className="
+        relative
+        py-20 sm:py-24 md:py-32 lg:py-36
+        px-4 sm:px-6 lg:px-8
+        overflow-hidden text-white
+      "
     >
       {/* ── Background decorations ── */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0">
         {/* Accent glow — top-right */}
         <div
-          className="absolute -top-32 right-0 w-[500px] h-[500px] rounded-full opacity-[0.035]"
+          className="
+            absolute
+            -top-20 sm:-top-32
+            right-0
+            w-[300px] h-[300px]
+            sm:w-[500px] sm:h-[500px]
+            rounded-full opacity-[0.035]
+          "
           style={{
             background:
               'radial-gradient(circle, var(--color-accent, #a78bfa) 0%, transparent 70%)',
-            filter: 'blur(80px)',
+            filter: 'blur(60px) sm:blur(80px)',
           }}
         />
         {/* Accent glow — bottom-left */}
         <div
-          className="absolute -bottom-40 -left-20 w-[400px] h-[400px] rounded-full opacity-[0.025]"
+          className="
+            absolute
+            -bottom-24 sm:-bottom-40
+            -left-10 sm:-left-20
+            w-[250px] h-[250px]
+            sm:w-[400px] sm:h-[400px]
+            rounded-full opacity-[0.025]
+          "
           style={{
             background:
               'radial-gradient(circle, var(--color-accent, #a78bfa) 0%, transparent 70%)',
-            filter: 'blur(100px)',
+            filter: 'blur(80px) sm:blur(100px)',
           }}
         />
         {/* Subtle grid */}
@@ -404,7 +455,7 @@ export default function Skills() {
           style={{
             backgroundImage:
               'linear-gradient(rgba(255,255,255,0.4) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.4) 1px, transparent 1px)',
-            backgroundSize: '64px 64px',
+            backgroundSize: '48px 48px',
             maskImage:
               'radial-gradient(ellipse 60% 50% at 50% 40%, black 30%, transparent 100%)',
             WebkitMaskImage:
@@ -414,7 +465,7 @@ export default function Skills() {
       </div>
 
       {/* ── Content ── */}
-      <div className="relative max-w-[1120px] mx-auto">
+      <div className="relative max-w-5xl lg:max-w-[1120px] mx-auto">
         <SectionHeader />
 
         <motion.div
@@ -428,16 +479,13 @@ export default function Skills() {
             },
           }}
           className="
-            grid grid-cols-1 md:grid-cols-2
-            gap-5 md:gap-6
-            auto-rows-auto
+            grid
+            grid-cols-1
+            md:grid-cols-2
+            gap-4 sm:gap-5 md:gap-6
           "
-          style={{
-            gridTemplateRows: 'auto auto',
-            gridTemplateColumns: '1fr 1fr',
-          }}
         >
-          {/* Core Engineering — spans full width on desktop */}
+          {/* Core Engineering — spans full width on md+ */}
           <div className="md:col-span-2">
             <SkillCard group={skillGroups[0]} emphasized />
           </div>
@@ -448,7 +496,7 @@ export default function Skills() {
           {/* Craft & Tooling */}
           <SkillCard group={skillGroups[2]} emphasized={false} />
 
-          {/* Currently Exploring — spans full width on desktop */}
+          {/* Currently Exploring — spans full width on md+ */}
           <div className="md:col-span-2">
             <SkillCard group={skillGroups[3]} emphasized={false} />
           </div>
