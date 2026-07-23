@@ -1,9 +1,12 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
+import Image from 'next/image';
 import { motion, useInView } from 'framer-motion';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight, GithubIcon as GithubIconLucid } from 'lucide-react';
 import { GithubIcon } from './Icons';
+
+/* ─── Data ─────────────────────────────────────────────── */
 
 const projects = [
   {
@@ -15,6 +18,7 @@ const projects = [
     live: 'https://filipino-profanity-api-latest.vercel.app/',
     category: 'API',
     year: '2024',
+    image: '/images/project_profanity_api.png',
   },
   {
     title: 'Lost and Found System',
@@ -24,6 +28,7 @@ const projects = [
     github: 'https://github.com/jobelGolde12/bulan_lost_and_found3.git',
     category: 'Capstone',
     year: '2024',
+    image: '/images/project_lost_and_found.png',
   },
   {
     title: 'Protec Damayan',
@@ -33,6 +38,7 @@ const projects = [
     github: 'https://github.com/jobelGolde12/damayan.git',
     category: 'Community',
     year: '2023',
+    image: null,
   },
 ];
 
