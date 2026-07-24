@@ -2,8 +2,11 @@
 
 import { useRef } from 'react';
 import Image from 'next/image';
+import dynamic from 'next/dynamic';
 import { motion, useInView, useReducedMotion } from 'framer-motion';
 import { Pill } from '@/components/ui/pill';
+
+const MapView = dynamic(() => import('@/components/MapView'), { ssr: false });
 
 const aboutContent = {
   summary: `A passionate programmer with strong experience in developing multiple systems. I enjoy solving problems through code, continuously improving my skills, and exploring different areas of the IT industry. Motivated, adaptable, and eager to learn, I aim to contribute to meaningful projects while expanding my knowledge in software development and emerging technologies.`,
@@ -193,6 +196,7 @@ export default function About() {
               <p className="text-base md:text-lg font-light text-white/80 tracking-wide">
                 {aboutContent.location}
               </p>
+              <MapView />
             </motion.div>
 
             {/* ── Languages ── */}

@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { GeistSans } from 'geist/font/sans';
 import { GeistMono } from 'geist/font/mono';
 import { Fraunces } from 'next/font/google';
+import 'leaflet/dist/leaflet.css';
 import './globals.css';
 import Shell from '@/components/Shell';
 
