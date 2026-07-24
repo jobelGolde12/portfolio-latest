@@ -1,13 +1,29 @@
 'use client';
 
-import { useEffect, useRef, useCallback } from 'react';
+import { useEffect, useRef, useCallback, type CSSProperties, type ReactNode } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
+
+/** Always-dark surface tokens so the dialog never renders with a light/white panel. */
+const DARK_DIALOG_VARS = {
+  '--color-bg-base': '#0A0B0D',
+  '--color-bg-surface': '#0D0D0D',
+  '--color-bg-surface-2': '#111111',
+  '--color-bg-overlay': 'rgba(10, 10, 10, 0.85)',
+  '--color-border-subtle': '#1A1A1A',
+  '--color-border-strong': '#262626',
+  '--color-text-primary': '#EDEFF2',
+  '--color-text-secondary': '#9AA1AC',
+  '--color-text-tertiary': '#5C636E',
+  '--color-accent-signal': '#7C5CFF',
+  '--color-accent-signal-text': '#9B85FF',
+  '--color-accent-signal-dim': 'rgba(124, 92, 255, 0.14)',
+} as CSSProperties;
 
 interface DialogProps {
   open: boolean;
   onClose: () => void;
-  children: React.ReactNode;
+  children: ReactNode;
   className?: string;
 }
 
@@ -82,10 +98,14 @@ export function Dialog({ open, onClose, children, className }: DialogProps) {
           role="dialog"
           aria-modal="true"
         >
-          {/* Backdrop */}
-          <div className="absolute inset-0 bg-bg-overlay backdrop-blur-sm" />
+          {/* Backdrop — always dark so the overlay never flashes white */}
+          <div
+            className="absolute inset-0 bg-black/75 backdrop-blur-sm"
+            onClick={onClose}
+            aria-hidden="true"
+          />
 
-          {/* Content */}
+          {/* Content — force dark theme tokens so palette stays dark in light mode */}
           <motion.div
             ref={dialogRef}
             tabIndex={-1}
@@ -97,6 +117,7 @@ export function Dialog({ open, onClose, children, className }: DialogProps) {
               'relative z-10 w-full max-w-lg rounded-xl border border-border-subtle bg-bg-surface shadow-lg',
               className,
             )}
+            style={DARK_DIALOG_VARS}
           >
             {children}
           </motion.div>
