@@ -2,6 +2,7 @@
 
 import { useRef } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { motion, useInView } from 'framer-motion';
 import { ArrowUp } from 'lucide-react';
 import { GithubIcon, LinkedinIcon, FacebookIcon } from './Icons';
@@ -14,10 +15,10 @@ const socialLinks = [
 ];
 
 const navLinks = [
-  { name: 'About', href: '#about' },
-  { name: 'Skills', href: '#skills' },
-  { name: 'Projects', href: '#projects' },
-  { name: 'Contact', href: '#contact' },
+  { name: 'About', href: '/#about' },
+  { name: 'Skills', href: '/#skills' },
+  { name: 'Projects', href: '/#projects' },
+  { name: 'Contact', href: '/#contact' },
 ];
 
 export default function Footer() {
@@ -65,13 +66,13 @@ export default function Footer() {
               </p>
               <div className="flex flex-col gap-2">
                 {navLinks.map((link) => (
-                  <a
+                  <Link
                     key={link.name}
                     href={link.href}
                     className="text-sm text-white/60 hover:text-accent-signal transition-colors"
                   >
                     {link.name}
-                  </a>
+                  </Link>
                 ))}
               </div>
             </motion.div>

@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Search, Sun, Moon } from 'lucide-react';
 import { useTheme } from '@/components/ThemeProvider';
@@ -9,10 +10,10 @@ import { GithubIcon } from '@/components/Icons';
 import { cn } from '@/lib/utils';
 
 const navLinks = [
-  { name: 'About', href: '#about' },
-  { name: 'Skills', href: '#skills' },
-  { name: 'Projects', href: '#projects' },
-  { name: 'Contact', href: '#contact' },
+  { name: 'About', href: '/#about' },
+  { name: 'Skills', href: '/#skills' },
+  { name: 'Projects', href: '/#projects' },
+  { name: 'Contact', href: '/#contact' },
 ];
 
 export default function Navbar({
@@ -57,7 +58,7 @@ export default function Navbar({
 
   /* ── Active section observer ─────────────────────────── */
   useEffect(() => {
-    const sectionIds = navLinks.map((l) => l.href.replace('#', ''));
+    const sectionIds = navLinks.map((l) => l.href.replace('/#', ''));
     const observers: IntersectionObserver[] = [];
 
     sectionIds.forEach((id) => {
@@ -67,7 +68,7 @@ export default function Navbar({
       const observer = new IntersectionObserver(
         ([entry]) => {
           if (entry.isIntersecting) {
-            setActiveSection(`#${id}`);
+            setActiveSection(id);
           }
         },
         { rootMargin: '-45% 0px -45% 0px' },
@@ -130,11 +131,9 @@ export default function Navbar({
           )}
         >
           {/* Logo */}
-          <motion.a
-            href="#"
+          <Link
+            href="/"
             className="relative flex items-center shrink-0 pl-3"
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.97 }}
             aria-label="Jobel — Home"
           >
             <Image
@@ -145,27 +144,29 @@ export default function Navbar({
               className="h-8 md:h-9 w-auto object-contain"
               priority
             />
-          </motion.a>
+          </Link>
 
-          {/* Desktop nav links - Made darker for visibility */}
+          {/* Desktop nav links */}
           <div className="hidden md:flex items-center gap-1">
-            {navLinks.map((link, index) => (
-              <motion.a
-                key={link.name}
-                href={link.href}
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.06 }}
-                className={cn(
-                  'relative px-4 py-2 text-sm font-medium rounded-full transition-colors duration-200',
-                  activeSection === link.href
-                    ? 'text-accent-signal'
-                    : 'text-text-primary hover:text-text-primary hover:bg-bg-surface-2',
-                )}
-              >
-                {link.name}
-              </motion.a>
-            ))}
+            {navLinks.map((link, index) => {
+              const sectionId = link.href.replace('/#', '');
+              const isActive = activeSection === sectionId;
+              return (
+                <Link
+                  key={link.name}
+                  href={link.href}
+                  aria-current={isActive ? 'page' : undefined}
+                  className={cn(
+                    'relative px-4 py-2 text-sm font-medium rounded-full transition-colors duration-200',
+                    isActive
+                      ? 'text-accent-signal'
+                      : 'text-text-primary hover:text-text-primary hover:bg-bg-surface-2',
+                  )}
+                >
+                  {link.name}
+                </Link>
+              );
+            })}
           </div>
 
           {/* Desktop actions - Made icons and text darker */}
@@ -197,12 +198,12 @@ export default function Navbar({
               GitHub
             </a>
 
-            <a
-              href="#contact"
+            <Link
+              href="/#contact"
               className="flex items-center gap-2 px-5 py-2 text-sm font-medium rounded-full bg-accent-signal text-white hover:brightness-110 transition-all"
             >
               Get in touch
-            </a>
+            </Link>
           </motion.div>
 
           {/* Mobile: search + theme + menu - Made icons darker */}
@@ -242,21 +243,26 @@ export default function Navbar({
               className="absolute top-[72px] left-4 right-4 rounded-2xl bg-bg-overlay/95 backdrop-blur-xl border border-border-subtle shadow-lg overflow-hidden md:hidden"
             >
               <div className="px-4 py-4 space-y-1">
-                {navLinks.map((link) => (
-                  <a
-                    key={link.name}
-                    href={link.href}
-                    onClick={() => setMobileMenuOpen(false)}
-                    className={cn(
-                      'block px-4 py-3 text-sm font-medium rounded-xl transition-colors',
-                      activeSection === link.href
-                        ? 'text-accent-signal bg-accent-signal-dim'
-                        : 'text-text-primary hover:text-text-primary hover:bg-bg-surface-2',
-                    )}
-                  >
-                    {link.name}
-                  </a>
-                ))}
+                {navLinks.map((link) => {
+                  const sectionId = link.href.replace('/#', '');
+                  const isActive = activeSection === sectionId;
+                  return (
+                    <Link
+                      key={link.name}
+                      href={link.href}
+                      onClick={() => setMobileMenuOpen(false)}
+                      aria-current={isActive ? 'page' : undefined}
+                      className={cn(
+                        'block px-4 py-3 text-sm font-medium rounded-xl transition-colors',
+                        isActive
+                          ? 'text-accent-signal bg-accent-signal-dim'
+                          : 'text-text-primary hover:text-text-primary hover:bg-bg-surface-2',
+                      )}
+                    >
+                      {link.name}
+                    </Link>
+                  );
+                })}
                 <div className="flex flex-col gap-2 pt-3 px-1">
                   <a
                     href="https://github.com/jobelGolde12"
@@ -267,13 +273,13 @@ export default function Navbar({
                     <GithubIcon className="w-4 h-4" />
                     GitHub
                   </a>
-                  <a
-                    href="#contact"
+                  <Link
+                    href="/#contact"
                     onClick={() => setMobileMenuOpen(false)}
                     className="flex items-center justify-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium bg-accent-signal text-white hover:brightness-110 transition-all"
                   >
                     Get in touch
-                  </a>
+                  </Link>
                 </div>
               </div>
             </motion.div>

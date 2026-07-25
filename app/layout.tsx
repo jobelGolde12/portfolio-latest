@@ -5,6 +5,8 @@ import { Fraunces } from 'next/font/google';
 import 'leaflet/dist/leaflet.css';
 import './globals.css';
 import Shell from '@/components/Shell';
+import JsonLd from '@/components/JsonLd';
+import { SITE_CONFIG } from '@/lib/seo';
 
 const geistSans = GeistSans;
 const geistMono = GeistMono;
@@ -16,21 +18,62 @@ const fraunces = Fraunces({
   weight: ['400', '500', '700', '800', '900'],
 });
 
+const { baseUrl, siteName, tagline, description, locale, ogImage, ogImageDimensions } =
+  SITE_CONFIG;
+
 export const metadata: Metadata = {
-  title: 'Jobel V. Golde — Full Stack Developer',
-  description:
-    'Professional portfolio of Jobel V. Golde — full-stack developer building systems that stay boring under load. BSIT student at Sorsogon State University.',
+  metadataBase: new URL(baseUrl),
+
+  title: {
+    default: `${siteName} — ${tagline}`,
+    template: `%s | ${siteName}`,
+  },
+
+  description,
+
   icons: {
     icon: [{ url: '/jobel_logo.png', type: 'image/png' }],
     apple: [{ url: '/jobel_logo.png', type: 'image/png' }],
     shortcut: '/jobel_logo.png',
   },
+
+  // Canonical URL — prevents duplicate content penalties
+  alternates: {
+    canonical: baseUrl,
+  },
+
   openGraph: {
-    title: 'Jobel V. Golde — Full Stack Developer',
-    description:
-      'Full-stack developer building systems that stay boring under load. BSIT student at Sorsogon State University.',
+    title: `${siteName} — ${tagline}`,
+    description,
+    url: baseUrl,
+    siteName,
     type: 'website',
-    locale: 'en_US',
+    locale,
+    images: [
+      {
+        url: ogImage,
+        width: ogImageDimensions.width,
+        height: ogImageDimensions.height,
+        alt: siteName,
+      },
+    ],
+  },
+
+  twitter: {
+    card: 'summary_large_image',
+    title: `${siteName} — ${tagline}`,
+    description,
+    images: [ogImage],
+    creator: SITE_CONFIG.twitterHandle,
+  },
+
+  // Additional metadata for crawlers
+  robots: {
+    index: true,
+    follow: true,
+    'max-snippet': -1,
+    'max-image-preview': 'large',
+    'max-video-preview': -1,
   },
 };
 
@@ -44,6 +87,8 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${fraunces.variable} font-ui antialiased min-h-screen overflow-x-hidden`}
       >
+        {/* Structured data for search engines (JSON-LD) */}
+        <JsonLd />
         <Shell>{children}</Shell>
       </body>
     </html>
