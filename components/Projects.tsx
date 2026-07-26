@@ -31,7 +31,7 @@ const projects: Project[] = [
     title: 'Suitora',
     image: '/images/project_suitora.png',
     gradient: 'from-amber-500 via-orange-500 to-rose-700',
-    link: 'https://github.com/jobelGolde12/suitora',
+    link: 'https://suitora-kappa.vercel.app/',
   },
   {
     title: 'Dugtong',
