@@ -21,6 +21,12 @@ const projects: Project[] = [
     gradient: 'from-violet-500/80 to-indigo-900/80',
     link: 'https://filipino-profanity-api-latest.vercel.app/?fbclid=IwY2xjawTQHvRleHRuA2FlbQIxMABicmlkETFPaTlrYkFpWWJXQmJZM2t0c3J0YwZhcHBfaWQQMjIyMDM5MTc4ODIwMDg5MgABHm6csQVvHFJnFC0wiHyGPLWtfrYWUhUp5Ma77zfzX7qQ6dpyPbWtsEgVbqgg_aem_TrYXt57tRJKARQ_7vM1myQ',
   },
+  {
+    title: 'TrailMates',
+    image: '/images/project_trailmates.png',
+    gradient: 'from-violet-500/80 to-indigo-900/80',
+    link: 'https://companion-hike.onrender.com/',
+  },
   { 
     title: 'Lost and Found System',
     image: '/images/project_lost_and_found.png',
