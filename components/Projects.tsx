@@ -28,10 +28,10 @@ const projects: Project[] = [
     link: 'https://companion-hike.onrender.com/',
   },
   { 
-    title: 'Lost and Found System',
-    image: '/images/project_lost_and_found.png',
+    title: 'TaskMind',
+    image: '/images/project_taskmind.png',
     gradient: 'from-emerald-500/80 to-teal-900/80',
-    link: 'https://github.com/jobelGolde12/bulan_lost_and_found3',
+    link: 'https://whatshouldido-five.vercel.app/',
   },
   {
     title: 'Suitora',
