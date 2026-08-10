@@ -25,9 +25,11 @@ interface DialogProps {
   onClose: () => void;
   children: ReactNode;
   className?: string;
+  /** Accessible name announced for screen readers (WCAG 4.1.2). */
+  ariaLabel?: string;
 }
 
-export function Dialog({ open, onClose, children, className }: DialogProps) {
+export function Dialog({ open, onClose, children, className, ariaLabel }: DialogProps) {
   const dialogRef = useRef<HTMLDivElement>(null);
   const previousActiveElement = useRef<Element | null>(null);
 
@@ -97,6 +99,7 @@ export function Dialog({ open, onClose, children, className }: DialogProps) {
           }}
           role="dialog"
           aria-modal="true"
+          aria-label={ariaLabel}
         >
           {/* Backdrop — always dark so the overlay never flashes white */}
           <div

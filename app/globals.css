@@ -6,6 +6,8 @@
   --color-bg-surface: #0D0D0D;
   --color-bg-surface-2: #111111;
   --color-bg-overlay: rgba(10, 10, 10, 0.85);
+  --color-dark: #0A0B0D;
+  --color-dark-light: #151517;
   --color-border-subtle: #1A1A1A;
   --color-border-strong: #262626;
   --color-text-primary: #EDEFF2;
@@ -119,6 +121,8 @@
   --color-bg-surface: var(--color-bg-surface);
   --color-bg-surface-2: var(--color-bg-surface-2);
   --color-bg-overlay: var(--color-bg-overlay);
+  --color-dark: var(--color-dark);
+  --color-dark-light: var(--color-dark-light);
   --color-border-subtle: var(--color-border-subtle);
   --color-border-strong: var(--color-border-strong);
   --color-text-primary: var(--color-text-primary);

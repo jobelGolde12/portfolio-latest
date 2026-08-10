@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import { Dialog } from '@/components/ui/dialog';
 import { Search, ArrowUpRight, Mail, FileText } from 'lucide-react';
 import { GithubIcon, LinkedinIcon, FacebookIcon } from '@/components/Icons';
@@ -22,6 +22,17 @@ interface CommandPaletteProps {
 export default function CommandPalette({ open, onClose }: CommandPaletteProps) {
   const [query, setQuery] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [prevOpen, setPrevOpen] = useState(open);
+
+  // Reset palette state whenever the dialog is (re)opened — "adjusting state during render"
+  // (React 19 pattern; avoids setState-in-effect lint error).
+  if (open !== prevOpen) {
+    setPrevOpen(open);
+    if (open) {
+      setQuery('');
+      setSelectedIndex(0);
+    }
+  }
 
   const commands: CommandItem[] = useMemo(
     () => [
@@ -30,6 +41,7 @@ export default function CommandPalette({ open, onClose }: CommandPaletteProps) {
       { id: 'skills', label: 'Skills', category: 'Sections', action: () => { document.getElementById('skills')?.scrollIntoView({ behavior: 'smooth' }); onClose(); } },
       { id: 'projects', label: 'Projects', category: 'Sections', action: () => { document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' }); onClose(); } },
       { id: 'contact', label: 'Contact', category: 'Sections', action: () => { document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); onClose(); } },
+      { id: 'blog', label: 'Visit the blog', category: 'Sections', action: () => { window.open('/blog', '_self'); onClose(); } },
 
       // Projects
       { id: 'proj-profanity', label: 'Profanity Detection API', category: 'Projects', action: () => { window.open('https://filipino-profanity-api-latest.vercel.app/', '_blank'); onClose(); } },
@@ -42,7 +54,7 @@ export default function CommandPalette({ open, onClose }: CommandPaletteProps) {
       { id: 'github', label: 'View GitHub profile', category: 'Actions', icon: <GithubIcon className="w-4 h-4" />, action: () => { window.open('https://github.com/jobelGolde12', '_blank'); onClose(); } },
       { id: 'linkedin', label: 'View LinkedIn profile', category: 'Actions', icon: <LinkedinIcon className="w-4 h-4" />, action: () => { window.open('https://www.linkedin.com/in/jobel-golde-6a8822411/', '_blank'); onClose(); } },
       { id: 'facebook', label: 'View Facebook profile', category: 'Actions', icon: <FacebookIcon className="w-4 h-4" />, action: () => { window.open('https://www.facebook.com/jobelGolde', '_blank'); onClose(); } },
-      { id: 'resume', label: 'Download resume', category: 'Actions', icon: <FileText className="w-4 h-4" />, action: () => { onClose(); } },
+      { id: 'resume', label: 'Download resume', category: 'Actions', icon: <FileText className="w-4 h-4" />, action: () => { window.open('/jobel-golde-resume.pdf', '_blank'); onClose(); } },
     ],
     [onClose],
   );
@@ -72,17 +84,6 @@ export default function CommandPalette({ open, onClose }: CommandPaletteProps) {
 
   const flatItems = filtered;
 
-  useEffect(() => {
-    setSelectedIndex(0);
-  }, [query]);
-
-  useEffect(() => {
-    if (!open) {
-      setQuery('');
-      setSelectedIndex(0);
-    }
-  }, [open]);
-
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
       if (e.key === 'ArrowDown') {
@@ -104,12 +105,19 @@ export default function CommandPalette({ open, onClose }: CommandPaletteProps) {
       <div className="flex flex-col" onKeyDown={handleKeyDown}>
         {/* Search input */}
         <div className="flex items-center gap-3 px-4 py-3 border-b border-border-subtle">
-          <Search className="w-4 h-4 text-text-tertiary shrink-0" />
+          <Search className="w-4 h-4 text-text-tertiary shrink-0" aria-hidden />
+          <label htmlFor="command-search" className="sr-only">
+            Search sections, projects, actions
+          </label>
           <input
+            id="command-search"
             type="text"
             placeholder="Search sections, projects, actions..."
             value={query}
-            onChange={(e) => setQuery(e.target.value)}
+            onChange={(e) => {
+              setQuery(e.target.value);
+              setSelectedIndex(0);
+            }}
             className="flex-1 bg-transparent text-sm text-text-primary placeholder:text-text-tertiary outline-none font-mono"
             autoFocus
           />

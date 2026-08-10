@@ -5,20 +5,9 @@ import Image from 'next/image';
 import dynamic from 'next/dynamic';
 import { motion, useInView, useReducedMotion } from 'framer-motion';
 import { Pill } from '@/components/ui/pill';
+import { aboutContent } from '@/data/about';
 
 const MapView = dynamic(() => import('@/components/MapView'), { ssr: false });
-
-const aboutContent = {
-  summary: `A passionate programmer with strong experience in developing multiple systems. I enjoy solving problems through code, continuously improving my skills, and exploring different areas of the IT industry. Motivated, adaptable, and eager to learn, I aim to contribute to meaningful projects while expanding my knowledge in software development and emerging technologies.`,
-  education: {
-    school: 'Sorsogon State University - Bulan Campus',
-    degree: 'Bachelor of Science in Information Technology (BSIT)',
-    year: '2022 - 2026',
-  },
-  location: 'Bulan, Sorsogon, Philippines',
-  languages: ['English', 'Filipino'],
-  interests: ['Web Development', 'Problem Solving', 'System Design', 'UI/UX Design'],
-};
 
 const fadeUp = {
   hidden: { opacity: 0, y: 36 },
@@ -30,7 +19,7 @@ const fadeUp = {
 };
 
 const labelClass =
-  'font-mono text-[11px] tracking-[0.2em] uppercase text-white/35 mb-6';
+  'font-mono text-[11px] tracking-[0.2em] uppercase text-text-secondary mb-6';
 
 export default function About() {
   const contentRef = useRef<HTMLDivElement>(null);
@@ -133,7 +122,7 @@ export default function About() {
                 }}
               >
                 <Image
-                  src="/profile.jpg"
+                  src="/profile.webp"
                   alt="Jobel V. Golde"
                   fill
                   sizes="(max-width: 1024px) 90vw, 440px"

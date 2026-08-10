@@ -66,12 +66,12 @@ export default function MapView() {
       <div className="flex items-center justify-between gap-2 px-4 py-2.5 bg-black/40 backdrop-blur-sm border-t border-white/[0.04]">
         <div className="flex items-center gap-2">
           <div className="w-1.5 h-1.5 rounded-full bg-accent-signal animate-signal-pulse" />
-          <span className="font-mono text-[11px] tracking-wider text-white/45">
+          <span className="font-mono text-[11px] tracking-wider text-text-secondary">
             Sorsogon State University – Bulan Campus
           </span>
         </div>
-        <span className="font-mono text-[9px] tracking-wider text-white/25">
-          © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer" className="hover:text-white/50 transition-colors">OSM</a>
+        <span className="font-mono text-[9px] tracking-wider text-text-tertiary">
+          © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-text-primary transition-colors">OSM</a>
         </span>
       </div>
     </div>

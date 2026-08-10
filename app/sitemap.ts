@@ -1,5 +1,6 @@
 import type { MetadataRoute } from 'next';
 import { SITE_CONFIG } from '@/lib/seo';
+import { posts } from '@/data/posts';
 
 const { baseUrl } = SITE_CONFIG;
 
@@ -18,20 +19,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly',
       priority: 1.0,
     },
-    // --- Example: Blog posts (uncomment when blog section exists) ---
-    // ...(await getBlogPosts()).map((post) => ({
-    //   url: `${baseUrl}/blog/${post.slug}`,
-    //   lastModified: new Date(post.updatedAt ?? post.createdAt),
-    //   changeFrequency: 'weekly' as const,
-    //   priority: 0.7,
-    // })),
-    //
-    // --- Example: Individual projects (uncomment when /projects/[slug] exists) ---
-    // ...(await getProjects()).map((project) => ({
-    //   url: `${baseUrl}/projects/${project.slug}`,
-    //   lastModified: new Date(project.updatedAt),
-    //   changeFrequency: 'monthly' as const,
-    //   priority: 0.8,
-    // })),
+    // Blog posts — dates are pinned to the post date so the sitemap stays stable.
+    ...posts.map((post) => ({
+      url: `${baseUrl}/blog/${post.slug}`,
+      lastModified: new Date(post.date),
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+    })),
   ];
 }

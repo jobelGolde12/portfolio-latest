@@ -4,17 +4,10 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Search, Sun, Moon } from 'lucide-react';
-import { useTheme } from '@/components/ThemeProvider';
+import { Menu, X, Search } from 'lucide-react';
 import { GithubIcon } from '@/components/Icons';
+import { NAV_LINKS } from '@/lib/seo';
 import { cn } from '@/lib/utils';
-
-const navLinks = [
-  { name: 'About', href: '/#about' },
-  { name: 'Skills', href: '/#skills' },
-  { name: 'Projects', href: '/#projects' },
-  { name: 'Contact', href: '/#contact' },
-];
 
 export default function Navbar({
   onCommandPaletteOpen,
@@ -29,7 +22,6 @@ export default function Navbar({
   const mobileMenuRef = useRef<HTMLDivElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
   const lastScrollY = useRef(0);
-  const { theme, toggleTheme } = useTheme();
 
   /* ── Scroll handler: direction + progress ───────────── */
   useEffect(() => {
@@ -58,7 +50,7 @@ export default function Navbar({
 
   /* ── Active section observer ─────────────────────────── */
   useEffect(() => {
-    const sectionIds = navLinks.map((l) => l.href.replace('/#', ''));
+    const sectionIds = NAV_LINKS.map((l) => l.href.replace('/#', ''));
     const observers: IntersectionObserver[] = [];
 
     sectionIds.forEach((id) => {
@@ -148,7 +140,7 @@ export default function Navbar({
 
           {/* Desktop nav links */}
           <div className="hidden md:flex items-center gap-1">
-            {navLinks.map((link, index) => {
+            {NAV_LINKS.map((link) => {
               const sectionId = link.href.replace('/#', '');
               const isActive = activeSection === sectionId;
               return (
@@ -221,6 +213,7 @@ export default function Navbar({
               className="p-2 rounded-full text-text-primary hover:text-text-primary hover:bg-bg-surface-2 transition-colors"
               aria-expanded={mobileMenuOpen}
               aria-controls="mobile-menu"
+              aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
             >
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
@@ -243,7 +236,7 @@ export default function Navbar({
               className="absolute top-[72px] left-4 right-4 rounded-2xl bg-bg-overlay/95 backdrop-blur-xl border border-border-subtle shadow-lg overflow-hidden md:hidden"
             >
               <div className="px-4 py-4 space-y-1">
-                {navLinks.map((link) => {
+                {NAV_LINKS.map((link) => {
                   const sectionId = link.href.replace('/#', '');
                   const isActive = activeSection === sectionId;
                   return (

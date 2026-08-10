@@ -46,7 +46,7 @@ export default function JsonLd() {
       addressCountry: 'PH',
     },
     email: 'jobelgolde45@gmail.com',
-    image: `${baseUrl}/profile.jpg`,
+    image: `${baseUrl}/profile.webp`,
   };
 
   const websiteSchema = {

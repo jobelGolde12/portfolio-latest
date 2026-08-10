@@ -5,11 +5,12 @@ import Skills from '@/components/Skills';
 import Services from '@/components/Services';
 import Projects from '@/components/Projects';
 import Timeline from '@/components/Timeline';
+import Testimonials from '@/components/Testimonials';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
 import { SITE_CONFIG } from '@/lib/seo';
 
-const { siteName, tagline, baseUrl } = SITE_CONFIG;
+const { siteName, tagline, baseUrl, ogImage, ogImageDimensions } = SITE_CONFIG;
 
 /**
  * Unique metadata for the homepage.
@@ -28,6 +29,15 @@ export const metadata: Metadata = {
     description:
       'Full-stack developer building systems that stay boring under load. BSIT student at Sorsogon State University.',
     url: baseUrl,
+    // Page-level openGraph replaces the layout's, so images must be repeated here.
+    images: [
+      {
+        url: ogImage,
+        width: ogImageDimensions.width,
+        height: ogImageDimensions.height,
+        alt: siteName,
+      },
+    ],
   },
 };
 
@@ -40,6 +50,7 @@ export default function Home() {
       <Services />
       <Projects />
       <Timeline />
+      <Testimonials />
       <Contact />
       <Footer />
     </>

@@ -2,12 +2,15 @@
 
 import { useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { Mail, MapPin, Send, CheckCircle, ArrowUpRight, Copy, Check } from 'lucide-react';
+import { Mail, MapPin, CheckCircle, ArrowUpRight, Copy, Check } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
-import { GithubIcon, LinkedinIcon, FacebookIcon } from './Icons';
+import { SectionHeading } from '@/components/ui/SectionHeading';
+import { SOCIAL_ICONS } from './Icons';
+import { SOCIAL_LINKS } from '@/lib/seo';
+import { staggerContainer, fadeUpItem } from '@/lib/motion';
 
 /* ─── Data ─────────────────────────────────────────── */
 
@@ -26,32 +29,7 @@ const contactInfo = [
   },
 ];
 
-const socialLinks = [
-  { icon: GithubIcon, href: 'https://github.com/jobelGolde12', label: 'GitHub' },
-  {
-    icon: LinkedinIcon,
-    href: 'https://www.linkedin.com/in/jobel-golde-6a8822411/',
-    label: 'LinkedIn',
-  },
-  { icon: FacebookIcon, href: 'https://www.facebook.com/jobelGolde', label: 'Facebook' },
-];
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.08 },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 16 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] as const },
-  },
-};
 
 export default function Contact() {
   const ref = useRef(null);
@@ -112,26 +90,25 @@ export default function Contact() {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-          className="mb-16 md:mb-20"
         >
-          <span className="text-accent-signal font-mono text-xs tracking-wider uppercase">
-            Get in touch
-          </span>
-          <h2 className="mt-2 font-display tracking-[var(--tracking-tight)]" style={{ fontSize: 'var(--text-3xl)' }}>
-            Let&apos;s start a{' '}
-            <br className="hidden sm:block" />
-            conversation
-          </h2>
+          <SectionHeading
+            label="Get in touch"
+            title={
+              <>
+                Let&apos;s start a <br className="hidden sm:block" /> conversation
+              </>
+            }
+          />
         </motion.div>
 
         <motion.div
-          variants={containerVariants}
+          variants={staggerContainer}
           initial="hidden"
           animate={isInView ? 'visible' : 'hidden'}
           className="grid lg:grid-cols-12 gap-12 lg:gap-20"
         >
           {/* Left column: info */}
-          <motion.div variants={itemVariants} className="lg:col-span-5 space-y-8">
+          <motion.div variants={fadeUpItem} className="lg:col-span-5 space-y-8">
             {/* Status reprise */}
             <Badge status="success" label="Available for new roles" />
 
@@ -148,20 +125,20 @@ export default function Contact() {
 
             {/* Contact methods */}
             <div className="space-y-4">
-              {contactInfo.map((info, i) => (
+              {contactInfo.map((info) => (
                 <motion.a
                   key={info.label}
                   href={info.href}
                   target={info.label === 'Location' ? '_blank' : undefined}
                   rel={info.label === 'Location' ? 'noopener noreferrer' : undefined}
-                  variants={itemVariants}
-                  className="flex items-center gap-4 group"
+                  variants={fadeUpItem}
+                  className="flex items-center gap-4 group rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-signal"
                 >
                   <span className="shrink-0 flex items-center justify-center w-10 h-10 rounded-full bg-dark border border-border-subtle text-white/60 group-hover:border-accent-signal group-hover:text-accent-signal transition-colors duration-200">
                     <info.icon className="w-4 h-4" />
                   </span>
                   <div className="min-w-0">
-                    <p className="text-[11px] text-white/50 uppercase tracking-widest font-mono">
+                    <p className="text-[11px] text-text-secondary uppercase tracking-widest font-mono">
                       {info.label}
                     </p>
                     <p className="text-sm font-medium truncate group-hover:text-accent-signal transition-colors duration-200">
@@ -173,7 +150,7 @@ export default function Contact() {
             </div>
 
             {/* Copy email */}
-            <motion.div variants={itemVariants}>
+            <motion.div variants={fadeUpItem}>
               <button
                 onClick={copyEmail}
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-border-subtle text-sm text-white/60 hover:border-accent-signal hover:text-accent-signal transition-colors"
@@ -184,31 +161,34 @@ export default function Contact() {
             </motion.div>
 
             {/* Social */}
-            <motion.div variants={itemVariants}>
-              <p className="text-[11px] text-white/50 uppercase tracking-widest font-mono mb-3">
+            <motion.div variants={fadeUpItem}>
+              <p className="text-[11px] text-text-secondary uppercase tracking-widest font-mono mb-3">
                 Social
               </p>
               <div className="flex gap-2">
-                {socialLinks.map((social) => (
-                  <motion.a
-                    key={social.label}
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    whileHover={{ y: -2 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="flex items-center justify-center w-9 h-9 rounded-full bg-dark border border-border-subtle text-white/60 hover:border-accent-signal hover:text-accent-signal transition-all duration-200"
-                    aria-label={social.label}
-                  >
-                    <social.icon className="w-4 h-4" />
-                  </motion.a>
-                ))}
+                {SOCIAL_LINKS.map((social) => {
+                  const Icon = SOCIAL_ICONS[social.icon];
+                  return (
+                    <motion.a
+                      key={social.label}
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      whileHover={{ y: -2 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="flex items-center justify-center w-9 h-9 rounded-full bg-dark border border-border-subtle text-text-secondary hover:border-accent-signal hover:text-accent-signal transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-signal"
+                      aria-label={social.label}
+                    >
+                      <Icon className="w-4 h-4" />
+                    </motion.a>
+                  );
+                })}
               </div>
             </motion.div>
           </motion.div>
 
           {/* Right column: form */}
-          <motion.div variants={itemVariants} className="lg:col-span-7">
+          <motion.div variants={fadeUpItem} className="lg:col-span-7">
             {isSubmitted ? (
               <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}

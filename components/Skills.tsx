@@ -2,6 +2,13 @@
 
 import { useRef } from 'react';
 import { motion, useInView, type Variants } from 'framer-motion';
+import { cn } from '@/lib/utils';
+import {
+  skillGroups,
+  MAX_LEVEL,
+  LEVEL_LABELS,
+  type SkillLevel,
+} from '@/data/skills';
 import {
   FileCode,
   Code2,
@@ -69,49 +76,6 @@ const GROUP_ICONS: Record<string, LucideIcon> = {
   exploring: Terminal,
 };
 
-// ─── Data ───────────────────────────────────────────────────────
-const skillGroups = [
-  {
-    id: 'core',
-    title: 'Core engineering',
-    description: "Languages & paradigms I'm genuinely fluent in",
-    skills: ['JavaScript', 'PHP', 'Java', 'C++', 'Python'],
-  },
-  {
-    id: 'systems',
-    title: 'Systems & infrastructure',
-    description: 'Where I operate — databases, networking, data',
-    skills: ['MySQL', 'phpMyAdmin', 'LAN/WAN', 'IP Addressing', 'Wireshark'],
-  },
-  {
-    id: 'craft',
-    title: 'Craft & tooling',
-    description: 'The day-to-day tools that shape how I work',
-    skills: [
-      'Laravel',
-      'React',
-      'Vue.js',
-      'Next.js',
-      'Inertia.js',
-      'HTML/CSS',
-      'Tailwind',
-      'Bootstrap',
-      'Git',
-      'Postman',
-      'Figma',
-      'VS Code',
-      'XAMPP',
-      'Laragon',
-    ],
-  },
-  {
-    id: 'exploring',
-    title: 'Currently exploring',
-    description: 'Actively learning right now',
-    skills: ['TypeScript', 'Docker', 'Cloud Platforms'],
-  },
-];
-
 // ─── Variants ───────────────────────────────────────────────────
 const headerVariants: Variants = {
   hidden: { opacity: 0 },
@@ -163,8 +127,8 @@ const badgeChild: Variants = {
 };
 
 // ─── SkillBadge ─────────────────────────────────────────────────
-function SkillBadge({ skill }: { skill: string }) {
-  const Icon = ICON_MAP[skill] ?? FileCode;
+function SkillBadge({ skill }: { skill: { name: string; level: SkillLevel } }) {
+  const Icon = ICON_MAP[skill.name] ?? FileCode;
   return (
     <motion.span
       variants={badgeChild}
@@ -189,15 +153,7 @@ function SkillBadge({ skill }: { skill: string }) {
         hover:border-[var(--color-accent,#a78bfa)]/50
         hover:bg-white/[0.06]
         hover:text-white
-        focus-visible:outline-none
-        focus-visible:ring-2
-        focus-visible:ring-[var(--color-accent,#a78bfa)]/60
-        focus-visible:ring-offset-2
-        focus-visible:ring-offset-[#09090b]
       "
-      role="listitem"
-      tabIndex={0}
-      aria-label={skill}
     >
       <Icon
         className="
@@ -210,7 +166,25 @@ function SkillBadge({ skill }: { skill: string }) {
         strokeWidth={1.8}
         aria-hidden="true"
       />
-      <span className="leading-none">{skill}</span>
+      <span className="flex flex-col items-start gap-1">
+        <span className="leading-none">{skill.name}</span>
+        {/* Proficiency dots — 4 max, filled per level */}
+        <span
+          className="flex items-center gap-[3px]"
+          aria-label={`Proficiency: ${LEVEL_LABELS[skill.level]}`}
+        >
+          {Array.from({ length: MAX_LEVEL }, (_, i) => (
+            <span
+              key={i}
+              className={cn(
+                'h-[3px] w-[3px] rounded-full',
+                i < skill.level ? 'bg-accent-signal' : 'bg-white/15',
+              )}
+              aria-hidden
+            />
+          ))}
+        </span>
+      </span>
     </motion.span>
   );
 }
@@ -299,7 +273,7 @@ function SkillCard({
         <span
           className="
             font-mono text-[11px] tracking-wider
-            text-white/25
+            text-text-tertiary
             mt-1 sm:mt-1.5
             tabular-nums
           "
@@ -313,7 +287,7 @@ function SkillCard({
       <p
         className="
           text-[12.5px] sm:text-[13px]
-          leading-[1.65] text-white/40
+          leading-[1.65] text-text-secondary
           mb-4 sm:mb-5
         "
       >
@@ -337,7 +311,7 @@ function SkillCard({
         aria-label={`${group.title} skills`}
       >
         {group.skills.map((skill) => (
-          <SkillBadge key={skill} skill={skill} />
+          <SkillBadge key={skill.name} skill={skill} />
         ))}
       </motion.div>
     </motion.article>
@@ -390,7 +364,7 @@ function SectionHeader() {
       {/* Supporting text */}
       <motion.p
         variants={headerChild}
-        className="max-w-sm sm:max-w-md text-[13px] sm:text-[14px] leading-[1.75] text-white/45"
+        className="max-w-sm sm:max-w-md text-[13px] sm:text-[14px] leading-[1.75] text-text-secondary"
       >
         Stack I use day to day — focused on full-stack web, with a foundation
         in systems and networking.

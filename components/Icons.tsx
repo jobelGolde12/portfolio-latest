@@ -79,6 +79,20 @@ export function InstagramIcon({ className }: { className?: string }) {
   );
 }
 
+import type { ComponentType } from 'react';
+
+export type SocialIconComponent = ComponentType<{ className?: string }>;
+
+/**
+ * Resolves the icon-name keys used in `lib/seo.ts` `SOCIAL_LINKS` to their
+ * components — single source of truth for social icons across components.
+ */
+export const SOCIAL_ICONS: Record<string, SocialIconComponent> = {
+  github: GithubIcon,
+  linkedin: LinkedinIcon,
+  facebook: FacebookIcon,
+};
+
 export function TwitterIcon({ className }: { className?: string }) {
   return (
     <svg

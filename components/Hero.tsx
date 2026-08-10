@@ -2,8 +2,9 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
-import { motion, useInView } from 'framer-motion';
+import { motion, useInView, useReducedMotion } from 'framer-motion';
 import { ArrowDown, ArrowUpRight, MapPin } from 'lucide-react';
+import { useMouseParallax } from '@/lib/useMouseParallax';
 import { cn } from '@/lib/utils';
 
 const specializations = [
@@ -26,16 +27,9 @@ export default function Hero() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
   const [specIndex, setSpecIndex] = useState(0);
-  const [isMounted, setIsMounted] = useState(false);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
-  const prefersReducedMotion =
-    typeof window !== 'undefined' &&
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
+  const prefersReducedMotion = useReducedMotion();
+  const mousePosition = useMouseParallax();
 
   // Rotate specialization text
   useEffect(() => {
@@ -46,20 +40,6 @@ export default function Hero() {
     }, 3000);
 
     return () => clearInterval(interval);
-  }, [prefersReducedMotion]);
-
-  // Mouse parallax
-  useEffect(() => {
-    if (prefersReducedMotion) return;
-
-    const handleMouseMove = (e: MouseEvent) => {
-      const x = (e.clientX / window.innerWidth - 0.5) * 2;
-      const y = (e.clientY / window.innerHeight - 0.5) * 2;
-      setMousePosition({ x, y });
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
   }, [prefersReducedMotion]);
 
   return (
@@ -138,7 +118,7 @@ export default function Hero() {
             transition={{ delay: 0.35, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             className="space-y-2"
           >
-            <p className="font-['Geist',sans-serif] font-light text-[clamp(0.8rem,1.2vw,1.2rem)] tracking-[0.15em] uppercase text-white/40">
+            <p className="font-['Geist',sans-serif] font-light text-[clamp(0.8rem,1.2vw,1.2rem)] tracking-[0.15em] uppercase text-text-secondary">
               Software Engineer
             </p>
             
@@ -146,7 +126,7 @@ export default function Hero() {
             <div className="h-8 flex items-center">
               <span className="text-white/60 text-[clamp(0.85rem,1vw,1rem)] tracking-wide">
                 Specializing in{' '}
-                {isMounted && !prefersReducedMotion ? (
+                {!prefersReducedMotion ? (
                   <span className="relative inline-block text-white/90 font-medium">
                     {specializations.map((spec, i) => (
                       <span
@@ -176,7 +156,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 15 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.45, duration: 0.5 }}
-            className="flex items-center gap-2 text-white/30 text-sm tracking-wide pt-2"
+            className="flex items-center gap-2 text-text-secondary text-sm tracking-wide pt-2"
           >
             <MapPin className="w-3.5 h-3.5" />
             <span>Sorsogon, Philippines</span>
@@ -193,7 +173,7 @@ export default function Hero() {
               href="#projects"
               whileHover={{ scale: 1.02, y: -2 }}
               whileTap={{ scale: 0.98 }}
-              className="group relative inline-flex items-center gap-2.5 px-8 py-3.5 bg-white text-black font-medium text-sm tracking-wide rounded-full overflow-hidden shadow-[0_0_40px_rgba(255,255,255,0.08)]"
+              className="group relative inline-flex items-center gap-2.5 px-8 py-3.5 bg-white text-black font-medium text-sm tracking-wide rounded-full overflow-hidden shadow-[0_0_40px_rgba(255,255,255,0.08)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-signal focus-visible:ring-offset-2 focus-visible:ring-offset-black"
             >
               <span className="relative z-10 flex items-center gap-2.5">
                 See projects
@@ -207,7 +187,7 @@ export default function Hero() {
               href="#contact"
               whileHover={{ scale: 1.02, y: -2 }}
               whileTap={{ scale: 0.98 }}
-              className="inline-flex items-center gap-2.5 px-8 py-3.5 bg-transparent border border-white/15 text-white/80 font-medium text-sm tracking-wide rounded-full hover:bg-white/5 hover:border-white/25 transition-all duration-300"
+              className="inline-flex items-center gap-2.5 px-8 py-3.5 bg-transparent border border-white/15 text-white/80 font-medium text-sm tracking-wide rounded-full hover:bg-white/5 hover:border-white/25 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-signal focus-visible:ring-offset-2 focus-visible:ring-offset-black"
             >
               Get in touch
             </motion.a>
@@ -223,7 +203,7 @@ export default function Hero() {
             {techStack.map((tech, index) => (
               <span
                 key={tech}
-                className="px-3 py-1.5 border border-white/5 bg-white/[0.02] font-mono text-[0.65rem] tracking-[0.1em] uppercase text-white/30 rounded-full"
+                className="px-3 py-1.5 border border-white/5 bg-white/[0.02] font-mono text-[0.65rem] tracking-[0.1em] uppercase text-text-secondary rounded-full"
                 style={{ transitionDelay: `${index * 20}ms` }}
               >
                 {tech}
@@ -266,7 +246,7 @@ export default function Hero() {
               }} />
 
               <Image
-                src="/me2.png"
+                src="/me2.webp"
                 alt="Jobel V. Golde"
                 fill
                 priority
@@ -301,7 +281,7 @@ export default function Hero() {
           href="#about"
           animate={prefersReducedMotion ? {} : { y: [0, 6, 0] }}
           transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-          className="flex flex-col items-center gap-2 text-white/20 hover:text-white/40 transition-colors"
+          className="flex flex-col items-center gap-2 text-text-tertiary hover:text-text-secondary transition-colors rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-signal"
         >
           <span className="text-[0.55rem] tracking-[0.2em] uppercase font-mono">Scroll</span>
           <ArrowDown className="w-3.5 h-3.5" />

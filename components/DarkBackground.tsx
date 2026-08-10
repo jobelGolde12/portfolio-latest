@@ -1,27 +1,10 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useMouseParallax } from '@/lib/useMouseParallax';
 
 export default function DarkBackground() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-
-  const prefersReducedMotion =
-    typeof window !== 'undefined' &&
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  // Mouse parallax for spotlight
-  useEffect(() => {
-    if (prefersReducedMotion) return;
-
-    const handleMouseMove = (e: MouseEvent) => {
-      const x = (e.clientX / window.innerWidth - 0.5) * 2;
-      const y = (e.clientY / window.innerHeight - 0.5) * 2;
-      setMousePosition({ x, y });
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, [prefersReducedMotion]);
+  // Returns normalized -1..1 pointer offset (zeros under reduced motion).
+  const mousePosition = useMouseParallax();
 
   return (
     <div className="fixed inset-0 -z-10 overflow-hidden">
@@ -33,9 +16,7 @@ export default function DarkBackground() {
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full blur-[150px] opacity-20 pointer-events-none"
         style={{
           background: 'radial-gradient(circle, rgba(180, 180, 180, 0.15) 0%, transparent 70%)',
-          transform: prefersReducedMotion
-            ? 'none'
-            : `translate(calc(-50% + ${mousePosition.x * 20}px), calc(-50% + ${mousePosition.y * 20}px))`,
+          transform: `translate(calc(-50% + ${mousePosition.x * 20}px), calc(-50% + ${mousePosition.y * 20}px))`,
           transition: 'transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)',
         }}
       />
