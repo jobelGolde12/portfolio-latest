@@ -1,24 +1,8 @@
 'use client';
 
-import { useEffect, useRef, useCallback, type CSSProperties, type ReactNode } from 'react';
+import { useEffect, useRef, useCallback, type ReactNode } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
-
-/** Always-dark surface tokens so the dialog never renders with a light/white panel. */
-const DARK_DIALOG_VARS = {
-  '--color-bg-base': '#0A0B0D',
-  '--color-bg-surface': '#0D0D0D',
-  '--color-bg-surface-2': '#111111',
-  '--color-bg-overlay': 'rgba(10, 10, 10, 0.85)',
-  '--color-border-subtle': '#1A1A1A',
-  '--color-border-strong': '#262626',
-  '--color-text-primary': '#EDEFF2',
-  '--color-text-secondary': '#9AA1AC',
-  '--color-text-tertiary': '#5C636E',
-  '--color-accent-signal': '#7C5CFF',
-  '--color-accent-signal-text': '#9B85FF',
-  '--color-accent-signal-dim': 'rgba(124, 92, 255, 0.14)',
-} as CSSProperties;
 
 interface DialogProps {
   open: boolean;
@@ -93,7 +77,7 @@ export function Dialog({ open, onClose, children, className, ariaLabel }: Dialog
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.15 }}
-          className="fixed inset-0 z-[100] flex items-start justify-center pt-[15vh]"
+          className="fixed inset-0 z-[100] flex items-start justify-center pt-[12vh]"
           onClick={(e) => {
             if (e.target === e.currentTarget) onClose();
           }}
@@ -101,26 +85,25 @@ export function Dialog({ open, onClose, children, className, ariaLabel }: Dialog
           aria-modal="true"
           aria-label={ariaLabel}
         >
-          {/* Backdrop — always dark so the overlay never flashes white */}
+          {/* Backdrop */}
           <div
-            className="absolute inset-0 bg-black/75 backdrop-blur-sm"
+            className="absolute inset-0 bg-ink/40"
             onClick={onClose}
             aria-hidden="true"
           />
 
-          {/* Content — force dark theme tokens so palette stays dark in light mode */}
+          {/* Content — inherits the page's editorial light theme */}
           <motion.div
             ref={dialogRef}
             tabIndex={-1}
-            initial={{ opacity: 0, scale: 0.96, y: -8 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.96, y: -8 }}
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.15, ease: [0.16, 1, 0.3, 1] }}
             className={cn(
-              'relative z-10 w-full max-w-lg rounded-xl border border-border-subtle bg-bg-surface shadow-lg',
+              'relative z-10 w-full max-w-lg rounded-sm border border-border-subtle bg-bg-base shadow-lg',
               className,
             )}
-            style={DARK_DIALOG_VARS}
           >
             {children}
           </motion.div>

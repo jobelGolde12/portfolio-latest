@@ -10,18 +10,16 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const variantStyles: Record<ButtonVariant, string> = {
-  primary:
-    'bg-accent-signal text-white hover:brightness-110 active:scale-[0.98] shadow-sm hover:shadow-md',
+  primary: 'bg-ink text-white hover:bg-black active:scale-[0.99]',
   secondary:
-    'border border-border-strong bg-transparent text-text-primary hover:bg-bg-surface-2 active:scale-[0.98]',
-  ghost:
-    'bg-transparent text-text-secondary hover:text-text-primary hover:bg-bg-surface-2 active:scale-[0.98]',
+    'border border-border-strong bg-bg-base text-text-primary hover:bg-bg-surface active:scale-[0.99]',
+  ghost: 'bg-transparent text-text-secondary hover:text-text-primary hover:bg-bg-surface',
 };
 
 const sizeStyles: Record<ButtonSize, string> = {
-  sm: 'h-8 px-3 text-sm',
-  md: 'h-10 px-5 text-sm',
-  lg: 'h-12 px-7 text-base',
+  sm: 'h-8 px-3 text-xs',
+  md: 'min-h-11 px-5 text-sm',
+  lg: 'min-h-12 px-6 text-sm',
 };
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
@@ -31,10 +29,10 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         disabled={disabled}
         className={cn(
-          'inline-flex items-center justify-center gap-2 rounded-full font-medium',
-          'transition-all duration-[var(--duration-fast)] ease-[var(--ease-out)]',
-          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-signal focus-visible:ring-offset-2 focus-visible:ring-offset-bg-base',
-          'disabled:opacity-[var(--opacity-disabled)] disabled:cursor-not-allowed disabled:hover:shadow-none',
+          'inline-flex items-center justify-center gap-2 rounded-sm font-medium',
+          'transition-colors duration-[var(--duration-fast)] ease-[var(--ease-out)]',
+          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2 focus-visible:ring-offset-bg-base',
+          'disabled:opacity-[var(--opacity-disabled)] disabled:cursor-not-allowed',
           variantStyles[variant],
           sizeStyles[size],
           className,

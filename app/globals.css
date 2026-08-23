@@ -1,30 +1,29 @@
 @import "tailwindcss";
 
 :root {
-  /* ── Color — Dark theme (default) ─────────────────── */
-  --color-bg-base: #0A0B0D;
-  --color-bg-surface: #0D0D0D;
-  --color-bg-surface-2: #111111;
-  --color-bg-overlay: rgba(10, 10, 10, 0.85);
-  --color-dark: #0A0B0D;
-  --color-dark-light: #151517;
-  --color-border-subtle: #1A1A1A;
-  --color-border-strong: #262626;
-  --color-text-primary: #EDEFF2;
-  --color-text-secondary: #9AA1AC;
-  --color-text-tertiary: #5C636E;
-  --color-accent-signal: #7C5CFF;
-  --color-accent-signal-text: #9B85FF;
-  --color-accent-signal-dim: rgba(124, 92, 255, 0.14);
-  --color-accent-warm: #FF8A5B;
-  --color-success: #3DD9A6;
-  --color-warning: #F5C451;
-  --color-danger: #FF5C7A;
-  --color-code-bg: #0B0B0B;
-  --color-code-border: #181818;
+  /* ── Color — Editorial light theme ─────────────────── */
+  --color-bg-base: #ffffff;
+  --color-bg-surface: #f8f8f6;
+  --color-bg-surface-2: #efefec;
+  --color-bg-overlay: rgba(255, 255, 255, 0.92);
+  --color-ink: #111111;
+  --color-border-subtle: #e8e8e8;
+  --color-border-strong: #d4d4d1;
+  --color-text-primary: #171717;
+  --color-text-secondary: #555555;
+  --color-text-tertiary: #6b6b6b;
+  --color-text-faint: #767676;
+  --color-accent-soft: #f3d7e1;
+  --color-accent-signal: #d96c92;
+  --color-accent-warm: #b33030;
+  --color-success: #1f7a57;
+  --color-warning: #8a6410;
+  --color-danger: #b33030;
+  --color-code-bg: #fafaf8;
+  --color-code-border: #e8e8e4;
 
   /* ── Typography ────────────────────────────────────── */
-  --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
+  --font-display: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   --font-ui: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", monospace;
 
@@ -35,16 +34,17 @@
   --text-xl: clamp(1.25rem, 1.15rem + 0.3vw, 1.375rem);
   --text-2xl: clamp(1.5rem, 1.3rem + 0.6vw, 1.75rem);
   --text-3xl: clamp(1.875rem, 1.5rem + 1.2vw, 2.25rem);
-  --text-4xl: clamp(2.25rem, 1.7rem + 2vw, 3rem);
-  --text-5xl: clamp(2.75rem, 1.9rem + 3vw, 4rem);
-  --text-6xl: clamp(3.25rem, 2rem + 4.5vw, 5.25rem);
+  --text-4xl: clamp(2.5rem, 1.8rem + 2.4vw, 3.5rem);
+  --text-display: clamp(3rem, 9vw, 6.75rem);
 
   --leading-tight: 1.1;
-  --leading-snug: 1.3;
+  --leading-snug: 1.35;
   --leading-normal: 1.55;
+  --leading-display: 0.98;
   --tracking-tight: -0.02em;
+  --tracking-display: -0.04em;
+  --tracking-label: 0.14em;
   --tracking-normal: 0em;
-  --tracking-wide: 0.04em;
 
   /* ── Spacing (8px grid) ───────────────────────────── */
   --space-1: 4px;
@@ -59,60 +59,29 @@
   --space-32: 128px;
   --space-48: 192px;
 
-  /* ── Radius ────────────────────────────────────────── */
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 16px;
+  /* ── Layout ────────────────────────────────────────── */
+  --container-width: 1280px;
+
+  /* ── Radius — editorial near-square geometry ──────── */
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 6px;
   --radius-full: 9999px;
 
-  /* ── Elevation / shadow ────────────────────────────── */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.24);
-  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.32);
-  --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.4);
-  --shadow-glow-signal: 0 0 32px var(--color-accent-signal-dim);
+  /* ── Elevation / shadow — almost none ──────────────── */
+  --shadow-sm: none;
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.08);
 
   /* ── Motion ────────────────────────────────────────── */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
-  --duration-fast: 140ms;
+  --duration-fast: 160ms;
   --duration-base: 220ms;
   --duration-reveal: 450ms;
-  --duration-pulse: 2400ms;
 
   /* ── Opacity ───────────────────────────────────────── */
   --opacity-disabled: 0.4;
-  --opacity-overlay: 0.85;
-
-  /* ── Blur ──────────────────────────────────────────── */
-  --blur-nav: 16px;
-  --blur-overlay: 20px;
-}
-
-/* ── Light theme overrides ─────────────────────────── */
-[data-theme="light"] {
-  --color-bg-base: #FAFAF9;
-  --color-bg-surface: #F0EFED;
-  --color-bg-surface-2: #E6E4E0;
-  --color-bg-overlay: rgba(250, 250, 249, 0.85);
-  --color-border-subtle: #DEDCD8;
-  --color-border-strong: #C4C1BC;
-  --color-text-primary: #1A1D21;
-  --color-text-secondary: #5C636E;
-  --color-text-tertiary: #9AA1AC;
-  --color-accent-signal: #5F45E0;
-  --color-accent-signal-text: #4A32C0;
-  --color-accent-signal-dim: rgba(95, 69, 224, 0.1);
-  --color-accent-warm: #E06830;
-  --color-success: #2BAF82;
-  --color-warning: #C99E20;
-  --color-danger: #D94460;
-  --color-code-bg: #F5F4F2;
-  --color-code-border: #DEDCD8;
-
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06);
-  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
-  --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.12);
-  --shadow-glow-signal: 0 0 32px var(--color-accent-signal-dim);
 }
 
 /* ── Tailwind theme mapping ────────────────────────── */
@@ -121,16 +90,15 @@
   --color-bg-surface: var(--color-bg-surface);
   --color-bg-surface-2: var(--color-bg-surface-2);
   --color-bg-overlay: var(--color-bg-overlay);
-  --color-dark: var(--color-dark);
-  --color-dark-light: var(--color-dark-light);
+  --color-ink: var(--color-ink);
   --color-border-subtle: var(--color-border-subtle);
   --color-border-strong: var(--color-border-strong);
   --color-text-primary: var(--color-text-primary);
   --color-text-secondary: var(--color-text-secondary);
   --color-text-tertiary: var(--color-text-tertiary);
+  --color-text-faint: var(--color-text-faint);
+  --color-accent-soft: var(--color-accent-soft);
   --color-accent-signal: var(--color-accent-signal);
-  --color-accent-signal-text: var(--color-accent-signal-text);
-  --color-accent-signal-dim: var(--color-accent-signal-dim);
   --color-accent-warm: var(--color-accent-warm);
   --color-success: var(--color-success);
   --color-warning: var(--color-warning);
@@ -150,14 +118,12 @@
   --shadow-sm: var(--shadow-sm);
   --shadow-md: var(--shadow-md);
   --shadow-lg: var(--shadow-lg);
-  --shadow-glow-signal: var(--shadow-glow-signal);
 
   --ease-out: var(--ease-out);
   --ease-in-out: var(--ease-in-out);
   --duration-fast: var(--duration-fast);
   --duration-base: var(--duration-base);
   --duration-reveal: var(--duration-reveal);
-  --duration-pulse: var(--duration-pulse);
 }
 
 /* ── Base styles ───────────────────────────────────── */
@@ -170,43 +136,71 @@ body {
   letter-spacing: var(--tracking-tight);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  transition: background-color 200ms ease, color 200ms ease;
+}
+
+/* Anchored sections must clear the fixed h-14 header when jumped to */
+section[id] {
+  scroll-margin-top: 4.5rem;
 }
 
 ::selection {
-  background-color: var(--color-accent-signal-dim);
+  background-color: var(--color-accent-soft);
   color: var(--color-text-primary);
 }
 
-/* ── Keyframes ─────────────────────────────────────── */
+/* ── Editorial primitives ──────────────────────────── */
+
+/* Micro eyebrow label */
+.editorial-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--color-text-tertiary);
+}
+
+/* Plain text link with arrow shift */
+.editorial-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--color-text-primary);
+  transition: color var(--duration-fast) ease;
+}
+.editorial-link:hover {
+  color: var(--color-text-secondary);
+}
+
+.hairline {
+  border-color: var(--color-border-subtle);
+}
+
+/* Hero portrait — subtle pointer-hover settle. Transform-only (no layout
+   shift); inert on touch/coarse pointers; snaps instantly under
+   prefers-reduced-motion via the global kill-switch. */
+.hero-portrait {
+  transform: rotate(-1.25deg);
+  transition: transform var(--duration-reveal) var(--ease-out);
+  will-change: transform;
+}
+@media (hover: hover) and (pointer: fine) {
+  .hero-portrait:hover {
+    transform: rotate(-0.25deg) scale(1.015);
+  }
+}
+
+/* ── Utilities ─────────────────────────────────────── */
 @keyframes signalPulse {
   0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.6; transform: scale(1.15); }
+  50% { opacity: 0.55; transform: scale(1.15); }
 }
 
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+.animate-signal-pulse {
+  animation: signalPulse var(--duration-base, 2200ms) ease-in-out infinite;
+  animation-duration: 2.4s;
 }
 
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(8px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  50%      { transform: translateY(-20px) rotate(5deg); }
-}
-
-.animate-float { animation: float 6s ease-in-out infinite; }
-.animate-signal-pulse { animation: signalPulse var(--duration-pulse) ease-in-out infinite; }
-
-.delay-500  { animation-delay: 500ms; }
-.delay-700  { animation-delay: 700ms; }
-.delay-1000 { animation-delay: 1000ms; }
-
-/* ── Scrollbar ─────────────────────────────────────── */
 .scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -222,10 +216,5 @@ body {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
-  }
-
-  .animate-signal-pulse {
-    animation: none !important;
-    opacity: 1;
   }
 }

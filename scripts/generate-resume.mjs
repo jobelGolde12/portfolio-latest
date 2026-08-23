@@ -3,6 +3,7 @@
  * built from the same data shown on the site. Wire the real PDF over this
  * file whenever you update your resume.
  *
+ * Palette mirrors app/globals.css (light editorial theme).
  * Usage: npm run generate:resume
  */
 import PDFDocument from 'pdfkit';
@@ -12,10 +13,12 @@ import { dirname, join } from 'node:path';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 
-// ── Brand palette ──────────────────────────────────────────────
-const INK = '#0A0B0D';
-const ACCENT = '#7C5CFF';
-const GRAY = '#5C636E';
+// ── Brand palette (light editorial) ───────────────────────────
+const INK = '#111111';
+const TEXT_PRIMARY = '#171717';
+const TEXT_SECONDARY = '#555555';
+const ACCENT = '#D96C92';
+const HAIRLINE = '#E8E8E8';
 
 const doc = new PDFDocument({
   size: 'LETTER',
@@ -30,7 +33,7 @@ const pageW = doc.page.width - doc.page.margins.left - doc.page.margins.right;
 // ── Helpers ────────────────────────────────────────────────────
 function sectionTitle(text) {
   doc
-    .fillColor(ACCENT)
+    .fillColor(INK)
     .font('Helvetica-Bold')
     .fontSize(10)
     .text(text.toUpperCase(), { characterSpacing: 1.2 })
@@ -39,7 +42,7 @@ function sectionTitle(text) {
     .moveTo(doc.x, doc.y)
     .lineTo(doc.x + pageW, doc.y)
     .lineWidth(0.8)
-    .strokeColor('#E5E5E5')
+    .strokeColor(HAIRLINE)
     .stroke()
     .moveDown(0.5);
 }
@@ -53,14 +56,14 @@ doc
   .moveDown(0.15);
 
 doc
-  .fillColor(ACCENT)
+  .fillColor(TEXT_SECONDARY)
   .font('Helvetica')
   .fontSize(12)
   .text('Full Stack Developer', { characterSpacing: 0.6 })
   .moveDown(0.35);
 
 doc
-  .fillColor(GRAY)
+  .fillColor(TEXT_SECONDARY)
   .font('Helvetica')
   .fontSize(9)
   .text(
@@ -70,16 +73,25 @@ doc
     'github.com/jobelGolde12  ·  linkedin.com/in/jobel-golde-6a8822411  ·  jobelgolde.dev',
     { link: 'https://jobelgolde.dev' },
   )
-  .moveDown(1);
+  .moveDown(0.5);
+
+// Single restrained accent rule under the header
+doc
+  .moveTo(doc.x, doc.y)
+  .lineTo(doc.x + 80, doc.y)
+  .lineWidth(3)
+  .strokeColor(ACCENT)
+  .stroke()
+  .moveDown(0.9);
 
 // ── Summary ────────────────────────────────────────────────────
 sectionTitle('Summary');
 doc
-  .fillColor(INK)
+  .fillColor(TEXT_PRIMARY)
   .font('Helvetica')
   .fontSize(10.5)
   .text(
-    'Passionate full-stack developer with strong experience building multiple systems. I enjoy solving problems through code, continuously improving my skills, and exploring different areas of the IT industry — contributing to meaningful projects while expanding my knowledge of software development and emerging technologies.',
+    'Full-stack developer building systems that stay boring under load. Experienced across Laravel, Vue.js, React, and Next.js — from schema design and REST APIs to deployment. BSIT student at Sorsogon State University (2022–2026), contributing to meaningful projects while deepening my knowledge of software development.',
     { lineGap: 3 },
   )
   .moveDown(0.6);
@@ -100,7 +112,7 @@ for (const [label, value] of skillRows) {
     .fillColor(INK)
     .text(`${label}: `, { continued: true })
     .font('Helvetica')
-    .fillColor(GRAY)
+    .fillColor(TEXT_SECONDARY)
     .text(value); // default width = remaining line space (wraps at right margin)
 }
 doc.moveDown(0.6);
@@ -135,10 +147,10 @@ for (const p of projects) {
     .font('Helvetica-Bold')
     .fontSize(10.5)
     .text(p.name, { continued: true })
-    .fillColor(ACCENT)
+    .fillColor(TEXT_SECONDARY)
     .font('Helvetica')
     .text(`   ${p.tech}`)
-    .fillColor(GRAY)
+    .fillColor(TEXT_SECONDARY)
     .font('Helvetica')
     .fontSize(9.5)
     .text(p.desc, { lineGap: 2 })
@@ -152,7 +164,7 @@ doc
   .fontSize(10)
   .fillColor(INK)
   .text('Bachelor of Science in Information Technology', { continued: true })
-  .fillColor(GRAY)
+  .fillColor(TEXT_SECONDARY)
   .font('Helvetica')
   .text('   (2022–2026)', { width: pageW })
   .font('Helvetica')
@@ -164,7 +176,7 @@ doc
   .fillColor(INK)
   .text('Languages: ', { continued: true })
   .font('Helvetica')
-  .fillColor(GRAY)
+  .fillColor(TEXT_SECONDARY)
   .text('English, Filipino');
 
 doc.end();

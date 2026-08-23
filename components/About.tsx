@@ -1,227 +1,111 @@
 'use client';
 
-import { useRef } from 'react';
-import Image from 'next/image';
 import dynamic from 'next/dynamic';
-import { motion, useInView, useReducedMotion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { Pill } from '@/components/ui/pill';
 import { aboutContent } from '@/data/about';
 
 const MapView = dynamic(() => import('@/components/MapView'), { ssr: false });
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 36 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] as const },
-  },
-};
-
-const labelClass =
-  'font-mono text-[11px] tracking-[0.2em] uppercase text-text-secondary mb-6';
-
 export default function About() {
-  const contentRef = useRef<HTMLDivElement>(null);
-  const summaryRef = useRef<HTMLDivElement>(null);
-  const educationRef = useRef<HTMLDivElement>(null);
-  const locationRef = useRef<HTMLDivElement>(null);
-  const languagesRef = useRef<HTMLDivElement>(null);
-  const interestsRef = useRef<HTMLDivElement>(null);
-
-  const isContentInView = useInView(contentRef, { once: true, margin: '-100px' });
-  const isSummaryInView = useInView(summaryRef, { once: true, margin: '-80px' });
-  const isEducationInView = useInView(educationRef, { once: true, margin: '-80px' });
-  const isLocationInView = useInView(locationRef, { once: true, margin: '-80px' });
-  const isLanguagesInView = useInView(languagesRef, { once: true, margin: '-80px' });
-  const isInterestsInView = useInView(interestsRef, { once: true, margin: '-80px' });
-
   const prefersReducedMotion = useReducedMotion();
 
-  const scrollToContent = () => {
-    contentRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  };
-
   return (
-    <section id="about" className="text-white">
-      {/* ---------------------------------------------------------------- */}
-      {/* 1. INTRO — full-viewport statement                                */}
-      {/* ---------------------------------------------------------------- */}
-      <div className="relative min-h-[100dvh] flex flex-col items-center justify-center px-4 text-center">
-        <motion.span
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-          className="text-accent-signal font-mono text-xs tracking-wider uppercase mb-4"
-        >
-          About
-        </motion.span>
-
-        <motion.h2
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
-          className="font-['Geist',sans-serif] font-light leading-[0.9] tracking-[-0.05em] text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl max-w-[90vw] sm:max-w-[80vw] md:max-w-[70vw] lg:max-w-[60vw] mx-auto"
-        >
-          A bit about me.
-        </motion.h2>
-
-        <motion.button
-          type="button"
-          onClick={scrollToContent}
-          aria-label="Scroll to read more about me"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
-          className="absolute bottom-10 flex flex-col items-center gap-2 text-white/40 hover:text-white/70 transition-colors"
-        >
-          <span className="font-mono text-[10px] tracking-wider uppercase">Scroll</span>
-          <motion.span
-            animate={prefersReducedMotion ? {} : { y: [0, 8, 0] }}
-            transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}
-            className="block w-px h-8 bg-white/40"
-          />
-        </motion.button>
-      </div>
-
-      {/* ---------------------------------------------------------------- */}
-      {/* 2. CONTENT — sticky image (left) + scroll-driven reveals (right)  */}
-      {/* ---------------------------------------------------------------- */}
-      <div ref={contentRef} className="px-4 pb-24 md:pb-32">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-y-12 lg:gap-x-16">
-          {/* Left column — sticky image, visible immediately */}
-          <div>
-            <motion.div
-              initial={{ opacity: 0, scale: 0.96 }}
-              animate={isContentInView ? { opacity: 1, scale: 1 } : {}}
-              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              className="lg:sticky lg:top-28"
+    <section id="about" aria-labelledby="about-heading" className="py-24 md:py-32">
+      <div className="mx-auto max-w-[1280px] px-5 sm:px-8 lg:px-12">
+        {/* Section header — label left, statement right */}
+        <div className="grid gap-8 lg:grid-cols-12">
+          <div className="lg:col-span-4">
+            <motion.p
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.45 }}
+              className="editorial-label"
+              id="about-label"
             >
-              <motion.div
-                className="relative w-full max-w-[440px] mx-auto lg:mx-0 aspect-[4/5] lg:max-h-[70vh] overflow-hidden"
-                animate={
-                  prefersReducedMotion
-                    ? {}
-                    : {
-                        borderRadius: [
-                          '60% 40% 55% 45% / 55% 60% 40% 45%',
-                          '40% 60% 45% 55% / 60% 45% 55% 40%',
-                          '55% 45% 40% 60% / 45% 55% 60% 40%',
-                          '45% 55% 60% 40% / 40% 45% 55% 60%',
-                          '60% 40% 55% 45% / 55% 60% 40% 45%',
-                        ],
-                      }
-                }
-                transition={{
-                  duration: 12,
-                  repeat: Infinity,
-                  ease: 'easeInOut',
-                  times: [0, 0.25, 0.5, 0.75, 1],
-                }}
-              >
-                <Image
-                  src="/profile.webp"
-                  alt="Jobel V. Golde"
-                  fill
-                  sizes="(max-width: 1024px) 90vw, 440px"
-                  className="object-cover"
-                  priority
-                />
-              </motion.div>
-            </motion.div>
+              About
+            </motion.p>
           </div>
 
-          {/* Right column — each section has its own huge margin & trigger */}
-          <div className="lg:pt-4">
-
-            {/* ── Summary ── */}
-            <motion.div
-              ref={summaryRef}
-              variants={fadeUp}
-              initial="hidden"
-              animate={isSummaryInView ? 'visible' : 'hidden'}
-              className="mt-[70dvh]"
+          <div className="lg:col-span-8">
+            <motion.h2
+              id="about-heading"
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+              className="font-display text-[clamp(1.75rem,3.2vw,2.75rem)] font-light leading-[1.08] tracking-[-0.03em] text-text-primary"
             >
-              <p className="text-lg md:text-xl leading-[1.85] text-white/85 font-light tracking-wide">
-                {aboutContent.summary}
-              </p>
-            </motion.div>
+              A developer who enjoys the unglamorous parts —
+              <span className="text-text-secondary"> the schema, the edge cases, the handoff.</span>
+            </motion.h2>
 
-            {/* ── Education ── */}
-            <motion.div
-              ref={educationRef}
-              variants={fadeUp}
-              initial="hidden"
-              animate={isEducationInView ? 'visible' : 'hidden'}
-              className="mt-[60dvh]"
+            <motion.p
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
+              className="mt-6 max-w-xl text-base leading-[1.75] text-text-secondary"
             >
-              <p className={labelClass}>Education</p>
-              <div className="space-y-2.5">
-                <h3 className="text-lg md:text-xl font-medium tracking-tight leading-snug">
-                  {aboutContent.education.degree}
-                </h3>
-                <p className="text-sm md:text-base text-white/55 leading-relaxed">
-                  {aboutContent.education.school}
-                </p>
-                <div className="flex items-center gap-4 mt-5 pt-5 border-t border-white/[0.06]">
-                  <span className="font-mono text-xs text-white/40 tracking-wider">
-                    {aboutContent.education.year}
-                  </span>
-                </div>
-              </div>
-            </motion.div>
+              {aboutContent.summary}
+            </motion.p>
+          </div>
+        </div>
 
-            {/* ── Location ── */}
-            <motion.div
-              ref={locationRef}
-              variants={fadeUp}
-              initial="hidden"
-              animate={isLocationInView ? 'visible' : 'hidden'}
-              className="mt-[60dvh]"
-            >
-              <p className={labelClass}>Based in</p>
-              <p className="text-base md:text-lg font-light text-white/80 tracking-wide">
-                {aboutContent.location}
-              </p>
-              <MapView />
-            </motion.div>
+        {/* Detail rows — editorial index */}
+        <motion.div
+          initial={prefersReducedMotion ? false : { opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+          className="mt-16 grid gap-x-12 gap-y-10 border-t border-border-subtle pt-10 md:grid-cols-2 md:pt-12"
+        >
+          {/* Education */}
+          <div>
+            <p className="editorial-label mb-4">Education</p>
+            <h3 className="text-base font-medium text-text-primary">
+              {aboutContent.education.degree}
+            </h3>
+            <p className="mt-1.5 text-sm text-text-secondary">{aboutContent.education.school}</p>
+            <p className="mt-3 font-mono text-xs text-text-tertiary">
+              {aboutContent.education.year}
+            </p>
+          </div>
 
-            {/* ── Languages ── */}
-            <motion.div
-              ref={languagesRef}
-              variants={fadeUp}
-              initial="hidden"
-              animate={isLanguagesInView ? 'visible' : 'hidden'}
-              className="mt-[60dvh]"
-            >
-              <p className={labelClass}>Languages</p>
-              <div className="flex flex-wrap gap-2.5">
+          {/* Languages & interests */}
+          <div className="space-y-8">
+            <div>
+              <p className="editorial-label mb-4">Languages</p>
+              <div className="flex flex-wrap gap-2">
                 {aboutContent.languages.map((lang) => (
                   <Pill key={lang}>{lang}</Pill>
                 ))}
               </div>
-            </motion.div>
-
-            {/* ── Interests ── */}
-            <motion.div
-              ref={interestsRef}
-              variants={fadeUp}
-              initial="hidden"
-              animate={isInterestsInView ? 'visible' : 'hidden'}
-              className="mt-[60dvh] mb-[60dvh]"
-            >
-              <p className={labelClass}>Interests</p>
-              <div className="flex flex-wrap gap-2.5">
+            </div>
+            <div>
+              <p className="editorial-label mb-4">Interests</p>
+              <div className="flex flex-wrap gap-2">
                 {aboutContent.interests.map((interest) => (
                   <Pill key={interest}>{interest}</Pill>
                 ))}
               </div>
-            </motion.div>
-
+            </div>
           </div>
-        </div>
+        </motion.div>
+
+        {/* Location + map */}
+        <motion.div
+          initial={prefersReducedMotion ? false : { opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+          className="mt-14"
+        >
+          <p className="editorial-label mb-4">Based in</p>
+          <p className="mb-6 text-base text-text-primary">{aboutContent.location}</p>
+          <MapView />
+        </motion.div>
       </div>
     </section>
   );

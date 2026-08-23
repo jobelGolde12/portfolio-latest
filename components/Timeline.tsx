@@ -1,251 +1,102 @@
 'use client';
 
-import { useRef, useState } from 'react';
-import {
-  motion,
-  useScroll,
-  useTransform,
-  useInView,
-  useReducedMotion,
-  useMotionValueEvent,
-  type MotionValue,
-} from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { Tag } from '@/components/ui/tag';
-import { SectionHeading } from '@/components/ui/SectionHeading';
 import { cn } from '@/lib/utils';
 import { timelineEntries, type TimelineEntry } from '@/data/timeline';
 
-// Reusable Timeline Progress Line
-function TimelineLine({ 
-  progress, 
-  prefersReducedMotion 
-}: { 
-  progress: MotionValue<number>; 
-  prefersReducedMotion: boolean | null;
-}) {
-  return (
-    <div className="absolute left-4 md:left-1/2 md:-translate-x-1/2 top-0 bottom-0 w-px bg-white/10">
-      <motion.div
-        className="absolute top-0 left-0 right-0 bottom-0 w-px bg-white origin-top"
-        style={{ scaleY: prefersReducedMotion ? 1 : progress }}
-      />
-    </div>
-  );
-}
+const typeLabel: Record<TimelineEntry['type'], string> = {
+  project: 'Project',
+  education: 'Education',
+  milestone: 'Milestone',
+};
 
-// Reusable Timeline Node
-function TimelineNode({ 
-  entry, 
-  isLinePassed 
-}: { 
-  entry: TimelineEntry; 
-  isLinePassed: boolean;
-}) {
-  return (
-    <div className="absolute left-4 md:left-1/2 top-0 -translate-x-1/2 z-10">
-      <motion.div
-        className={cn(
-          'w-4 h-4 rounded-full flex items-center justify-center transition-colors duration-500',
-          // When the line hits the node, make it solid white
-          isLinePassed 
-            ? 'bg-white ring-2 ring-white/40' 
-            : entry.featured
-              ? 'bg-accent-warm/20 ring-2 ring-accent-warm'
-              : entry.type === 'education'
-                ? 'bg-accent-signal-dim ring-2 ring-accent-signal'
-                : 'bg-bg-surface-2 ring-2 ring-border-subtle',
-        )}
-        // Animate scale and glow when hit
-        animate={isLinePassed ? { 
-          scale: 1.5, 
-          boxShadow: '0px 0px 16px rgba(255,255,255,0.6)' 
-        } : { 
-          scale: 1, 
-          boxShadow: '0px 0px 0px rgba(255,255,255,0)' 
-        }}
-        transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] as const }}
-      >
-        <div
-          className={cn(
-            'w-1.5 h-1.5 rounded-full transition-colors duration-500',
-            // Inner dot becomes dark so it's visible against the new white background
-            isLinePassed 
-              ? 'bg-black/60' 
-              : entry.featured
-                ? 'bg-accent-warm'
-                : entry.type === 'education'
-                  ? 'bg-accent-signal'
-                  : 'bg-text-tertiary',
-          )}
-        />
-      </motion.div>
-    </div>
-  );
-}
-
-// Reusable Timeline Card
-function TimelineCard({ 
-  entry, 
-  isLeft, 
-  isCardInView, 
-  prefersReducedMotion 
-}: { 
-  entry: TimelineEntry; 
-  isLeft: boolean; 
-  isCardInView: boolean;
-  prefersReducedMotion: boolean | null;
-}) {
-  // Best transition for showing/hiding: "Focus Pull" (Opacity + Y + Blur + Scale)
-  const cardAnimate = prefersReducedMotion
-    ? { opacity: 1, y: 0, filter: 'blur(0px)', scale: 1 }
-    : isCardInView
-      ? { opacity: 1, y: 0, filter: 'blur(0px)', scale: 1 }
-      : { opacity: 0, y: 24, filter: 'blur(8px)', scale: 0.98 };
+function EntryRow({ entry }: { entry: TimelineEntry }) {
+  const prefersReducedMotion = useReducedMotion();
 
   return (
-    <div
-      className={cn(
-        'w-full pl-12 md:w-1/2 md:pl-0',
-        isLeft ? 'md:pr-12 md:ml-0' : 'md:pl-12 md:ml-auto'
-      )}
+    <motion.li
+      initial={prefersReducedMotion ? false : { opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+      className="
+        grid gap-x-10 gap-y-3 border-b border-border-subtle py-8 md:py-10
+        md:grid-cols-[6rem_1fr] lg:grid-cols-[8rem_20rem_1fr]
+      "
     >
-      {/* Outer motion.div handles the scroll show/hide animation */}
-      <motion.div
-        animate={cardAnimate}
-        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] as const }}
-        className="relative"
+      {/* Year gutter */}
+      <time
+        dateTime={entry.date}
+        className="font-mono text-sm text-text-faint tabular-nums"
       >
-        {/* Inner div handles the hover interaction & dynamic border */}
-        <div
+        {entry.date}
+      </time>
+
+      {/* Title block */}
+      <div>
+        <h3
           className={cn(
-            'max-w-[500px] p-6 rounded-xl bg-white/[0.02] transition-all duration-300',
-            'hover:-translate-y-1 hover:bg-white/[0.04]',
-            isCardInView 
-              ? 'border border-white/70 shadow-[0_8px_30px_rgb(255,255,255,0.04)]' 
-              : 'border border-transparent'
+            'text-lg font-medium tracking-[-0.01em] text-text-primary',
+            entry.featured && 'font-display text-xl font-normal',
           )}
         >
-          <div className="flex items-center gap-3 mb-2">
-            <time className="text-lg font-mono text-white/60 tabular-nums">
-              {entry.date}
-            </time>
-            <span className="text-white/30">·</span>
-            <span className="text-lg text-white/60">
-              {entry.organization}
-            </span>
+          {entry.title}
+        </h3>
+        <p className="mt-1.5 flex items-center gap-2 text-[13px] text-text-secondary">
+          <span>{entry.organization}</span>
+          <span aria-hidden>·</span>
+          <span className="editorial-label" style={{ letterSpacing: '0.08em' }}>
+            {typeLabel[entry.type]}
+          </span>
+        </p>
+
+        {entry.tags && entry.tags.length > 0 && (
+          <div className="mt-4 flex flex-wrap gap-2">
+            {entry.tags.map((tag) => (
+              <Tag key={tag}>{tag}</Tag>
+            ))}
           </div>
+        )}
+      </div>
 
-          <h3 className="text-2xl md:text-3xl font-semibold tracking-tight text-white mb-3">
-            {entry.title}
-          </h3>
-
-          <p className="text-base md:text-lg text-white/70 leading-relaxed mb-4">
-            {entry.description}
-          </p>
-
-          {entry.tags && (
-            <div className="flex flex-wrap gap-2">
-              {entry.tags.map((tag) => (
-                <Tag key={tag}>{tag}</Tag>
-              ))}
-            </div>
-          )}
-        </div>
-      </motion.div>
-    </div>
-  );
-}
-
-// Wrapper to manage the scroll tracking for both Node and Card
-function TimelineItem({ 
-  entry, 
-  index, 
-  prefersReducedMotion 
-}: { 
-  entry: TimelineEntry; 
-  index: number;
-  prefersReducedMotion: boolean | null;
-}) {
-  const itemRef = useRef<HTMLDivElement>(null);
-  
-  // State for the node: Has the progress line passed this point?
-  const [isLinePassed, setIsLinePassed] = useState(false);
-  
-  // State for the card: Is the card actively in the viewport?
-  const isCardInView = useInView(itemRef, { amount: 0.2 });
-
-  // Track the exact scroll progress of this specific item
-  const { scrollYProgress } = useScroll({
-    target: itemRef,
-    offset: ["start 0.8", "start 0.2"], // Matches the container's scroll offset
-  });
-
-  // Update node state when the line visually hits it
-  useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    setIsLinePassed(latest > 0.001);
-  });
-
-  const isLeft = index % 2 === 0;
-
-  return (
-    <div ref={itemRef} className="relative mb-32 md:mb-40 last:mb-0">
-      <TimelineNode entry={entry} isLinePassed={isLinePassed} />
-      <TimelineCard 
-        entry={entry} 
-        isLeft={isLeft} 
-        isCardInView={isCardInView} 
-        prefersReducedMotion={prefersReducedMotion} 
-      />
-    </div>
+      {/* Description */}
+      <p className="max-w-md text-sm leading-[1.75] text-text-secondary">
+        {entry.description}
+      </p>
+    </motion.li>
   );
 }
 
 export default function Timeline() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const prefersReducedMotion = useReducedMotion();
-
-  // Scroll progress for the timeline line
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start 0.8', 'end 0.2'],
-  });
-
-  const scaleY = useTransform(scrollYProgress, [0, 1], [0, 1]);
-
   return (
-    <section
-      id="experience"
-      className="relative py-24 md:py-32 px-4 text-white overflow-hidden"
-    >
-      {/* Subtle radial gradient background */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_rgba(255,255,255,0.03),_transparent_60%)] pointer-events-none" />
-
-      <div className="relative max-w-4xl mx-auto">
-        {/* Section Header */}
-        <motion.div
-          initial={{ opacity: prefersReducedMotion ? 1 : 0, y: prefersReducedMotion ? 0 : 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.5 }}
-          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] as const }}
-        >
-          <SectionHeading label="Journey" title="Experience" align="center" />
-        </motion.div>
-
-        {/* Timeline Container */}
-        <div ref={containerRef} className="relative">
-          <TimelineLine progress={scaleY} prefersReducedMotion={prefersReducedMotion} />
-
-          <div className="space-y-0">
-            {timelineEntries.map((entry, index) => (
-              <TimelineItem 
-                key={`${entry.date}-${entry.title}`}
-                entry={entry} 
-                index={index} 
-                prefersReducedMotion={prefersReducedMotion} 
-              />
-            ))}
+    <section id="experience" aria-labelledby="experience-heading" className="py-24 md:py-32">
+      <div className="mx-auto max-w-[1280px] px-5 sm:px-8 lg:px-12">
+        {/* Header */}
+        <div className="mb-12 grid gap-6 md:mb-16 lg:grid-cols-12">
+          <div className="lg:col-span-4">
+            <p className="editorial-label">Journey</p>
+          </div>
+          <div className="lg:col-span-8">
+            <h2
+              id="experience-heading"
+              className="font-display text-[clamp(1.75rem,3.2vw,2.75rem)] font-light leading-[1.08] tracking-[-0.03em] text-text-primary"
+            >
+              Experience<span aria-hidden>.</span>
+            </h2>
+            <p className="mt-4 max-w-lg text-sm leading-[1.7] text-text-secondary">
+              A short record of what I have built and studied — projects,
+              coursework, and the milestones in between.
+            </p>
           </div>
         </div>
+
+        {/* Entries */}
+        <ol className="border-t border-border-subtle">
+          {timelineEntries.map((entry) => (
+            <EntryRow key={`${entry.date}-${entry.title}`} entry={entry} />
+          ))}
+        </ol>
       </div>
     </section>
   );

@@ -16,21 +16,10 @@ export default function Error({
   }, [error]);
 
   return (
-    <div className="relative flex min-h-screen flex-col items-center justify-center px-4 text-center text-white">
-      <div
-        className="pointer-events-none absolute inset-0 -z-10"
-        aria-hidden
-        style={{
-          background:
-            'radial-gradient(ellipse 50% 40% at 50% 40%, rgba(255,92,122,0.08), transparent 100%)',
-        }}
-      />
-
-      <p className="font-mono text-[11px] tracking-[0.2em] uppercase text-danger">
-        Something went wrong
-      </p>
+    <div className="flex min-h-screen flex-col items-center justify-center px-4 text-center">
+      <p className="editorial-label text-danger">Something went wrong</p>
       <h1
-        className="mt-4 font-display leading-[1.1] tracking-[var(--tracking-tight)] text-text-primary"
+        className="mt-5 font-display font-light leading-[1.05] tracking-[-0.03em] text-text-primary"
         style={{ fontSize: 'var(--text-4xl)' }}
       >
         This page hit an error
@@ -44,13 +33,13 @@ export default function Error({
         <button
           type="button"
           onClick={reset}
-          className="inline-flex items-center rounded-full bg-accent-signal px-6 py-3 text-sm font-medium text-white transition-all hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-signal focus-visible:ring-offset-2"
+          className="inline-flex min-h-11 items-center rounded-sm bg-ink px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2"
         >
           Try again
         </button>
         <Link
           href="/"
-          className="inline-flex items-center rounded-full border border-border-strong px-6 py-3 text-sm font-medium text-text-primary transition-colors hover:bg-bg-surface-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-signal focus-visible:ring-offset-2"
+          className="inline-flex min-h-11 items-center rounded-sm border border-border-strong px-6 py-3 text-sm font-medium text-text-primary transition-colors hover:bg-bg-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2"
         >
           Back home
         </Link>

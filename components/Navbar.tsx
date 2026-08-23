@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -9,36 +9,25 @@ import { GithubIcon } from '@/components/Icons';
 import { NAV_LINKS } from '@/lib/seo';
 import { cn } from '@/lib/utils';
 
+const GITHUB_URL = 'https://github.com/jobelGolde12';
+
 export default function Navbar({
   onCommandPaletteOpen,
 }: {
   onCommandPaletteOpen?: () => void;
 }) {
-  const [scrollDirection, setScrollDirection] = useState<'up' | 'down' | null>(null);
-  const [isAtTop, setIsAtTop] = useState(true);
-  const [scrollProgress, setScrollProgress] = useState(0);
+  const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('');
-  const mobileMenuRef = useRef<HTMLDivElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
-  const lastScrollY = useRef(0);
 
-  /* ── Scroll handler: direction + progress ───────────── */
+  /* ── Scroll state ───────────────────────────────────── */
   useEffect(() => {
     let ticking = false;
     const handleScroll = () => {
       if (!ticking) {
         requestAnimationFrame(() => {
-          const currentY = window.scrollY;
-          const direction = currentY > lastScrollY.current + 5 ? 'down' : currentY < lastScrollY.current - 5 ? 'up' : scrollDirection;
-
-          setScrollDirection(direction);
-          setIsAtTop(currentY < 20);
-
-          const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-          setScrollProgress(docHeight > 0 ? (currentY / docHeight) * 100 : 0);
-
-          lastScrollY.current = currentY;
+          setIsScrolled(window.scrollY > 8);
           ticking = false;
         });
         ticking = true;
@@ -46,7 +35,7 @@ export default function Navbar({
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [scrollDirection]);
+  }, []);
 
   /* ── Active section observer ─────────────────────────── */
   useEffect(() => {
@@ -84,201 +73,176 @@ export default function Navbar({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [onCommandPaletteOpen]);
 
-  /* ── Focus trap for mobile menu ──────────────────────── */
-  const handleMenuKeyDown = useCallback(
-    (e: React.KeyboardEvent) => {
-      if (!mobileMenuOpen || e.key !== 'Escape') return;
-      setMobileMenuOpen(false);
-      toggleRef.current?.focus();
-    },
-    [mobileMenuOpen],
-  );
-
-  const navHidden = scrollDirection === 'down' && !isAtTop && !mobileMenuOpen;
+  /* ── Escape closes the mobile menu ───────────────────── */
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setMobileMenuOpen(false);
+        toggleRef.current?.focus();
+      }
+    };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [mobileMenuOpen]);
 
   return (
-    <>
-      {/* Scroll progress bar */}
-      <div className="fixed top-0 left-0 right-0 z-[60] h-0.5">
-        <div
-          className="h-full bg-accent-signal transition-[width] duration-100 ease-linear"
-          style={{ width: `${scrollProgress}%` }}
-        />
-      </div>
-
-      <motion.nav
-        initial={{ y: -100 }}
-        animate={{ y: navHidden ? -100 : 0 }}
-        transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-        className="fixed top-0.5 left-0 right-0 z-50 flex items-center justify-center px-4 pt-3"
-        role="navigation"
-        aria-label="Main navigation"
-        onKeyDown={handleMenuKeyDown}
-      >
-        <div
-          className={cn(
-            'flex items-center justify-between w-full max-w-[1280px] rounded-full px-4 py-2 transition-all duration-300',
-            'bg-bg-overlay/80 backdrop-blur-md border border-border-subtle',
-            !isAtTop && 'shadow-md',
-          )}
+    <header
+      className={cn(
+        'fixed top-0 left-0 right-0 z-50 bg-bg-base transition-colors duration-200',
+        isScrolled || mobileMenuOpen ? 'border-b border-border-subtle' : 'border-b border-transparent',
+      )}
+    >
+      <div className="mx-auto flex h-14 max-w-[1280px] items-center justify-between px-5 sm:px-8 lg:px-12">
+        {/* Wordmark */}
+        <Link
+          href="/"
+          className="flex shrink-0 items-center"
+          aria-label="Jobel Golde — Home"
         >
-          {/* Logo */}
+          <Image
+            src="/jobel_logo.png"
+            alt=""
+            width={120}
+            height={40}
+            className="h-6 w-auto object-contain md:h-7"
+            priority
+          />
+        </Link>
+
+        {/* Desktop nav — small, quiet */}
+        <nav aria-label="Main navigation" className="hidden items-center gap-7 md:flex">
+          {NAV_LINKS.map((link) => {
+            const sectionId = link.href.replace('/#', '');
+            const isActive = activeSection === sectionId;
+            return (
+              <Link
+                key={link.name}
+                href={link.href}
+                aria-current={isActive ? 'page' : undefined}
+                className={cn(
+                  'text-[13px] transition-colors duration-150',
+                  'underline-offset-4 hover:underline hover:decoration-border-strong',
+                  isActive ? 'text-text-primary' : 'text-text-secondary hover:text-text-primary',
+                )}
+              >
+                {link.name}
+              </Link>
+            );
+          })}
+        </nav>
+
+        {/* Utility icons + CTA */}
+        <div className="hidden items-center gap-4 md:flex">
+          <button
+            onClick={onCommandPaletteOpen}
+            className="flex items-center gap-1.5 rounded-sm border border-border-subtle px-2 py-1 font-mono text-[11px] text-text-tertiary transition-colors duration-150 hover:border-border-strong hover:text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2"
+            aria-label="Open command palette"
+          >
+            <Search className="h-3 w-3" aria-hidden />
+            <span>⌘K</span>
+          </button>
+
+          <a
+            href={GITHUB_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="GitHub profile (opens in new tab)"
+            className="text-text-secondary transition-colors duration-150 hover:text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2 rounded-sm p-1"
+          >
+            <GithubIcon className="h-4 w-4" />
+          </a>
+
           <Link
-            href="/"
-            className="relative flex items-center shrink-0 pl-3"
-            aria-label="Jobel — Home"
+            href="/#contact"
+            className="rounded-sm bg-ink px-3.5 py-2 text-[13px] font-medium text-white transition-colors duration-150 hover:bg-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2"
           >
-            <Image
-              src="/jobel_logo.png"
-              alt="Jobel"
-              width={140}
-              height={48}
-              className="h-8 md:h-9 w-auto object-contain"
-              priority
-            />
+            Contact
           </Link>
-
-          {/* Desktop nav links */}
-          <div className="hidden md:flex items-center gap-1">
-            {NAV_LINKS.map((link) => {
-              const sectionId = link.href.replace('/#', '');
-              const isActive = activeSection === sectionId;
-              return (
-                <Link
-                  key={link.name}
-                  href={link.href}
-                  aria-current={isActive ? 'page' : undefined}
-                  className={cn(
-                    'relative px-4 py-2 text-sm font-medium rounded-full transition-colors duration-200',
-                    isActive
-                      ? 'text-accent-signal'
-                      : 'text-text-primary hover:text-text-primary hover:bg-bg-surface-2',
-                  )}
-                >
-                  {link.name}
-                </Link>
-              );
-            })}
-          </div>
-
-          {/* Desktop actions - Made icons and text darker */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.4 }}
-            className="hidden md:flex items-center gap-2"
-          >
-            {/* Command palette hint */}
-            <button
-              onClick={onCommandPaletteOpen}
-              className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono text-text-primary rounded-full border border-border-subtle hover:border-border-strong hover:text-text-primary transition-colors"
-              aria-label="Open command palette"
-            >
-              <Search className="w-3 h-3" />
-              <span>⌘K</span>
-            </button>
-
-            
-
-            <a
-              href="https://github.com/jobelGolde12/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-text-primary rounded-full hover:text-text-primary hover:bg-bg-surface-2 transition-colors"
-            >
-              <GithubIcon className="w-4 h-4" />
-              GitHub
-            </a>
-
-            <Link
-              href="/#contact"
-              className="flex items-center gap-2 px-5 py-2 text-sm font-medium rounded-full bg-accent-signal text-white hover:brightness-110 transition-all"
-            >
-              Get in touch
-            </Link>
-          </motion.div>
-
-          {/* Mobile: search + theme + menu - Made icons darker */}
-          <div className="flex md:hidden items-center gap-1">
-            <button
-              onClick={onCommandPaletteOpen}
-              className="p-2 rounded-full text-text-primary hover:text-text-primary hover:bg-bg-surface-2 transition-colors"
-              aria-label="Open command palette"
-            >
-              <Search className="w-4 h-4" />
-            </button>
-            <button
-              ref={toggleRef}
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-full text-text-primary hover:text-text-primary hover:bg-bg-surface-2 transition-colors"
-              aria-expanded={mobileMenuOpen}
-              aria-controls="mobile-menu"
-              aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
-            >
-              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-            </button>
-          </div>
         </div>
 
-        {/* Mobile dropdown */}
-        <AnimatePresence>
-          {mobileMenuOpen && (
-            <motion.div
-              id="mobile-menu"
-              ref={mobileMenuRef}
-              role="dialog"
-              aria-modal="true"
-              aria-label="Navigation menu"
-              initial={{ opacity: 0, y: -8, scale: 0.98 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -8, scale: 0.98 }}
-              transition={{ duration: 0.2, ease: 'easeOut' }}
-              className="absolute top-[72px] left-4 right-4 rounded-2xl bg-bg-overlay/95 backdrop-blur-xl border border-border-subtle shadow-lg overflow-hidden md:hidden"
-            >
-              <div className="px-4 py-4 space-y-1">
-                {NAV_LINKS.map((link) => {
-                  const sectionId = link.href.replace('/#', '');
-                  const isActive = activeSection === sectionId;
-                  return (
-                    <Link
-                      key={link.name}
-                      href={link.href}
-                      onClick={() => setMobileMenuOpen(false)}
-                      aria-current={isActive ? 'page' : undefined}
-                      className={cn(
-                        'block px-4 py-3 text-sm font-medium rounded-xl transition-colors',
-                        isActive
-                          ? 'text-accent-signal bg-accent-signal-dim'
-                          : 'text-text-primary hover:text-text-primary hover:bg-bg-surface-2',
-                      )}
-                    >
-                      {link.name}
-                    </Link>
-                  );
-                })}
-                <div className="flex flex-col gap-2 pt-3 px-1">
-                  <a
-                    href="https://github.com/jobelGolde12"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium bg-bg-surface-2 text-text-primary hover:text-text-primary transition-colors"
-                  >
-                    <GithubIcon className="w-4 h-4" />
-                    GitHub
-                  </a>
+        {/* Mobile controls */}
+        <div className="flex items-center gap-1 md:hidden">
+          <button
+            onClick={onCommandPaletteOpen}
+            className="rounded-sm p-2.5 text-text-secondary transition-colors hover:text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink"
+            aria-label="Open command palette"
+          >
+            <Search className="h-[18px] w-[18px]" aria-hidden />
+          </button>
+          <button
+            ref={toggleRef}
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="rounded-sm p-2.5 text-text-primary transition-colors hover:text-text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink"
+            aria-expanded={mobileMenuOpen}
+            aria-controls="mobile-menu"
+            aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+          >
+            {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile panel */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            id="mobile-menu"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Navigation menu"
+            initial={{ opacity: 0, y: -6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.18, ease: 'easeOut' }}
+            className="border-b border-border-subtle bg-bg-base shadow-md md:hidden"
+          >
+            <nav aria-label="Mobile navigation" className="space-y-1 px-5 py-4">
+              {NAV_LINKS.map((link) => {
+                const sectionId = link.href.replace('/#', '');
+                const isActive = activeSection === sectionId;
+                return (
                   <Link
-                    href="/#contact"
+                    key={link.name}
+                    href={link.href}
                     onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center justify-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium bg-accent-signal text-white hover:brightness-110 transition-all"
+                    aria-current={isActive ? 'page' : undefined}
+                    className={cn(
+                      'flex min-h-11 items-center justify-between text-sm transition-colors',
+                      isActive
+                        ? 'font-medium text-text-primary'
+                        : 'text-text-secondary hover:text-text-primary',
+                    )}
                   >
-                    Get in touch
+                    {link.name}
+                    {isActive && (
+                      <span className="h-1 w-1 rounded-full bg-accent-signal" aria-hidden />
+                    )}
                   </Link>
-                </div>
+                );
+              })}
+              <div className="flex items-center gap-3 pt-3">
+                <a
+                  href={GITHUB_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex min-h-11 flex-1 items-center justify-center gap-2 rounded-sm border border-border-subtle text-sm text-text-primary transition-colors hover:bg-bg-surface"
+                >
+                  <GithubIcon className="h-4 w-4" />
+                  GitHub
+                </a>
+                <Link
+                  href="/#contact"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex min-h-11 flex-1 items-center justify-center rounded-sm bg-ink text-sm font-medium text-white transition-colors hover:bg-black"
+                >
+                  Contact
+                </Link>
               </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </motion.nav>
-    </>
+            </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </header>
   );
 }

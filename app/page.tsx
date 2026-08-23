@@ -2,10 +2,9 @@ import type { Metadata } from 'next';
 import Hero from '@/components/Hero';
 import About from '@/components/About';
 import Skills from '@/components/Skills';
-import Services from '@/components/Services';
 import Projects from '@/components/Projects';
+import Services from '@/components/Services';
 import Timeline from '@/components/Timeline';
-import Testimonials from '@/components/Testimonials';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
 import { SITE_CONFIG } from '@/lib/seo';
@@ -47,10 +46,9 @@ export default function Home() {
       <Hero />
       <About />
       <Skills />
-      <Services />
       <Projects />
+      <Services />
       <Timeline />
-      <Testimonials />
       <Contact />
       <Footer />
     </>

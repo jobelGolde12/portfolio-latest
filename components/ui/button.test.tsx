@@ -11,7 +11,7 @@ describe('Button', () => {
 
   it('applies the primary variant styles by default', () => {
     const { container } = render(<Button>Primary</Button>);
-    expect(container.firstChild).toHaveClass('bg-accent-signal');
+    expect(container.firstChild).toHaveClass('bg-ink');
   });
 
   it('applies secondary and ghost variants', () => {
@@ -24,7 +24,7 @@ describe('Button', () => {
 
   it('respects the size prop', () => {
     const { container } = render(<Button size="lg">Large</Button>);
-    expect(container.firstChild).toHaveClass('h-12');
+    expect(container.firstChild).toHaveClass('min-h-12');
   });
 
   it('is disabled and does not fire onClick', async () => {

@@ -15,10 +15,10 @@ const Pill = forwardRef<HTMLSpanElement, PillProps>(
       <span
         ref={ref}
         className={cn(
-          'inline-flex items-center rounded-full px-3 py-1.5 text-sm font-medium transition-colors duration-[var(--duration-fast)]',
+          'inline-flex items-center rounded-sm px-2.5 py-1 text-[13px] transition-colors duration-[var(--duration-fast)]',
           active
             ? 'bg-accent-signal text-white'
-            : 'bg-bg-surface-2 text-text-secondary',
+            : 'border border-border-subtle bg-bg-base text-text-secondary',
           className,
         )}
         {...props}

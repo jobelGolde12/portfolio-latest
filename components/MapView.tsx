@@ -3,20 +3,22 @@
 import { useEffect, useRef } from 'react';
 import { MapContainer, TileLayer, Marker, useMap } from 'react-leaflet';
 import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
 
-/* ── Custom marker styled to match the accent palette ── */
+/* ── Custom marker — quiet ink dot with rose ring ── */
 const markerIcon = L.divIcon({
   className: '',
   html: `<div style="
-    width: 18px; height: 18px;
-    background: #7C5CFF;
-    border: 3px solid rgba(124, 92, 255, 0.35);
+    width: 14px; height: 14px;
+    background: #111111;
+    border: 2px solid #ffffff;
+    outline: 2px solid #d96c92;
     border-radius: 50%;
-    box-shadow: 0 0 24px rgba(124, 92, 255, 0.55), 0 0 8px rgba(124, 92, 255, 0.3);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
   "></div>`,
-  iconSize: [18, 18],
-  iconAnchor: [9, 9],
-  popupAnchor: [0, -12],
+  iconSize: [14, 14],
+  iconAnchor: [7, 7],
+  popupAnchor: [0, -10],
 });
 
 /* ── Sorsogon State University - Bulan Campus coordinates ── */
@@ -41,7 +43,7 @@ function MapResizer() {
 
 export default function MapView() {
   return (
-    <div className="mt-8 rounded-xl overflow-hidden border border-white/[0.06] shadow-lg shadow-black/20">
+    <div className="overflow-hidden rounded-sm border border-border-subtle">
       <MapContainer
         center={CAMPUS_COORDS}
         zoom={15}
@@ -49,29 +51,33 @@ export default function MapView() {
         zoomControl={false}
         dragging={false}
         attributionControl={false}
-        className="w-full h-[220px] sm:h-[260px] md:h-[300px] lg:h-[320px]"
+        className="h-[220px] w-full sm:h-[260px] md:h-[300px]"
       >
         <MapResizer />
-        {/* ── Standard OpenStreetMap tiles — normal map colors like Google Maps, clear and readable ── */}
+        {/* Standard OpenStreetMap tiles — neutral colors that sit quietly on the white canvas */}
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
 
-        {/* ── Marker ── */}
         <Marker position={CAMPUS_COORDS} icon={markerIcon} />
       </MapContainer>
 
-      {/* ── Subtle bottom bar with location label & attribution ── */}
-      <div className="flex items-center justify-between gap-2 px-4 py-2.5 bg-black/40 backdrop-blur-sm border-t border-white/[0.04]">
-        <div className="flex items-center gap-2">
-          <div className="w-1.5 h-1.5 rounded-full bg-accent-signal animate-signal-pulse" />
-          <span className="font-mono text-[11px] tracking-wider text-text-secondary">
-            Sorsogon State University – Bulan Campus
-          </span>
-        </div>
-        <span className="font-mono text-[9px] tracking-wider text-text-tertiary">
-          © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-text-primary transition-colors">OSM</a>
+      {/* Bottom bar with location label & attribution */}
+      <div className="flex items-center justify-between gap-2 border-t border-border-subtle bg-bg-surface px-4 py-2.5">
+        <span className="font-mono text-[11px] tracking-wider text-text-secondary">
+          Sorsogon State University – Bulan Campus
+        </span>
+        <span className="font-mono text-[9px] tracking-wider text-text-faint">
+          ©{' '}
+          <a
+            href="https://www.openstreetmap.org/copyright"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-text-secondary transition-colors hover:text-text-primary"
+          >
+            OSM
+          </a>
         </span>
       </div>
     </div>

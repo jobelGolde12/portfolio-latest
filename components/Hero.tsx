@@ -3,8 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { motion, useInView, useReducedMotion } from 'framer-motion';
-import { ArrowDown, ArrowUpRight, MapPin } from 'lucide-react';
-import { useMouseParallax } from '@/lib/useMouseParallax';
+import { ArrowRight, MapPin } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const specializations = [
@@ -14,30 +13,21 @@ const specializations = [
   'community systems',
 ];
 
-const techStack = [
-  'Laravel',
-  'React',
-  'Next.js',
-  'Vue.js',
-  'TypeScript',
-  'MySQL',
-];
+const techStack = ['Laravel', 'React', 'Next.js', 'Vue.js', 'TypeScript', 'MySQL'];
 
 export default function Hero() {
-  const ref = useRef(null);
+  const ref = useRef<HTMLElement>(null);
   const isInView = useInView(ref, { once: true });
   const [specIndex, setSpecIndex] = useState(0);
-
   const prefersReducedMotion = useReducedMotion();
-  const mousePosition = useMouseParallax();
 
-  // Rotate specialization text
+  // Rotate specialization text (static under reduced motion)
   useEffect(() => {
     if (prefersReducedMotion) return;
 
     const interval = setInterval(() => {
       setSpecIndex((prev) => (prev + 1) % specializations.length);
-    }, 3000);
+    }, 3200);
 
     return () => clearInterval(interval);
   }, [prefersReducedMotion]);
@@ -45,248 +35,153 @@ export default function Hero() {
   return (
     <section
       ref={ref}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#0a0a0a]"
+      aria-labelledby="hero-heading"
+      className="relative overflow-hidden bg-bg-base pt-28 pb-16 sm:pt-32 lg:min-h-[92vh] lg:pt-24 lg:pb-20"
     >
-      {/* Background depth layers */}
-      <div className="absolute inset-0">
-        {/* Base gradient */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0d0d0d] via-[#0a0a0a] to-[#050505]" />
-        
-        {/* Soft spotlight glow */}
-        <div 
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full blur-[150px] opacity-20 pointer-events-none"
-          style={{
-            background: 'radial-gradient(circle, rgba(180, 180, 180, 0.15) 0%, transparent 70%)',
-            transform: prefersReducedMotion ? 'none' : `translate(calc(-50% + ${mousePosition.x * 20}px), calc(-50% + ${mousePosition.y * 20}px))`,
-            transition: 'transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)',
-          }}
-        />
-
-        {/* Editorial grain texture */}
-        <div 
-          className="absolute inset-0 opacity-[0.03] pointer-events-none"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E")`,
-            backgroundRepeat: 'repeat',
-            backgroundSize: '256px 256px',
-          }}
-        />
-
-        {/* Subtle vignette */}
-        <div 
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background: 'radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.6) 100%)',
-          }}
-        />
-      </div>
-
-      {/* Main content container - 50/50 split */}
-      <div className="relative z-10 w-full max-w-[1440px] mx-auto px-8 lg:px-12 xl:px-16 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center min-h-[85vh] py-12">
-        
-        {/* Left column - Typography (50% width) */}
-        <div className="flex flex-col space-y-6 lg:space-y-8 order-2 lg:order-1">
-          {/* Status Badge - Premium floating pill */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.1, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="inline-flex"
-          >
-           
-          </motion.div>
-
-          {/* Large name - Editorial typography */}
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.2, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="font-['Geist',sans-serif] font-light leading-[0.9] tracking-[-0.05em]"
-          >
-            <span className="text-[clamp(3.5rem,8vw,7rem)] text-white inline mt-[-0.05em] me-3">
-              Jobel
-            </span>
-            <span className="text-[clamp(3.5rem,8vw,7rem)] text-white inline mt-[-0.05em]">
-              Golde
-            </span>
-          </motion.h1>
-
-          {/* Professional title with thin style */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.35, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="space-y-2"
-          >
-            <p className="font-['Geist',sans-serif] font-light text-[clamp(0.8rem,1.2vw,1.2rem)] tracking-[0.15em] uppercase text-text-secondary">
-              Software Engineer
-            </p>
-            
-            {/* Rotating specialization */}
-            <div className="h-8 flex items-center">
-              <span className="text-white/60 text-[clamp(0.85rem,1vw,1rem)] tracking-wide">
-                Specializing in{' '}
-                {!prefersReducedMotion ? (
-                  <span className="relative inline-block text-white/90 font-medium">
-                    {specializations.map((spec, i) => (
-                      <span
-                        key={spec}
-                        className={cn(
-                          'absolute inset-0 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]',
-                          i === specIndex
-                            ? 'opacity-100 translate-y-0'
-                            : 'opacity-0 translate-y-2 pointer-events-none'
-                        )}
-                        aria-hidden={i !== specIndex}
-                      >
-                        {spec}
-                      </span>
-                    ))}
-                    <span className="invisible">{specializations[specIndex]}</span>
-                  </span>
-                ) : (
-                  <span className="text-white/90 font-medium">{specializations[0]}</span>
-                )}
-              </span>
-            </div>
-          </motion.div>
-
-          {/* Location - Minimal */}
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.45, duration: 0.5 }}
-            className="flex items-center gap-2 text-text-secondary text-sm tracking-wide pt-2"
-          >
-            <MapPin className="w-3.5 h-3.5" />
-            <span>Sorsogon, Philippines</span>
-          </motion.div>
-
-          {/* CTA Buttons - Premium redesign */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.55, duration: 0.5 }}
-            className="flex flex-wrap items-center gap-4 pt-4"
-          >
-            <motion.a
-              href="#projects"
-              whileHover={{ scale: 1.02, y: -2 }}
-              whileTap={{ scale: 0.98 }}
-              className="group relative inline-flex items-center gap-2.5 px-8 py-3.5 bg-white text-black font-medium text-sm tracking-wide rounded-full overflow-hidden shadow-[0_0_40px_rgba(255,255,255,0.08)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-signal focus-visible:ring-offset-2 focus-visible:ring-offset-black"
-            >
-              <span className="relative z-10 flex items-center gap-2.5">
-                See projects
-                <ArrowUpRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-              </span>
-              <span className="absolute inset-0 bg-gradient-to-r from-white via-white/90 to-white/80" />
-              <span className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-            </motion.a>
-
-            <motion.a
-              href="#contact"
-              whileHover={{ scale: 1.02, y: -2 }}
-              whileTap={{ scale: 0.98 }}
-              className="inline-flex items-center gap-2.5 px-8 py-3.5 bg-transparent border border-white/15 text-white/80 font-medium text-sm tracking-wide rounded-full hover:bg-white/5 hover:border-white/25 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-signal focus-visible:ring-offset-2 focus-visible:ring-offset-black"
-            >
-              Get in touch
-            </motion.a>
-          </motion.div>
-
-          {/* Tech stack - Subtle */}
-          <motion.div
+      <div className="mx-auto grid max-w-[1280px] grid-cols-1 items-center gap-14 px-5 sm:px-8 lg:grid-cols-12 lg:gap-8 lg:px-12">
+        {/* ── Left — typography (columns 1–7) ── */}
+        <div className="flex flex-col items-start lg:col-span-7">
+          {/* Eyebrow */}
+          <motion.p
             initial={{ opacity: 0 }}
             animate={isInView ? { opacity: 1 } : {}}
-            transition={{ delay: 0.7, duration: 0.5 }}
-            className="flex flex-wrap items-center gap-2 pt-6"
+            transition={{ duration: 0.4 }}
+            className="editorial-label mb-6"
           >
-            {techStack.map((tech, index) => (
+            Software engineer · Full-stack
+          </motion.p>
+
+          {/* Name — the dominant typographic object */}
+          <motion.h1
+            id="hero-heading"
+            initial={{ opacity: 0, y: 16 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="font-display text-[clamp(3rem,9vw,6.75rem)] font-light leading-[var(--leading-display)] tracking-[var(--tracking-display)] text-text-primary"
+          >
+            Jobel Golde.
+          </motion.h1>
+
+          {/* Value proposition — one short editorial line */}
+          <motion.p
+            initial={{ opacity: 0, y: 12 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.55, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+            className="mt-6 max-w-md text-lg leading-[1.5] text-text-secondary"
+          >
+            Building systems that stay boring under load — specializing in{' '}
+            {!prefersReducedMotion ? (
+              <span className="relative inline-block whitespace-nowrap align-baseline">
+                {specializations.map((spec, i) => (
+                  <span
+                    key={spec}
+                    className={cn(
+                      'absolute inset-0 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]',
+                      i === specIndex
+                        ? 'translate-y-0 opacity-100'
+                        : 'pointer-events-none translate-y-1 opacity-0',
+                    )}
+                    aria-hidden={i !== specIndex}
+                  >
+                    {spec}.
+                  </span>
+                ))}
+                {/* Invisible sizer prevents layout shift while rotating */}
+                <span className="invisible">{specializations[specIndex]}.</span>
+              </span>
+            ) : (
+              <span>{specializations[0]}.</span>
+            )}
+          </motion.p>
+
+          {/* Location */}
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={isInView ? { opacity: 1 } : {}}
+            transition={{ duration: 0.45, delay: 0.25 }}
+            className="mt-5 flex items-center gap-2 text-sm text-text-tertiary"
+          >
+            <MapPin className="h-3.5 w-3.5" aria-hidden />
+            Sorsogon, Philippines
+          </motion.p>
+
+          {/* CTAs — one compact dark button + one text link */}
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            className="mt-10 flex flex-wrap items-center gap-x-7 gap-y-4"
+          >
+            <a
+              href="#projects"
+              className="group inline-flex min-h-11 items-center gap-2 rounded-sm bg-ink px-6 py-3 text-sm font-medium text-white transition-colors duration-200 hover:bg-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2"
+            >
+              See projects
+              <ArrowRight
+                className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-0.5"
+                aria-hidden
+              />
+            </a>
+            <a
+              href="#contact"
+              className="editorial-link group min-h-11 items-center py-3 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2"
+            >
+              Get in touch
               <span
+                aria-hidden
+                className="transition-transform duration-200 group-hover:translate-x-0.5"
+              >
+                →
+              </span>
+            </a>
+          </motion.div>
+
+          {/* Stack — quiet mono tags */}
+          <motion.ul
+            initial={{ opacity: 0 }}
+            animate={isInView ? { opacity: 1 } : {}}
+            transition={{ duration: 0.5, delay: 0.5 }}
+            aria-label="Core technologies"
+            className="mt-12 flex flex-wrap items-center gap-x-2 gap-y-2"
+          >
+            {techStack.map((tech) => (
+              <li
                 key={tech}
-                className="px-3 py-1.5 border border-white/5 bg-white/[0.02] font-mono text-[0.65rem] tracking-[0.1em] uppercase text-text-secondary rounded-full"
-                style={{ transitionDelay: `${index * 20}ms` }}
+                className="border border-border-subtle bg-bg-surface px-2.5 py-1 font-mono text-[11px] tracking-wide text-text-secondary"
               >
                 {tech}
-              </span>
+              </li>
             ))}
-          </motion.div>
+          </motion.ul>
         </div>
 
-        {/* Right column - Large portrait with cinematic treatment (50% width) */}
+        {/* ── Right — one dominant visual (columns 8–12) ── */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={isInView ? { opacity: 1, scale: 1 } : {}}
-          transition={{ delay: 0.3, duration: 1, ease: [0.16, 1, 0.3, 1] }}
-          className="order-1 lg:order-2 relative flex items-center justify-center"
-          style={{
-            transform: prefersReducedMotion ? 'none' : `translate(${mousePosition.x * -8}px, ${mousePosition.y * -8}px)`,
-            transition: 'transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)',
-          }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+          className="lg:col-span-5"
         >
-          {/* Portrait container with cinematic styling */}
-          <div className="relative w-full max-w-[520px] aspect-[4/5]">
-            {/* Soft radial backlight */}
-            <div 
-              className="absolute inset-0 rounded-3xl blur-[80px] opacity-30"
-              style={{
-                background: 'radial-gradient(ellipse at center, rgba(255,255,255,0.1) 0%, transparent 70%)',
-              }}
-            />
-
-            {/* Main portrait with feathered edge */}
-            <div className="relative w-full h-full rounded-3xl overflow-hidden shadow-[0_40px_120px_rgba(0,0,0,0.6)]">
-              {/* Subtle vignette overlay */}
-              <div className="absolute inset-0 z-10 pointer-events-none" style={{
-                background: 'radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.3) 100%)',
-              }} />
-              
-              {/* Warm rim light gradient */}
-              <div className="absolute inset-0 z-10 pointer-events-none" style={{
-                background: 'linear-gradient(135deg, rgba(255,200,150,0.08) 0%, transparent 50%, rgba(150,180,255,0.04) 100%)',
-              }} />
-
+          <figure className="relative mx-auto w-full max-w-[400px] lg:max-w-none lg:-translate-y-2 lg:translate-x-2">
+            {/* Single dominant visual — settles gently under a fine pointer */}
+            <div className="hero-portrait overflow-hidden rounded-sm">
               <Image
-                src="/me2.webp"
-                alt="Jobel V. Golde"
-                fill
+                src="/profile.webp"
+                alt="Portrait of Jobel V. Golde"
+                width={853}
+                height={1280}
                 priority
-                sizes="(max-width: 1024px) 100vw, 520px"
-                className="object-cover object-center scale-105 mix-blend-multiply"
+                sizes="(max-width: 1024px) 90vw, 420px"
+                className="h-auto w-full object-cover"
               />
-
-              {/* Feathered edge overlay */}
-              <div className="absolute inset-0 z-10 pointer-events-none rounded-3xl" style={{
-                boxShadow: 'inset 0 0 60px rgba(0,0,0,0.4)',
-              }} />
             </div>
-
-            {/* Premium decorative frame line */}
-            <div className="absolute -inset-2 rounded-[2rem] border border-white/[0.03] pointer-events-none" />
-          </div>
-
-          {/* Editorial decorative elements */}
-          <div className="absolute -bottom-4 -left-4 w-12 h-12 border-l border-b border-white/[0.04] pointer-events-none hidden xl:block" />
-          <div className="absolute -top-4 -right-4 w-12 h-12 border-r border-t border-white/[0.04] pointer-events-none hidden xl:block" />
+            <figcaption className="editorial-label mt-3 flex items-center justify-between">
+              <span>Jobel V. Golde</span>
+              <span aria-hidden>Bulan, Sorsogon ↗</span>
+            </figcaption>
+          </figure>
         </motion.div>
       </div>
-
-      {/* Scroll indicator - Minimal */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={isInView ? { opacity: 1 } : {}}
-        transition={{ delay: 1.2, duration: 0.5 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10"
-      >
-        <motion.a
-          href="#about"
-          animate={prefersReducedMotion ? {} : { y: [0, 6, 0] }}
-          transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-          className="flex flex-col items-center gap-2 text-text-tertiary hover:text-text-secondary transition-colors rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-signal"
-        >
-          <span className="text-[0.55rem] tracking-[0.2em] uppercase font-mono">Scroll</span>
-          <ArrowDown className="w-3.5 h-3.5" />
-        </motion.a>
-      </motion.div>
     </section>
   );
 }

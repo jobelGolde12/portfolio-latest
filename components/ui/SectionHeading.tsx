@@ -29,20 +29,18 @@ export function SectionHeading({
         className,
       )}
     >
-      <span className="text-accent-signal font-mono text-xs tracking-wider uppercase">
-        {label}
-      </span>
+      <span className="editorial-label">{label}</span>
       <h2
-        className="mt-2 font-display tracking-[var(--tracking-tight)] text-text-primary"
-        style={{ fontSize: 'var(--text-3xl)' }}
+        className="mt-3 font-display font-light leading-[1.08] tracking-[-0.03em] text-text-primary"
+        style={{ fontSize: 'var(--text-4xl)' }}
       >
         {title}
       </h2>
       {description && (
         <p
           className={cn(
-            'mt-4 text-sm leading-[1.7] text-text-secondary',
-            align === 'center' && 'mx-auto max-w-md',
+            'mt-4 max-w-md text-sm leading-[1.7] text-text-secondary',
+            align === 'center' && 'mx-auto',
           )}
         >
           {description}

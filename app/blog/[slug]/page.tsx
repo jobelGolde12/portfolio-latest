@@ -52,7 +52,7 @@ function Block({ block }: { block: PostBlock }) {
       );
     case 'code':
       return (
-        <pre className="my-6 overflow-x-auto rounded-xl border border-code-border bg-code-bg p-5 font-mono text-sm leading-relaxed text-text-secondary">
+        <pre className="my-6 overflow-x-auto rounded-sm border border-code-border bg-code-bg p-5 font-mono text-sm leading-relaxed text-text-primary">
           <code>{block.code}</code>
         </pre>
       );
@@ -67,48 +67,46 @@ export default async function BlogPostPage({ params }: PageProps) {
   if (!post) notFound();
 
   return (
-    <article className="pt-28 sm:pt-32 pb-24 px-4 text-white">
-      <div className="max-w-[720px] mx-auto">
-        {/* Back */}
-        <Link
-          href="/blog"
-          className="inline-flex items-center gap-2 font-mono text-xs tracking-wider uppercase text-text-tertiary transition-colors hover:text-accent-signal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-signal rounded-md"
+    <article className="mx-auto max-w-[720px] px-5 pb-24 pt-28 sm:px-8 sm:pt-32">
+      {/* Back */}
+      <Link
+        href="/blog"
+        className="editorial-label inline-flex min-h-11 items-center gap-2 transition-colors hover:text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2 rounded-sm"
+      >
+        <ArrowLeft className="h-3.5 w-3.5" aria-hidden />
+        All posts
+      </Link>
+
+      {/* Header */}
+      <header className="mt-8">
+        <div className="flex flex-wrap items-center gap-3 font-mono text-xs text-text-faint">
+          <time dateTime={post.date}>{formatDate(post.date, { month: 'long' })}</time>
+          <span aria-hidden>·</span>
+          <span>{post.readMinutes} min read</span>
+        </div>
+        <h1
+          className="mt-4 font-display font-light leading-[1.1] tracking-[-0.03em] text-text-primary"
+          style={{ fontSize: 'var(--text-4xl)' }}
         >
-          <ArrowLeft className="w-3.5 h-3.5" aria-hidden />
-          All posts
-        </Link>
-
-        {/* Header */}
-        <header className="mt-8">
-          <div className="flex flex-wrap items-center gap-3 font-mono text-xs text-text-tertiary">
-            <time dateTime={post.date}>{formatDate(post.date, { month: 'long' })}</time>
-            <span aria-hidden>·</span>
-            <span>{post.readMinutes} min read</span>
-          </div>
-          <h1
-            className="mt-4 font-display leading-[1.15] tracking-[var(--tracking-tight)] text-text-primary"
-            style={{ fontSize: 'var(--text-4xl)' }}
-          >
-            {post.title}
-          </h1>
-          <div className="mt-5 flex flex-wrap gap-2">
-            {post.tags.map((tag) => (
-              <span
-                key={tag}
-                className="rounded-md bg-bg-surface-2 px-2 py-0.5 font-mono text-xs text-text-secondary"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-        </header>
-
-        {/* Body */}
-        <div className="mt-10 border-t border-border-subtle pt-4">
-          {post.blocks.map((block, i) => (
-            <Block key={i} block={block} />
+          {post.title}
+        </h1>
+        <div className="mt-5 flex flex-wrap gap-2">
+          {post.tags.map((tag) => (
+            <span
+              key={tag}
+              className="rounded-sm border border-border-subtle bg-bg-surface px-2 py-0.5 font-mono text-xs text-text-secondary"
+            >
+              {tag}
+            </span>
           ))}
         </div>
+      </header>
+
+      {/* Body */}
+      <div className="mt-10 border-t border-border-subtle pt-4">
+        {post.blocks.map((block, i) => (
+          <Block key={i} block={block} />
+        ))}
       </div>
     </article>
   );

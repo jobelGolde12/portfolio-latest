@@ -17,17 +17,17 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
           className="block text-sm font-medium text-text-secondary"
         >
           {label}
-          {required && <span className="text-accent-warm ml-0.5" aria-hidden>*</span>}
+          {required && <span className="text-danger ml-0.5" aria-hidden>*</span>}
         </label>
         <textarea
           ref={ref}
           id={textareaId}
           required={required}
           className={cn(
-            'w-full rounded-md border border-border-subtle bg-dark-light px-4 py-3 text-sm text-text-primary',
-            'placeholder:text-text-tertiary resize-none min-h-[120px]',
+            'w-full rounded-md border border-border-subtle bg-bg-base px-4 py-3 text-sm text-text-primary',
+            'placeholder:text-text-faint resize-none min-h-[120px]',
             'transition-colors duration-[var(--duration-fast)]',
-            'focus:outline-none focus:border-accent-signal focus:ring-1 focus:ring-accent-signal',
+            'focus:outline-none focus:border-ink focus:ring-1 focus:ring-ink',
             error && 'border-danger focus:border-danger focus:ring-danger',
             className,
           )}

@@ -14,25 +14,27 @@ test.describe('Portfolio smoke tests', () => {
     expect(errors).toEqual([]);
   });
 
-  test('project case-study dialog opens and closes', async ({ page }) => {
+  test('project cards render with corrected info and actions', async ({ page }) => {
     await page.goto('/');
 
-    const card = page.getByRole('button', {
-      name: /Open case study: Profanity Detection API/,
-    });
-    await card.click();
+    const section = page.locator('#projects');
+    await expect(section.getByRole('heading', { level: 3 })).toHaveCount(5);
 
-    const dialog = page.getByRole('dialog', {
-      name: /Profanity Detection API case study/,
-    });
-    await expect(dialog).toBeVisible();
-    await expect(dialog.getByText('The problem')).toBeVisible();
-    await expect(dialog.getByText('Trade-offs')).toBeVisible();
-    await expect(dialog.getByRole('link', { name: /Visit live site/ })).toBeVisible();
-    await expect(dialog.getByRole('link', { name: /View source/ })).toBeVisible();
+    // Corrected positioning
+    await expect(
+      section.getByText('Know if it suits you before you buy.'),
+    ).toBeVisible();
+    await expect(section.getByText(/decision & action clarity tool/i)).toBeVisible();
 
-    await page.keyboard.press('Escape');
-    await expect(dialog).toBeHidden();
+    // CTAs: four live demos, one repo-primary card, one repo-secondary link
+    await expect(section.getByRole('link', { name: 'Live demo' })).toHaveCount(4);
+    await expect(section.getByRole('link', { name: 'View source' })).toHaveCount(1);
+    await expect(section.getByRole('link', { name: 'Source ↗' })).toHaveCount(1);
+
+    // Embeddable projects expose an in-place live preview toggle
+    await expect(
+      section.getByRole('button', { name: 'Live preview' }),
+    ).toHaveCount(2);
   });
 
   test('blog listing and post pages render', async ({ page }) => {

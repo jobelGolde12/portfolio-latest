@@ -1,7 +1,7 @@
 /**
  * Generates public/og-default.png (1200×630) — the Open Graph card used by
- * lib/seo.ts. Renders the brand (dark bg, violet accent, name + tagline) via
- * sharp's SVG renderer.
+ * lib/seo.ts. Renders the light editorial brand (white canvas, ink typography,
+ * restrained rose accent) via sharp's SVG renderer.
  *
  * Usage: npm run generate:og
  */
@@ -13,25 +13,37 @@ const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const W = 1200;
 const H = 630;
 
+// Brand tokens (mirrors app/globals.css)
+const TEXT_PRIMARY = '#171717';
+const TEXT_SECONDARY = '#555555';
+const TEXT_TERTIARY = '#777777';
+const ACCENT = '#D96C92';
+const BORDER = '#E8E8E8';
+
 const svg = `
 <svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
-  <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#0d0d0d"/>
-      <stop offset="100%" stop-color="#050505"/>
-    </linearGradient>
-    <radialGradient id="glow" cx="82%" cy="18%" r="75%">
-      <stop offset="0%" stop-color="#7C5CFF" stop-opacity="0.4"/>
-      <stop offset="100%" stop-color="#7C5CFF" stop-opacity="0"/>
-    </radialGradient>
-  </defs>
-  <rect width="${W}" height="${H}" fill="url(#bg)"/>
-  <rect width="${W}" height="${H}" fill="url(#glow)"/>
-  <line x1="80" y1="512" x2="360" y2="512" stroke="#7C5CFF" stroke-width="3" stroke-opacity="0.85"/>
-  <text x="80" y="170" font-family="sans-serif" font-size="24" letter-spacing="7" fill="#9AA1AC">FULL STACK DEVELOPER</text>
-  <text x="80" y="290" font-family="sans-serif" font-weight="800" font-size="92" fill="#EDEFF2">Jobel V. Golde</text>
-  <text x="80" y="400" font-family="sans-serif" font-size="36" fill="#9AA1AC">Building systems that stay boring under load.</text>
-  <text x="80" y="580" font-family="sans-serif" font-size="26" fill="#5C636E">Laravel · Vue.js · React · Next.js · TypeScript</text>
+  <rect width="${W}" height="${H}" fill="#FFFFFF"/>
+
+  <!-- Hairline frame, editorial geometry -->
+  <rect x="40" y="40" width="${W - 80}" height="${H - 80}" fill="none" stroke="${BORDER}" stroke-width="2"/>
+
+  <!-- Eyebrow label -->
+  <text x="104" y="168" font-family="Helvetica, Arial, sans-serif" font-size="22" letter-spacing="6" fill="${TEXT_TERTIARY}">SOFTWARE ENGINEER · FULL-STACK</text>
+
+  <!-- Name — the dominant typographic object -->
+  <text x="98" y="318" font-family="Helvetica, Arial, sans-serif" font-weight="300" font-size="118" letter-spacing="-4" fill="${TEXT_PRIMARY}">Jobel Golde.</text>
+
+  <!-- Value line -->
+  <text x="104" y="392" font-family="Helvetica, Arial, sans-serif" font-size="34" fill="${TEXT_SECONDARY}">Building systems that stay boring under load.</text>
+
+  <!-- Accent rule — single restrained signal -->
+  <line x1="104" y1="452" x2="184" y2="452" stroke="${ACCENT}" stroke-width="4"/>
+
+  <!-- Stack line -->
+  <text x="104" y="530" font-family="Courier New, monospace" font-size="24" fill="${TEXT_TERTIARY}">Laravel · Vue.js · React · Next.js · TypeScript</text>
+
+  <!-- Location, bottom-right -->
+  <text x="${W - 104}" y="530" text-anchor="end" font-family="Courier New, monospace" font-size="22" fill="${TEXT_TERTIARY}">Sorsogon, PH</text>
 </svg>
 `;
 

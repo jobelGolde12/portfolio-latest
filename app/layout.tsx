@@ -1,8 +1,6 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { GeistSans } from 'geist/font/sans';
 import { GeistMono } from 'geist/font/mono';
-import { Fraunces } from 'next/font/google';
-import 'leaflet/dist/leaflet.css';
 import './globals.css';
 import Shell from '@/components/Shell';
 import JsonLd from '@/components/JsonLd';
@@ -10,13 +8,6 @@ import { SITE_CONFIG } from '@/lib/seo';
 
 const geistSans = GeistSans;
 const geistMono = GeistMono;
-
-const fraunces = Fraunces({
-  subsets: ['latin'],
-  variable: '--font-fraunces',
-  display: 'swap',
-  weight: ['400', '500', '700', '800', '900'],
-});
 
 const { baseUrl, siteName, tagline, description, locale, ogImage, ogImageDimensions } =
   SITE_CONFIG;
@@ -77,20 +68,21 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  themeColor: '#ffffff',
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className="scroll-smooth"
-      data-scroll-behavior="smooth"
-      suppressHydrationWarning
-    >
+    <html lang="en" className="scroll-smooth" data-scroll-behavior="smooth">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${fraunces.variable} font-ui antialiased min-h-screen overflow-x-hidden`}
+        className={`${geistSans.variable} ${geistMono.variable} font-ui antialiased min-h-screen`}
       >
         {/* Structured data for search engines (JSON-LD) */}
         <JsonLd />
