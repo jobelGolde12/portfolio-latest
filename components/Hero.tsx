@@ -166,10 +166,10 @@ export default function Hero() {
             {/* Single dominant visual — settles gently under a fine pointer */}
             <div className="hero-portrait overflow-hidden rounded-sm">
               <Image
-                src="/profile.webp"
+                src="/profile.png"
                 alt="Portrait of Jobel V. Golde"
-                width={853}
-                height={1280}
+                width={1254}
+                height={1254}
                 priority
                 sizes="(max-width: 1024px) 90vw, 420px"
                 className="h-auto w-full object-cover"
