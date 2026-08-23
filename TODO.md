@@ -1550,18 +1550,23 @@ no horizontal overflow 320–1920px ✓
 * Order set intentionally by strength/relevance:
   Profanity API → Suitora → TrailMates → TaskMind → Dugtong.
 
-### R4.5 Media & live preview — ✅ DONE
+### R4.5 Media & live preview — ✅ DONE (revised: live-only cards)
 
-* Every project has a real interface screenshot; aspect ratio locked at 16:9
-  with fixed padding-bottom (zero layout shift), object-cover (no distortion).
-* In-place live preview retained for embeddable projects (Profanity API,
-  TrailMates): always-visible "Live preview" toggle chip on the media
-  (not hover-gated → touch-friendly), iframe mounts on first click only,
-  15s timeout reverts to screenshot with an honest note + direct-open link.
-* Non-embeddable projects never attempted (headers probed previously).
-* Fixed during QA: `loading="lazy"` on the toggle-mounted iframe deferred
-  loading indefinitely for offscreen frames → false timeout. Removed
-  (mount-on-click already gates network cost). Verified loading in-place.
+* Screenshot toggle feature removed entirely. Embeddable projects
+  (Profanity Detection API, TrailMates) render their deployed site directly:
+  no toggle, no screenshot layer — the card IS the live site.
+* Iframes mount via IntersectionObserver when a card scrolls near the viewport
+  (initial page load stays clean); skeleton + "Loading live preview…" until
+  onLoad; 15s slow-note ("may still be waking up" + Open it directly) without
+  unmounting, so Render cold starts can still land.
+* TaskMind & Suitora deployments send `X-Frame-Options: DENY` +
+  `frame-ancestors 'none'` and their codebases are not local — they keep plain
+  imagery rather than bypassing security headers. To unlock: remove those
+  headers in each app's middleware/config (or scope frame-ancestors to
+  https://jobelgolde.dev) and set `embeddable: true` in data/projects.ts.
+* Dugtong keeps imagery (repo-only, no deployment exists to embed).
+* Fixed during QA: `loading="lazy"` on mounted iframes deferred offscreen
+  loads indefinitely → false timeout; replaced by IO gating.
 
 ### R4.6 Accessibility & interaction — ✅ DONE
 

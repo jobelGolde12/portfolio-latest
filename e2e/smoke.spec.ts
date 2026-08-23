@@ -31,10 +31,22 @@ test.describe('Portfolio smoke tests', () => {
     await expect(section.getByRole('link', { name: 'View source' })).toHaveCount(1);
     await expect(section.getByRole('link', { name: 'Source ↗' })).toHaveCount(1);
 
-    // Embeddable projects expose an in-place live preview toggle
+    // Embeddable projects render their deployed site in-place (live-first,
+    // mounted when scrolled near). Non-embeddable ones keep plain imagery.
+    await page.locator('#projects article').nth(0).scrollIntoViewIfNeeded();
     await expect(
-      section.getByRole('button', { name: 'Live preview' }),
-    ).toHaveCount(2);
+      section.locator('iframe[title="Profanity Detection API — live site"]'),
+    ).toBeAttached({ timeout: 10_000 });
+    await page.locator('#projects article').nth(2).scrollIntoViewIfNeeded();
+    await expect(
+      section.locator('iframe[title="TrailMates — live site"]'),
+    ).toBeAttached({ timeout: 10_000 });
+    await expect(
+      section.getByRole('img', { name: 'TaskMind — preview of the application' }),
+    ).toBeAttached();
+    await expect(
+      section.getByRole('img', { name: 'Dugtong — preview of the application' }),
+    ).toBeAttached();
   });
 
   test('blog listing and post pages render', async ({ page }) => {

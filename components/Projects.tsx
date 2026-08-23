@@ -7,11 +7,9 @@ import { projects, type Project } from '@/data/projects';
 function ProjectRow({
   project,
   index,
-  priority,
 }: {
   project: Project;
   index: number;
-  priority?: boolean;
 }) {
   const mediaFirst = index % 2 === 0;
   const primary = project.links.demo
@@ -30,7 +28,7 @@ function ProjectRow({
     >
       {/* Media well */}
       <div className={`lg:col-span-7 ${mediaFirst ? '' : 'lg:order-2'}`}>
-        <ProjectPreview project={project} priority={priority} />
+        <ProjectPreview project={project} />
       </div>
 
       {/* Text */}
@@ -111,7 +109,7 @@ export default function Projects() {
         {/* Index rows */}
         <div className="border-t border-border-subtle">
           {projects.map((project, i) => (
-            <ProjectRow key={project.slug} project={project} index={i} priority={i === 0} />
+            <ProjectRow key={project.slug} project={project} index={i} />
           ))}
         </div>
       </div>

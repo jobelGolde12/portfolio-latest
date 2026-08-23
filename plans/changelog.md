@@ -22,10 +22,14 @@ positioning, audited all projects, full git workflow.
 - `components/Projects.tsx` — dialog and all case-study elements removed;
   server component again. Cards: tagline label, name, short description,
   primary CTA (Live demo / View source), secondary Source link.
-- `components/ProjectPreview.tsx` — repurposed as inline card media: screenshot
-  default + always-visible Live preview toggle for embeddable projects,
-  mount-on-click iframe, 15s honest fallback. Fixed lazy-loading false timeout.
-- `e2e/smoke.spec.ts` — dialog test replaced by card/CTA assertions.
+- `components/ProjectPreview.tsx` — live-only card media: screenshot layer and
+  toggle removed entirely. Embeddable projects (Profanity API, TrailMates)
+  render their deployed site directly via IntersectionObserver-gated iframes;
+  skeleton while loading; 15s slow-note that leaves the frame mounted for
+  Render cold starts. TaskMind/Suitora (DENY headers, codebase not local) and
+  Dugtong (no deployment) keep plain imagery.
+- `e2e/smoke.spec.ts` — dialog test replaced by card/CTA + live-iframe
+  assertions.
 
 ## Verification (Round 4)
 
