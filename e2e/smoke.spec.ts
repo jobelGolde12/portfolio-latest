@@ -18,16 +18,18 @@ test.describe('Portfolio smoke tests', () => {
     await page.goto('/');
 
     const section = page.locator('#projects');
-    await expect(section.getByRole('heading', { level: 3 })).toHaveCount(5);
+    await expect(section.getByRole('heading', { level: 3 })).toHaveCount(4);
 
     // Corrected positioning
-    await expect(
-      section.getByText('Know if it suits you before you buy.'),
-    ).toBeVisible();
+    // Suitora — temporarily hidden; restore alongside its data entry in
+    // data/projects.ts.
+    // await expect(
+    //   section.getByText('Know if it suits you before you buy.'),
+    // ).toBeVisible();
     await expect(section.getByText(/decision & action clarity tool/i)).toBeVisible();
 
-    // CTAs: four live demos, one repo-primary card, one repo-secondary link
-    await expect(section.getByRole('link', { name: 'Live demo' })).toHaveCount(4);
+    // CTAs: three live demos, one repo-primary card, one repo-secondary link
+    await expect(section.getByRole('link', { name: 'Live demo' })).toHaveCount(3);
     await expect(section.getByRole('link', { name: 'View source' })).toHaveCount(1);
     await expect(section.getByRole('link', { name: 'Source ↗' })).toHaveCount(1);
 
@@ -37,7 +39,7 @@ test.describe('Portfolio smoke tests', () => {
     await expect(
       section.locator('iframe[title="Profanity Detection API — live site"]'),
     ).toBeAttached({ timeout: 10_000 });
-    await page.locator('#projects article').nth(2).scrollIntoViewIfNeeded();
+    await page.locator('#projects article').nth(1).scrollIntoViewIfNeeded();
     await expect(
       section.locator('iframe[title="TrailMates — live site"]'),
     ).toBeAttached({ timeout: 10_000 });

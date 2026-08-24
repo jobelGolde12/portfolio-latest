@@ -100,8 +100,8 @@ export default function Projects() {
               Projects<span aria-hidden>.</span>
             </h2>
             <p className="mt-4 max-w-lg text-sm leading-[1.7] text-text-secondary">
-              Five real products I have shipped — what each one does and who it
-              is for.
+              {projects.length} real products I have shipped — what each one
+              does and who it is for.
             </p>
           </div>
         </div>

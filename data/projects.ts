@@ -32,15 +32,16 @@ export const projects: Project[] = [
     },
     embeddable: true,
   },
-  {
-    slug: 'suitora',
-    title: 'Suitora',
-    tagline: 'Know if it suits you before you buy.',
-    description:
-      'An AI-powered fashion assistant that helps you make smarter purchasing decisions — virtual try-on, compatibility scoring, and personalized style recommendations before you commit to the checkout.',
-    image: '/images/project_suitora.webp',
-    links: { demo: 'https://suitora-kappa.vercel.app/' },
-  },
+  // Suitora — temporarily removed from Projects section; uncomment to restore.
+  // {
+  //   slug: 'suitora',
+  //   title: 'Suitora',
+  //   tagline: 'Know if it suits you before you buy.',
+  //   description:
+  //     'An AI-powered fashion assistant that helps you make smarter purchasing decisions — virtual try-on, compatibility scoring, and personalized style recommendations before you commit to the checkout.',
+  //   image: '/images/project_suitora.webp',
+  //   links: { demo: 'https://suitora-kappa.vercel.app/' },
+  // },
   {
     slug: 'trailmates',
     title: 'TrailMates',
