@@ -60,6 +60,17 @@ export const projects: Project[] = [
       'A decision & action clarity tool that turns confusing messages, emails, announcements, and instructions into structured action items — clear deadlines, urgency levels, and required decisions.',
     image: '/images/project_taskmind.webp',
     links: { demo: 'https://whatshouldido-five.vercel.app/' },
+    embeddable: true,
+  },
+  {
+    slug: 'convert',
+    title: 'Convert',
+    tagline: 'Browser-first document conversion, privately',
+    description:
+      'Convert Word, PDF, PowerPoint, Excel, images, HTML and Markdown. Privacy-first: server files auto-delete, client tools never upload a byte. 31 server-side conversions across documents, slides, sheets, web and text — all processed instantly.',
+    image: null,
+    links: { demo: 'https://convert-py.vercel.app/' },
+    embeddable: true,
   },
   {
     slug: 'dugtong',

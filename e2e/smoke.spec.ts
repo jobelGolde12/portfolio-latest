@@ -18,7 +18,7 @@ test.describe('Portfolio smoke tests', () => {
     await page.goto('/');
 
     const section = page.locator('#projects');
-    await expect(section.getByRole('heading', { level: 3 })).toHaveCount(4);
+    await expect(section.getByRole('heading', { level: 3 })).toHaveCount(5);
 
     // Corrected positioning
     // Suitora — temporarily hidden; restore alongside its data entry in
@@ -28,8 +28,8 @@ test.describe('Portfolio smoke tests', () => {
     // ).toBeVisible();
     await expect(section.getByText(/decision & action clarity tool/i)).toBeVisible();
 
-    // CTAs: three live demos, one repo-primary card, one repo-secondary link
-    await expect(section.getByRole('link', { name: 'Live demo' })).toHaveCount(3);
+    // CTAs: four live demos, one repo-primary card, one repo-secondary link
+    await expect(section.getByRole('link', { name: 'Live demo' })).toHaveCount(4);
     await expect(section.getByRole('link', { name: 'View source' })).toHaveCount(1);
     await expect(section.getByRole('link', { name: 'Source ↗' })).toHaveCount(1);
 
@@ -43,9 +43,6 @@ test.describe('Portfolio smoke tests', () => {
     await expect(
       section.locator('iframe[title="TrailMates — live site"]'),
     ).toBeAttached({ timeout: 10_000 });
-    await expect(
-      section.getByRole('img', { name: 'TaskMind — preview of the application' }),
-    ).toBeAttached();
     await expect(
       section.getByRole('img', { name: 'Dugtong — preview of the application' }),
     ).toBeAttached();
