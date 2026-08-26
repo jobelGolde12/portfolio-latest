@@ -63,13 +63,33 @@ export function ProjectPreview({ project }: { project: Project }) {
         "
       >
         <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
-          <Image
-            src={project.image ?? ''}
-            alt={`${project.title} — preview of the application`}
-            fill
-            sizes="(max-width: 1024px) 92vw, 720px"
-            className="object-cover"
-          />
+          {project.image ? (
+            <Image
+              src={project.image}
+              alt={`${project.title} — preview of the application`}
+              fill
+              sizes="(max-width: 1024px) 92vw, 720px"
+              className="object-cover"
+            />
+          ) : (
+            <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-gradient-to-br from-bg-surface to-bg-base p-6 text-center">
+              <span className="font-display text-xl font-light tracking-tight text-text-primary">
+                {project.title}
+              </span>
+              <span className="text-xs text-text-tertiary">No preview available</span>
+              {project.links.demo && (
+                <a
+                  href={project.links.demo}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-2 inline-flex items-center gap-1.5 rounded-sm bg-ink px-4 py-2 text-xs font-medium text-white transition-colors hover:bg-black"
+                >
+                  Open live site
+                  <ExternalLink className="h-3 w-3" aria-hidden />
+                </a>
+              )}
+            </div>
+          )}
         </div>
       </div>
     );

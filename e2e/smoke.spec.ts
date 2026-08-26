@@ -43,6 +43,13 @@ test.describe('Portfolio smoke tests', () => {
     await expect(
       section.locator('iframe[title="TrailMates — live site"]'),
     ).toBeAttached({ timeout: 10_000 });
+    // Non-embeddable projects show image or text fallback
+    await expect(
+      section.getByRole('img', { name: 'TaskMind — preview of the application' }),
+    ).toBeAttached();
+    await expect(
+      section.getByText('No preview available'),
+    ).toBeAttached();
     await expect(
       section.getByRole('img', { name: 'Dugtong — preview of the application' }),
     ).toBeAttached();
