@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { ExternalLink } from 'lucide-react';
 import type { Project } from '@/data/projects';
 
-type Status = 'idle' | 'loading' | 'ready' | 'slow';
+type Status = 'idle' | 'loading' | 'ready' | 'slow' | 'failed';
 
 const SLOW_TIMEOUT_MS = 15000;
 
@@ -95,6 +95,47 @@ export function ProjectPreview({ project }: { project: Project }) {
     );
   }
 
+  /* If iframe failed (e.g. site blocks framing), show image fallback */
+  if (status === 'failed') {
+    return (
+      <div
+        className="
+          relative overflow-hidden rounded-sm border border-border-subtle bg-bg-surface
+        "
+      >
+        <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
+          {project.image ? (
+            <Image
+              src={project.image}
+              alt={`${project.title} — preview of the application`}
+              fill
+              sizes="(max-width: 1024px) 92vw, 720px"
+              className="object-cover"
+            />
+          ) : (
+            <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-gradient-to-br from-bg-surface to-bg-base p-6 text-center">
+              <span className="font-display text-xl font-light tracking-tight text-text-primary">
+                {project.title}
+              </span>
+              <span className="text-xs text-text-tertiary">Live preview unavailable</span>
+              {project.links.demo && (
+                <a
+                  href={project.links.demo}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-2 inline-flex items-center gap-1.5 rounded-sm bg-ink px-4 py-2 text-xs font-medium text-white transition-colors hover:bg-black"
+                >
+                  Open live site
+                  <ExternalLink className="h-3 w-3" aria-hidden />
+                </a>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  }
+
   /* Live media */
   return (
     <div>
@@ -111,6 +152,7 @@ export function ProjectPreview({ project }: { project: Project }) {
               src={project.links.demo}
               title={`${project.title} — live site`}
               onLoad={() => setStatus('ready')}
+              onError={() => setStatus('failed')}
               referrerPolicy="no-referrer"
               sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
               className="absolute inset-0 h-full w-full border-0 bg-white"
