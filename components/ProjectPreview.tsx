@@ -149,7 +149,7 @@ export function ProjectPreview({ project }: { project: Project }) {
         <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
           {inView && (
             <iframe
-              src={project.links.demo}
+              src={`/api/proxy?url=${encodeURIComponent(project.links.demo!)}`}
               title={`${project.title} — live site`}
               onLoad={() => setStatus('ready')}
               onError={() => setStatus('failed')}
