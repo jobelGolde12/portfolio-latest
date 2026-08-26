@@ -1,5 +1,6 @@
 import { NextRequest } from 'next/server';
 import { rewriteHtml } from '@/lib/proxy-rewrite';
+import { logRequest } from '@/lib/proxy-logs';
 
 /**
  * Proxy route — fetches an external site and serves it through this domain.
@@ -55,37 +56,6 @@ function cleanupHits() {
     if (recent.length === 0) hits.delete(ip);
     else hits.set(ip, recent);
   }
-}
-
-/* ─── Request logging ───────────────────────────────────── */
-
-interface LogEntry {
-  timestamp: string;
-  ip: string;
-  target: string;
-  hostname: string;
-  status: number;
-  latencyMs: number;
-  error?: string;
-}
-
-const MAX_LOGS = 200;
-const requestLogs: LogEntry[] = [];
-
-function logRequest(entry: LogEntry) {
-  requestLogs.push(entry);
-  // Keep only the most recent entries
-  if (requestLogs.length > MAX_LOGS) {
-    requestLogs.splice(0, requestLogs.length - MAX_LOGS);
-  }
-  // Also log to console for Vercel function logs
-  console.log(
-    JSON.stringify({
-      level: entry.status >= 400 ? 'error' : 'info',
-      msg: 'proxy_request',
-      ...entry,
-    }),
-  );
 }
 
 /* ─── Route handler ─────────────────────────────────────── */
