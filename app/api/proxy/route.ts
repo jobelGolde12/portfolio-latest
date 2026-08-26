@@ -57,12 +57,45 @@ function cleanupHits() {
   }
 }
 
+/* ─── Request logging ───────────────────────────────────── */
+
+interface LogEntry {
+  timestamp: string;
+  ip: string;
+  target: string;
+  hostname: string;
+  status: number;
+  latencyMs: number;
+  error?: string;
+}
+
+const MAX_LOGS = 200;
+const requestLogs: LogEntry[] = [];
+
+function logRequest(entry: LogEntry) {
+  requestLogs.push(entry);
+  // Keep only the most recent entries
+  if (requestLogs.length > MAX_LOGS) {
+    requestLogs.splice(0, requestLogs.length - MAX_LOGS);
+  }
+  // Also log to console for Vercel function logs
+  console.log(
+    JSON.stringify({
+      level: entry.status >= 400 ? 'error' : 'info',
+      msg: 'proxy_request',
+      ...entry,
+    }),
+  );
+}
+
 /* ─── Route handler ─────────────────────────────────────── */
 
 export const dynamic = 'force-dynamic';
 
 export async function GET(request: NextRequest) {
   cleanupHits();
+
+  const start = Date.now();
 
   // Rate limit
   const ip =
@@ -71,6 +104,15 @@ export async function GET(request: NextRequest) {
     'unknown';
 
   if (isRateLimited(ip)) {
+    logRequest({
+      timestamp: new Date().toISOString(),
+      ip,
+      target: request.url,
+      hostname: 'rate-limited',
+      status: 429,
+      latencyMs: Date.now() - start,
+      error: 'Rate limit exceeded',
+    });
     return new Response(
       JSON.stringify({ error: 'Rate limit exceeded. Try again shortly.' }),
       { status: 429, headers: { 'Content-Type': 'application/json' } },
@@ -81,6 +123,15 @@ export async function GET(request: NextRequest) {
   const targetUrl = searchParams.get('url');
 
   if (!targetUrl) {
+    logRequest({
+      timestamp: new Date().toISOString(),
+      ip,
+      target: 'missing',
+      hostname: 'unknown',
+      status: 400,
+      latencyMs: Date.now() - start,
+      error: 'Missing url parameter',
+    });
     return new Response(JSON.stringify({ error: 'Missing url parameter' }), {
       status: 400,
       headers: { 'Content-Type': 'application/json' },
@@ -92,6 +143,15 @@ export async function GET(request: NextRequest) {
   try {
     parsed = new URL(targetUrl);
   } catch {
+    logRequest({
+      timestamp: new Date().toISOString(),
+      ip,
+      target: targetUrl,
+      hostname: 'invalid',
+      status: 400,
+      latencyMs: Date.now() - start,
+      error: 'Invalid URL',
+    });
     return new Response(JSON.stringify({ error: 'Invalid URL' }), {
       status: 400,
       headers: { 'Content-Type': 'application/json' },
@@ -100,6 +160,15 @@ export async function GET(request: NextRequest) {
 
   // Only allow HTTPS
   if (parsed.protocol !== 'https:') {
+    logRequest({
+      timestamp: new Date().toISOString(),
+      ip,
+      target: targetUrl,
+      hostname: parsed.hostname,
+      status: 400,
+      latencyMs: Date.now() - start,
+      error: 'Non-HTTPS URL',
+    });
     return new Response(
       JSON.stringify({ error: 'Only HTTPS URLs are allowed' }),
       { status: 400, headers: { 'Content-Type': 'application/json' } },
@@ -108,6 +177,15 @@ export async function GET(request: NextRequest) {
 
   // Whitelist check
   if (!ALLOWED_HOSTS.includes(parsed.hostname)) {
+    logRequest({
+      timestamp: new Date().toISOString(),
+      ip,
+      target: targetUrl,
+      hostname: parsed.hostname,
+      status: 403,
+      latencyMs: Date.now() - start,
+      error: 'Domain not allowed',
+    });
     return new Response(JSON.stringify({ error: 'Domain not allowed' }), {
       status: 403,
       headers: { 'Content-Type': 'application/json' },
@@ -144,6 +222,16 @@ export async function GET(request: NextRequest) {
       responseBody = new TextEncoder().encode(html).buffer as ArrayBuffer;
     }
 
+    const latencyMs = Date.now() - start;
+    logRequest({
+      timestamp: new Date().toISOString(),
+      ip,
+      target: targetUrl,
+      hostname: parsed.hostname,
+      status: upstream.status,
+      latencyMs,
+    });
+
     // Strip frame-blocking headers from the upstream response
     const headers = new Headers();
     headers.set('Content-Type', contentType);
@@ -160,7 +248,17 @@ export async function GET(request: NextRequest) {
       status: upstream.status,
       headers,
     });
-  } catch {
+  } catch (err) {
+    const latencyMs = Date.now() - start;
+    logRequest({
+      timestamp: new Date().toISOString(),
+      ip,
+      target: targetUrl,
+      hostname: parsed.hostname,
+      status: 502,
+      latencyMs,
+      error: String(err),
+    });
     return new Response(
       JSON.stringify({ error: 'Failed to fetch upstream site' }),
       { status: 502, headers: { 'Content-Type': 'application/json' } },
