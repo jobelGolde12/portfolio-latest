@@ -1,4 +1,5 @@
 import { NextRequest } from 'next/server';
+import { rewriteHtml } from '@/lib/proxy-rewrite';
 
 /**
  * Proxy route — fetches an external site and serves it through this domain.
@@ -54,76 +55,6 @@ function cleanupHits() {
     if (recent.length === 0) hits.delete(ip);
     else hits.set(ip, recent);
   }
-}
-
-/* ─── HTML rewriting ────────────────────────────────────── */
-
-/**
- * Rewrite relative URLs in HTML so assets load through the proxy.
- *
- * Handles: src, href, srcset, poster, data-src attributes on any tag,
- * plus url() values in inline <style> blocks.
- */
-function rewriteHtml(
-  html: string,
-  upstreamOrigin: string,
-  proxyBase: string,
-): string {
-  // Rewrite attribute values: src="...", href="...", poster="...", data-src="..."
-  // Only rewrite absolute paths (/foo) and protocol-relative (//foo), not full URLs
-  const attrPattern =
-    /((?:src|href|poster|data-src|action)\s*=\s*)(["'])(\/[^"']*?)\2/gi;
-  html = html.replace(
-    attrPattern,
-    (_match, prefix, quote, path) => `${prefix}${quote}${proxyBase}${path}${quote}`,
-  );
-
-  // Rewrite srcset attributes: /foo.png 1x, /bar.png 2x
-  const srcsetPattern =
-    /(srcset\s*=\s*)(["'])([^"']*?)\2/gi;
-  html = html.replace(
-    srcsetPattern,
-    (_match, prefix, quote, value) => {
-      const rewritten = value
-        .split(',')
-        .map((entry: string) => {
-          const parts = entry.trim().split(/\s+/);
-          if (parts[0] && parts[0].startsWith('/')) {
-            parts[0] = `${proxyBase}${parts[0]}`;
-          }
-          return parts.join(' ');
-        })
-        .join(', ');
-      return `${prefix}${quote}${rewritten}${quote}`;
-    },
-  );
-
-  // Rewrite url() in inline <style> blocks
-  const urlPattern =
-    /(url\s*\(\s*)(["']?)(\/[^)"']*)\2(\))/gi;
-  html = html.replace(
-    urlPattern,
-    (_match, prefix, quote, path, suffix) =>
-      `${prefix}${quote}${proxyBase}${path}${quote}${suffix}`,
-  );
-
-  // Rewrite absolute upstream URLs (https://convert-py.vercel.app/foo)
-  // to proxy URLs so they also go through the proxy
-  const absPattern =
-    new RegExp(
-      `(=["']|url\\(\\s*["']?)(${upstreamOrigin.replace(
-        /[.*+?^${}()|[\]\\]/g,
-        '\\$&',
-      )})(\\/[^"')\\s]*)`,
-      'gi',
-    );
-  html = html.replace(
-    absPattern,
-    (_match, prefix: string, _origin: string, path: string) =>
-      `${prefix}${proxyBase}${path}`,
-  );
-
-  return html;
 }
 
 /* ─── Route handler ─────────────────────────────────────── */
