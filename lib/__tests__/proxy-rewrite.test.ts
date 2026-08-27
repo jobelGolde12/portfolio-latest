@@ -42,8 +42,44 @@ describe('rewriteHtml', () => {
       expect(result).toBe(input);
     });
 
-    it('does not rewrite relative paths without leading slash', () => {
+    it('rewrites relative paths without leading slash (style.css, app.js)', () => {
+      const input = '<link rel="stylesheet" href="style.css">';
+      const result = rewriteHtml(input, UPSTREAM, PROXY);
+      expect(result).toBe(`<link rel="stylesheet" href="${PROXY}/style.css">`);
+    });
+
+    it('rewrites relative image paths', () => {
       const input = '<img src="images/logo.png">';
+      const result = rewriteHtml(input, UPSTREAM, PROXY);
+      expect(result).toBe(`<img src="${PROXY}/images/logo.png">`);
+    });
+
+    it('does not rewrite anchor links (#...)', () => {
+      const input = '<a href="#section">Link</a>';
+      const result = rewriteHtml(input, UPSTREAM, PROXY);
+      expect(result).toBe(input);
+    });
+
+    it('does not rewrite mailto: links', () => {
+      const input = '<a href="mailto:test@example.com">Email</a>';
+      const result = rewriteHtml(input, UPSTREAM, PROXY);
+      expect(result).toBe(input);
+    });
+
+    it('does not rewrite tel: links', () => {
+      const input = '<a href="tel:+1234567890">Call</a>';
+      const result = rewriteHtml(input, UPSTREAM, PROXY);
+      expect(result).toBe(input);
+    });
+
+    it('does not rewrite javascript: links', () => {
+      const input = '<a href="javascript:void(0)">Click</a>';
+      const result = rewriteHtml(input, UPSTREAM, PROXY);
+      expect(result).toBe(input);
+    });
+
+    it('does not rewrite data: URIs', () => {
+      const input = '<img src="data:image/png;base64,abc">';
       const result = rewriteHtml(input, UPSTREAM, PROXY);
       expect(result).toBe(input);
     });
